@@ -1,0 +1,141 @@
+---
+title: "DSRS & CSCC - Práctico IV"
+subtitle: "Visualización Inicial de Datos"
+author: "Cristóbal Ortiz Vilches"
+date: "02 de octubre de 2026"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-summary: "Mostrar código R"
+    other-links:
+      - text: "Descargar en PDF"
+        href: ejercicio-practico-4.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.qmd)"
+        href: ejercicio-practico-4.qmd
+        icon: file-earmark-code
+editor: visual
+---
+
+# 1. Configuración del Entorno
+
+Iniciamos cargando la librería **`tidyverse`**, que automáticamente nos da acceso a **`ggplot2`**.
+
+# Encabezado 1
+
+## Encabezado 2
+
+### ...
+
+```{r}
+
+```
+
+```{r setup}
+# Cargar librerías
+library(tidyverse)
+# Ojo que tidyverse ya trae incluido ggplot2()
+```
+
+Para esta sesión inicial, usaremos el *dataset* **`mpg`** (datos de vehículos) por su simplicidad.
+
+```{r explorar_datos}
+# Explorar el dataset mpg
+datos_autos <- mpg
+
+# Mostrar las primeras filas
+head(datos_autos)
+```
+
+# 2 La Estructura Básica de `ggplot2`
+
+La *Gramática de los Gráficos* indica que un gráfico se construye añadiendo capas. Para un gráfico simple, solo necesitamos tres componentes esenciales:
+
+1.  **`ggplot(data = ...)`**: Define la base del gráfico y el *data frame* a utilizar.
+2.  **`aes(x = ..., y = ...)`**: Define el **mapeo estético**, es decir, qué variables van a qué ejes.
+3.  **`geom_*(...)`**: Define la **geometría** o tipo de gráfico (puntos, barras, cajas, etc.).
+
+## Ejemplo Básico: Las Capas Mínimas
+
+Mostramos la relación entre cilindrada (`displ`) y consumo en carretera (`hwy`).
+
+```{r capas_minimas}
+
+# Sintaxis ggplot2: data + aes + geom 
+
+#1. Capa vacía
+ggplot(data = datos_autos)
+
+#2. Capa con variables
+ggplot(data = datos_autos, mapping = aes(x = displ, y = hwy)) 
+
+#3. Capa con geom
+ggplot(data = datos_autos, mapping = aes(x = displ, y = hwy)) + 
+  geom_point()
+
+# 4. Capa con geom (eficiente)
+ggplot(datos_autos, aes(x = displ, y = hwy)) + 
+  geom_point()
+
+# 5. Conectando ggplot con tidyverse (%>% | |> )
+datos_autos %>% 
+  ggplot(aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+```
+
+**Mapeo Adicional:** Para añadir una tercera variable, la incluimos en `aes()`. Aquí, el tipo de vehículo (`class`) se mapea al color.
+
+```{r mapeo_adicional}
+ggplot(data = datos_autos) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class))
+```
+
+# 3 Gráficos con una Variable (Univariados)
+
+## 3.1 Variables Categóricas (`geom_bar`)
+
+Usamos `geom_bar()` para ver la **frecuencia** de las categorías de una variable. Solo se necesita mapear el eje $x$.
+
+```{r univariado_barras_basico}
+# Gráfico de barras de la variable 'class'
+datos_autos |> 
+  ggplot(aes(x = class)) +
+  geom_bar()
+```
+
+## 3.2 Variables Continuas (`geom_histogram`)
+
+Usamos `geom_histogram()` para ver la **distribución** de una variable numérica, como el consumo en carretera (`hwy`).
+
+```{r univariado_hist_basico}
+# Histograma de la variable 'hwy'
+datos_autos |> 
+  ggplot(aes(x = hwy)) +
+  geom_histogram(fill = "darkred", color = "black") # Solo color para rellenar (fill) y borde
+```
+
+# 4. Gráficos con Dos Variables (Bivariados)
+
+## 4.1 Continuas vs. Continuas (`geom_point`)
+
+Gráfico de dispersión para ver la relación entre dos variables numéricas: consumo en ciudad (`cty`) y consumo en carretera (`hwy`).
+
+```{r bivariado_point_basico}
+datos_autos |> 
+  ggplot(aes(x = cty, y = hwy)) +
+  geom_point()
+```
+
+## 4.2 Continua vs. Categórica (`geom_boxplot`)
+
+Gráfico de caja y bigote para comparar la distribución de una variable continua (`hwy`) entre las categorías de una variable discreta (`drv` - tipo de tracción).
+
+```{r bivariado_box_basico}
+datos_autos %>%  
+  ggplot(aes(x = drv, y = hwy)) +
+  geom_boxplot()
+```

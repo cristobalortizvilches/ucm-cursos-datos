@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Cristóbal Ortiz Vilches">
+
+<title>DSRS &amp; CSCC - Práctico VI – Cursos Ciencia de Datos &amp; CCSS Computacionales</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../1-data-science-rstudio/images/logo-ucm-render.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-da7ae726d33b9c2f5f7ed100260dcb8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../1-data-science-rstudio/images/logo-ucm-render.png" alt="" class="navbar-logo light-content">
+    <img src="../../1-data-science-rstudio/images/logo-ucm-render.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Cursos Ciencia de Datos &amp; CCSS Computacionales</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> <i class="bi bi-house-door" role="img">
+</i> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../clases-dsrs.html"> <i class="bi bi-bar-chart-line" role="img">
+</i> 
+<span class="menu-text">Ciencia de Datos (DSRS)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../clases-cscc.html"> <i class="bi bi-diagram-3" role="img">
+</i> 
+<span class="menu-text">CCSS Computacionales (CSCC)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../practicos.html"> <i class="bi bi-code-slash" role="img">
+</i> 
+<span class="menu-text">Prácticos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../evaluaciones.html"> <i class="bi bi-clipboard-check" role="img">
+</i> 
+<span class="menu-text">Evaluaciones</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datos.html"> <i class="bi bi-database" role="img">
+</i> 
+<span class="menu-text">Datos</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/cristobalortizvilches/ucm-cursos-datos"> <i class="bi bi-github" role="img" aria-label="Repositorio en GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../practicos.html">Talleres Prácticos</a></li><li class="breadcrumb-item"><a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-6.html">Práctico VI: Encuestas (survey)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Información General</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inicio y Programa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bases de Datos y Recursos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Clases DSRS (OPR319)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../clases-dsrs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ver todas las clases DSRS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Clases CSCC (OPR219)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../clases-cscc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ver todas las clases CSCC</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Talleres Prácticos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../practicos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Índice de Prácticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico I: Flujo e Importación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico II: Procesamiento</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico III: Manipulación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico IV: Visualización Inicial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico V (1): NA, Joins y Pivot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico V (2): Git y GitHub</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Práctico VI: Encuestas (survey)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico VII: Longitudinales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Práctico VIII: Datos Espaciales</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Evaluaciones 2026</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../evaluaciones.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Guía de Evaluaciones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../4-evaluaciones-conjuntas/rubrica-e1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rúbrica Evaluación I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../4-evaluaciones-conjuntas/plantilla-e1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plantilla Evaluación I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../4-evaluaciones-conjuntas/rubrica-e2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rúbrica Evaluación II</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../4-evaluaciones-conjuntas/plantilla-e2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plantilla Evaluación II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#preparación-de-datos" id="toc-preparación-de-datos" class="nav-link active" data-scroll-target="#preparación-de-datos">1. Preparación de datos</a>
+  <ul class="collapse">
+  <li><a href="#a.-cargar-librerías" id="toc-a.-cargar-librerías" class="nav-link" data-scroll-target="#a.-cargar-librerías">a. Cargar librerías</a></li>
+  <li><a href="#b.-cargar-base-de-datos-desde-repositorio-en-dataverse" id="toc-b.-cargar-base-de-datos-desde-repositorio-en-dataverse" class="nav-link" data-scroll-target="#b.-cargar-base-de-datos-desde-repositorio-en-dataverse">b. Cargar base de datos desde repositorio en Dataverse</a></li>
+  <li><a href="#c.-selección-de-variables-y-filtrado-de-datos" id="toc-c.-selección-de-variables-y-filtrado-de-datos" class="nav-link" data-scroll-target="#c.-selección-de-variables-y-filtrado-de-datos">c.&nbsp;Selección de variables y filtrado de datos</a></li>
+  <li><a href="#d.-transformar-base-de-datos-de-wide-a-long" id="toc-d.-transformar-base-de-datos-de-wide-a-long" class="nav-link" data-scroll-target="#d.-transformar-base-de-datos-de-wide-a-long">d.&nbsp;Transformar base de datos de wide a long</a></li>
+  <li><a href="#e.-recodificación-de-variables" id="toc-e.-recodificación-de-variables" class="nav-link" data-scroll-target="#e.-recodificación-de-variables">e. Recodificación de variables</a></li>
+  </ul></li>
+  <li><a href="#visualización-de-datos" id="toc-visualización-de-datos" class="nav-link" data-scroll-target="#visualización-de-datos">2. Visualización de datos</a>
+  <ul class="collapse">
+  <li><a href="#survey" id="toc-survey" class="nav-link" data-scroll-target="#survey">a. Acerca del uso de <code>survey</code></a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-other-links"><h2>Otros Enlaces</h2><ul><li><a href="ejercicio-practico-6.pdf"><i class="bi bi-file-earmark-pdf"></i>Descargar en PDF</a></li><li><a href="ejercicio-practico-6.Rmd"><i class="bi bi-file-earmark-code"></i>Descargar código (.Rmd)</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../practicos.html">Talleres Prácticos</a></li><li class="breadcrumb-item"><a href="../../3-practicos-conjuntos/2_codigo/ejercicio-practico-6.html">Práctico VI: Encuestas (survey)</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">DSRS &amp; CSCC - Práctico VI</h1>
+<p class="subtitle lead">Análisis de Encuestas Complejas con <code>survey</code></p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Cristóbal Ortiz Vilches </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="preparación-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="preparación-de-datos">1. Preparación de datos</h2>
+<p>En lo que sigue se especifican los pasos a seguir para obtener una base de datos procesada, con la cual es posible realizar una correcta visualización y análisis de los datos. En primer lugar se cargan las librerías que contienen funciones necesarias para la manipulación de los datos. A continuación se carga la base de datos directamente del repositorio Dataverse de ELSOC-COES. En tercer lugar, se seleccionar las variables a utilizar, filtrando casos con atrición y aquellos con inconsistencias mayores entre olas. Luego, se transforma la base de datos cargada de formato “wide” a “long”, a fin de facilitar posteriores análisis. Finalmente, se recodifican y renombran las variables a usar, todo ello con el fin de facilitar la visualización de datos.</p>
+<section id="a.-cargar-librerías" class="level3">
+<h3 class="anchored" data-anchor-id="a.-cargar-librerías">a. Cargar librerías</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#"pacman" es una herramienta de administración de paquetes R. Se utiliza el comando "p_load"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#para instalar los paquetes que no se encuentran descargados y cargar los paquetes que se deseen utilizar, ahorrando lineas de escritura.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(<span class="at">list =</span> <span class="fu">ls</span>()) <span class="co">#limpieza del entorno de trabajo</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("pacman")</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pacman)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'pacman' was built under R version 4.5.3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(car, panelr, tidyverse, survey, ggrepel)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>) <span class="co">#evita notación científica</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b.-cargar-base-de-datos-desde-repositorio-en-dataverse" class="level3">
+<h3 class="anchored" data-anchor-id="b.-cargar-base-de-datos-desde-repositorio-en-dataverse">b. Cargar base de datos desde repositorio en Dataverse</h3>
+<ol type="1">
+<li>Si quiere manualmente descargar en la base de datos desde la url oficial alojado en Dataverse puede ingresar al siguiente <a href="https://dataverse.harvard.edu/dataverse/coes_data_repository">link</a></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para cargar la bbdd desde un archivo que fue manualmente descargado:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#getwd()</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#load("C:/Users/.../ELSOC_Wide_2016_2019_Merge_v1.00_R.RData")</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># esta base no está en la carpeta raiz, es sólo un ejemplo</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="2" type="1">
+<li>Si quiere automaticamente utilizar la base de datos desde el url en forma directa siga el código siguiente.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://dataverse.harvard.edu/api/access/datafile/4606527"</span>)) <span class="co">#cargar bbdd desde url oficial alojado en dataverse</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="c.-selección-de-variables-y-filtrado-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="c.-selección-de-variables-y-filtrado-de-datos">c.&nbsp;Selección de variables y filtrado de datos</h3>
+<p>Para el desarrollo del instructivo se trabajará con las siguientes variables de ELSOC:</p>
+<ul>
+<li><code>id</code>: número único que identifica a cada persona encuestada</li>
+<li><code>ponderador01</code>: ponderador ajustado por región</li>
+<li><code>ponderador02</code>: ponderador ajustado por región y sexo</li>
+<li><code>m0_sexo</code>: sexo de la persona encuestada</li>
+<li><code>m0_edad</code>: edad de la persona encuestada</li>
+<li><code>m01</code>: nivel de educación de la persona encuestada</li>
+<li><code>d01</code>: estatus social subjetivo de la persona encuestada</li>
+<li><code>m02</code>: situación ocupacional de la persona encuestada</li>
+<li><code>segmento</code>: manzanas o bloques de la muestra.</li>
+<li><code>estrato</code>: tipo de ciudad de la persona encuestada</li>
+<li><code>region</code>: región de residencia de la persona encuestada</li>
+<li><code>c16</code>: identificación con partidos políticos de la persona encuestada</li>
+<li><code>c17</code>: identificación con coalición política de la persona encuestada</li>
+<li><code>c28</code>: grado de acuerdo con la necesidad de cambiar la constitución actual de la persona encuestada</li>
+<li><code>c05</code>: nivel de confianza con el presidente de la república de la persona encuestada</li>
+<li><code>c05_02</code>: nivel de confianza con los partidos políticos de la persona encuestada</li>
+<li><code>c05_03</code>: nivel de confianza con los carabineros de la persona encuestada</li>
+</ul>
+<p>Todas las cuales tienen agregado el sufijo “_w0[X]” que indica la ola de medición de la variable, y donde <strong>[X]</strong> corresponde al número de ola, pudiendo tomar los valores <strong>1</strong>, <strong>2</strong>, <strong>3</strong> y <strong>4</strong>, asociados a las olas 2016, 2017, 2018 y 2019 respectivamente.</p>
+<p>Finalmente, para trabajar con datos panel resulta fundamental filtrar las variables por atrición y tipo de casos, donde:</p>
+<ul>
+<li><code>tipo_atricion</code>: indica cantidad de encuestados que responde a cada ola incluidas en la versión de la base de datos combinada.</li>
+<li><code>tipo_caso</code>: clasifica los casos según su consistencia intertemporal en los atributos sexo, edad y educación.</li>
+</ul>
+<p>En específico, nos quedaremos sólo con aquellos encuestados que respondieron en las cuatro olas de ELSOC (<code>tipo_atricion</code>=1) y eliminaremos de la muestra los casos con inconsistencias mayores (<code>tipo_caso</code>=2).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>elsoc_wide <span class="ot">&lt;-</span> elsoc_wide_2016_2019 <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tipo_caso <span class="sc">!=</span> <span class="dv">2</span>) <span class="co">#filtrar atrición entre 2016-19 y casos c/inconsistencias mayores</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>elsoc_wide <span class="ot">&lt;-</span> elsoc_wide <span class="sc">%&gt;%</span> <span class="fu">select</span>(idencuesta, <span class="co">#identificador individual</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                             ponderador01_w01,ponderador01_w02,ponderador01_w03,ponderador01_w04, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                                                                            <span class="co">#ponderador población</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                             ponderador02_w01,ponderador02_w02,ponderador02_w03,ponderador02_w04, </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                                                                                <span class="co">#ponderador sexo</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                             m0_sexo_w01,m0_sexo_w02,m0_sexo_w03,m0_sexo_w04, <span class="co">#sexo</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                             m0_edad_w01,m0_edad_w02,m0_edad_w03,m0_edad_w04, <span class="co">#edad</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                             m01_w01,m01_w02,m01_w03,m01_w04, <span class="co">#nivel de educación</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                             d01_01_w01,d01_01_w02,d01_01_w03,d01_01_w04, <span class="co">#estatus social subjetivo</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                             m02_w01,m02_w02,m02_w03,m02_w04, <span class="co">#situación ocupacional</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                             segmento_w01,segmento_w02,segmento_w03,segmento_w04, <span class="co">#manzana o bloque</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                             estrato_w01,estrato_w02,estrato_w03,estrato_w04, <span class="co">#ciudad</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                             region_w01,region_w02,region_w03,region_w04, <span class="co">#región</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                             c16_w01,c16_w02,c16_w03,c16_w04, <span class="co">#indentificación con partido político</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                             c17_w01,c17_w02,c17_w03,c17_w04, <span class="co">#intentificación con coalición política</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                             c28_w01,c28_w02,c28_w03,c28_w04, <span class="co">#de acuerdo con cambiar la constitución actual</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                             c05_08_w01,c05_08_w02,c05_08_w03,c05_08_w04, <span class="co">#confianza en el presidente</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                             c05_02_w01,c05_02_w02,c05_02_w03,c05_02_w04, <span class="co">#confianza en partidos políticos</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                             c05_03_w01,c05_03_w02,c05_03_w03,c05_03_w04) <span class="co">#confianza en carabineros</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="d.-transformar-base-de-datos-de-wide-a-long" class="level3">
+<h3 class="anchored" data-anchor-id="d.-transformar-base-de-datos-de-wide-a-long">d.&nbsp;Transformar base de datos de wide a long</h3>
+<p>Antes de trasformar la base de datos de wide a long, se debe tener claro el nombre de la etiqueta de periodo asociada a cada variable. En este caso, como se indicó, dicha etiqueta es el sufijo “_w0”, habiendo cuatro casos asociados a cada ola: “_w01”, “_w02”, “_w03” y “_w04”. Estos corresponden al años 2016, 2017, 2018 y 2019, respectivamente. Teniendo esta información clara se puede completar los argumentos de la función <code>long_panel</code> del paquete <code>panelr</code>. Para mayor información del uso de <code>long_panel</code> visitar el <a href="https://rdrr.io/cran/panelr/man/long_panel.html">link</a>.</p>
+<div class="alert alert-success" role="alert">
+<h4 class="alert-heading anchored">
+<p>Estructura de la función long panel</p>
+</h4>
+<p>
+[nueva bbdd long] &lt;- long_panel(data = [bbdd wide], prefix = “[prefijo de la etiqueta]”, begin = [etiqueta de la primera ola], end = [etiqueta de la última ola], label_location = “[ubicación de la ola en la etiqueta]”, id = “[indentificador individual]”, wave =“[nombre de la nueva variable asociada al periodo]”).
+</p>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>elsoc_long <span class="ot">&lt;-</span> <span class="fu">long_panel</span>(<span class="at">data =</span> elsoc_wide, <span class="co">#base de datos formato wide</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">prefix =</span> <span class="st">"_w0"</span>, <span class="co">#caracteres antes de la etiqueta de cada ola</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">begin =</span> <span class="dv">1</span>, <span class="co">#etiqueta de la primera ola</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">end =</span> <span class="dv">4</span>, <span class="co">#etiqueta de la última ola</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">label_location =</span> <span class="st">"end"</span>, <span class="co">#indica donde se localiza la etiqueta asociada a la ola </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">id =</span> <span class="st">"idencuesta"</span>, <span class="co">#indica identificador individual</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">wave =</span> <span class="st">"ola"</span>) <span class="co">#nombre que tomará la variable que indica periodo. </span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Finalmente, filtramos la base de datos long de casos perdidos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>elsoc_long[elsoc_long <span class="sc">==</span> <span class="sc">-</span><span class="dv">999</span> <span class="sc">|</span> elsoc_long <span class="sc">==</span> <span class="sc">-</span><span class="dv">888</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co">#recodificar No sabe y No responde en NA</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(elsoc_long)) <span class="co">#indica cantidad de NA</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1142</code></pre>
+</div>
+</div>
+</section>
+<section id="e.-recodificación-de-variables" class="level3">
+<h3 class="anchored" data-anchor-id="e.-recodificación-de-variables">e. Recodificación de variables</h3>
+<p>A continuación, se recodificarán las categorías de respuesta y se etiquetarán las variables seleccionadas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "ola" correspondiente a la ola de medición.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>ola <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>ola,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'2016'</span>, <span class="st">'2017'</span>, <span class="st">'2018'</span>, <span class="st">'2019'</span>))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>ola <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>ola, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Ola de Medición"</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "m0_sexo" / rename "sexo".</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>sexo <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>m0_sexo,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Hombre'</span>, <span class="st">'Mujer'</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>sexo <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>sexo, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Tipo de sexo"</span>)) </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                   <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "m0_edad" / rename "edad"</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>edad <span class="ot">&lt;-</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(elsoc_long<span class="sc">$</span>m0_edad, <span class="st">"18:29=1;30:49=2;50:64=3;65:150=4"</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'18-29'</span>, <span class="st">'30-49'</span>, <span class="st">'50-64'</span>, <span class="st">'65 o más'</span>))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>edad <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>edad, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Edad en Tramos"</span>)) </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                  <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "m01" nivel educacional / rename "educacion"</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>educacion <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">recode</span>(elsoc_long<span class="sc">$</span>m01,<span class="st">"c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4"</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>educacion <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>educacion,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Basica"</span>,<span class="st">"Media"</span>,<span class="st">"Tecnica"</span>,<span class="st">"Universitaria"</span>))</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>educacion <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>educacion, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Nivel Educacional"</span>))     </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                                              <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "d01_01" estatus social subjetivo / raneme "estatus".</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>estatus<span class="ot">&lt;-</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(elsoc_long<span class="sc">$</span>d01_01, <span class="st">"0:4=1;5=2;6:10=3"</span>),</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Bajo'</span>,<span class="st">'Medio'</span>,<span class="st">'Alto'</span>))</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>estatus <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>estatus, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Estatus Social Subjetivo"</span>)) </span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "m02" situación ocupacional / rename "socup".</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>socup <span class="ot">&lt;-</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(elsoc_long<span class="sc">$</span>m02,<span class="st">"c(1,2,3) = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"</span>),</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Trabajo remunerado"</span>, <span class="st">"Trabajo doméstico no remunerado"</span>, </span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Desempleado/a"</span>, <span class="st">"Jubilado/a o pensionado/a"</span>, </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Otras categorías"</span>))</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>socup <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_na_value_to_level</span>(elsoc_long<span class="sc">$</span>socup, <span class="st">"NS/NR"</span>) <span class="co">#recode NA en categoría "NS/NR"</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>socup <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>socup, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Situación Ocupacional"</span>)) </span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                    <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "estrato" que refiere al tipo de ciudad / rename "tipo de ciudad"</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>tipo_ciudad <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>estrato, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Gran Santiago'</span>, <span class="st">'Gran Valparaíso'</span>, <span class="st">'Gran </span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="st">                                                                Concepción'</span>, <span class="st">'Ciudades grandes'</span>, <span class="st">'Ciudades </span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="st">                                                                medianas'</span>, <span class="st">'Ciudades pequeñas'</span>))</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>tipo_ciudad <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>estrato, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Tipo de ciudad"</span>)) </span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>                          <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode variable "region" correspondiente a regiones del país/ raname "zona" relativa a macrozona geográfica.</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>zona  <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">recode</span>(elsoc_long<span class="sc">$</span>region,</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"c('Tarapaca','Antofagasta','Atacama','Coquimbo','Arica')=1;</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="st">                                c('Valparaiso','Lib. Gral. B. Ohiggins','B. Ohiggins', 'Maule','Bio Bio')=2;</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="st">                                c('Araucania','Los Lagos','Aysen','Magallanes','Los Rios')=3 ;</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="st">                                'Metropolitana'=4"</span>)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>zona  <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>zona,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">"1"</span>,<span class="st">"2"</span>,<span class="st">"3"</span>,<span class="st">"4"</span>), <span class="at">labels =</span> </span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"Norte"</span>,<span class="st">"Centro"</span>,<span class="st">"Sur"</span>,<span class="st">"Metropolitana"</span>))</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>zona <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>zona, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Zona Geográfica"</span>)) </span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>                   <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode "c16" identificación con partidos políticos / rename "idpart".</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>idpart <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>c16,<span class="at">labels =</span> </span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="st">'PC'</span>,<span class="st">'PH'</span>,<span class="st">'RD'</span>,<span class="st">'PRO'</span>,<span class="st">'EVO'</span>,<span class="st">'PPD'</span>,<span class="st">'AMP'</span>,<span class="st">'PDC'</span>,<span class="st">'PRI'</span>,<span class="st">'RN'</span>,<span class="st">'UDI'</span>,<span class="st">'PS'</span>,<span class="st">'PRDS'</span>,</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>                              <span class="st">'Otro'</span>,<span class="st">'Ninguno'</span>))</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>idpart <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>idpart, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Indentificación con Partido Político"</span>)) </span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>                     <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode "c17" indentifiación con colación política /rename "idcoal".</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>idcoal <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>c17, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Chile Vamos'</span>,<span class="st">'Nueva Mayoría'</span>,<span class="st">'Frente Amplio'</span>, </span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>                                                       <span class="st">'Otra'</span>,<span class="st">'Ninguna'</span>))</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>idcoal <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_na_value_to_level</span>(elsoc_long<span class="sc">$</span>idcoal, <span class="st">"NS/NR"</span>) <span class="co">#recode NA en categoría "NS/NR"</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>idcoal <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>idcoal, <span class="at">label =</span> </span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>                                             <span class="fu">c</span>(<span class="st">"Indentificación con Coalición Política"</span>)) </span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>                    <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode "c28" grado de acuerdo con cambiar constitución / rename "cambiar_consti".</span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>cambiar_consti <span class="ot">&lt;-</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(elsoc_long<span class="sc">$</span>c28, <span class="st">"c(1,2)=1;c(3)=2;c(4,5)=3"</span>))</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>cambiar_consti <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>cambiar_consti, </span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'En desacuendo o totalmente en desacuerdo'</span>, <span class="st">'Ni de acuerdo ni en </span></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="st">                                       desacuerdo'</span>, <span class="st">'De acuerdo o totalmente de acuerdo'</span>))</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>cambiar_consti <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>cambiar_consti, <span class="at">label =</span> </span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>                                                     <span class="fu">c</span>(<span class="st">"Grado de Acuerdo con Cambiar Constitución"</span>))       </span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>                              <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode "c05_08" confianza en el presidente / rename "conf_presi".</span></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>conf_presi <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>c05_08,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Nada'</span>, <span class="st">'Poco'</span>, <span class="st">'Algo'</span>, <span class="st">'Bastante'</span>, <span class="st">'Mucho'</span>))</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>conf_presi <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>conf_presi, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Confianza en el </span></span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="st">                                                                                Presidente"</span>))</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>                        <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode "c05_02" confianza en partidos políticos / rename "conf_part".</span></span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>conf_part <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>c05_02,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Nada'</span>, <span class="st">'Poco'</span>, <span class="st">'Algo'</span>, <span class="st">'Bastante'</span>, <span class="st">'Mucho'</span>))</span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>conf_part <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>conf_part, <span class="at">label =</span> </span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>                                                <span class="fu">c</span>(<span class="st">"Confianza en Partidos Políticos"</span>)) </span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>                        <span class="co">#etiquetamos variable</span></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a><span class="co">#Recode "c05_03" confianza en carabineros / rename "conf_carb".</span></span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>conf_carb <span class="ot">&lt;-</span> <span class="fu">factor</span>(elsoc_long<span class="sc">$</span>c05_03,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'Nada'</span>, <span class="st">'Poco'</span>, <span class="st">'Algo'</span>, <span class="st">'Bastante'</span>, <span class="st">'Mucho'</span>))</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>elsoc_long<span class="sc">$</span>conf_carb <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">set_label</span>(elsoc_long<span class="sc">$</span>conf_carb, <span class="at">label =</span> </span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>                                                <span class="fu">c</span>(<span class="st">"Confianza en Carabineros"</span>))   </span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>                        <span class="co">#etiquetamos variable</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="visualización-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="visualización-de-datos">2. Visualización de datos</h2>
+<section id="survey" class="level3">
+<h3 class="anchored" data-anchor-id="survey">a. Acerca del uso de <code>survey</code></h3>
+<p>El diseño muestral ELSOC es probabilístico, estratificado, por conglomerados y multietápico. Si bien la unidad de análisis es a nivel individual, las unidades de muestreo se realiza primero a nivel de ciudad (<code>estrato</code>) y luego a nivel de manzana (<code>segmento</code>). Además de lo anterior, para lograr una correspondencia entre la muestra y la población objetivo, se utilizan ponderadores de corte transversal que ajustan por población regional y sexo.</p>
+<p>Dado lo anterior, se define el diseño de la encuesta longitudinal con la librería <code>survey</code> que reconoce a la base de datos como una muestra obtenida mediante un diseño muestral complejo. Para mayor información del uso de <code>survey</code> visitar el <a href="https://rdrr.io/cran/survey/">link</a>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>elsoc_diseno <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>segmento, <span class="co">#muestreo por conglomerado o clúster a nivel de manzanas (segmento)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">strata =</span> <span class="sc">~</span>estrato, <span class="co">#muestreo estratificado a nivel ciudad (estrato)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">weights =</span> <span class="sc">~</span>ponderador02, <span class="co">#ponderador de corte transversal</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">nest =</span> <span class="cn">TRUE</span>, <span class="co">#indica que clúster (manzana) está anidados dentro de estrato (ciudad)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> elsoc_long) <span class="co">#base de datos</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>El diseño de encuesta con <code>elsoc_diseno</code> permite realizar tablas ponderadas, tal que los análisis de gráficos a realizar sean representativos de la población objetivo de ELSOC.</p>
+<p>Se muestra un ejemplo de tabla ponderada con la variable de interés: <code>conf_presi</code> y agrupación por <code>ola</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>datos_tabla <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">svytable</span>(<span class="sc">~</span>conf_presi <span class="sc">+</span> <span class="co">#variable de interés</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                   ola, <span class="co">#variable de agrupación (puede ser más de una)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                   elsoc_diseno, <span class="co">#indica el diseño muestral creado</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">round =</span> F <span class="co">#indica que no quiero redondear cifras</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                                   ))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>datos_tabla</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   conf_presi  ola       Freq
+1        Nada 2016  744.29800
+2        Poco 2016  406.58600
+3        Algo 2016  441.24600
+4    Bastante 2016  172.85800
+5       Mucho 2016   62.69100
+6        Nada 2017  702.78835
+7        Poco 2017  447.03017
+8        Algo 2017  418.83162
+9    Bastante 2017  165.51061
+10      Mucho 2017   89.54639
+11       Nada 2018  576.88674
+12       Poco 2018  440.15113
+13       Algo 2018  548.86083
+14   Bastante 2018  232.10636
+15      Mucho 2018   66.68083
+16       Nada 2019 1406.57257
+17       Poco 2019  315.60306
+18       Algo 2019  266.57394
+19   Bastante 2019   61.37995
+20      Mucho 2019   25.43453</code></pre>
+</div>
+</div>
+<p>A partir de la tabla anterior no es intuitiva la interpretación de los porcentajes obtenidos. Para encontrar las frecuencias de las categorías dentro de cada año de análisis entonces se realiza la siguiente tabla:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Crear tabla que agrupa las frecuencias por cada respuesta y agrupa las frecuencias dentro de cada año</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>datos_grafico <span class="ot">&lt;-</span> <span class="fu">data.frame</span>((<span class="fu">svytable</span>(<span class="sc">~</span>conf_presi <span class="sc">+</span> ola, elsoc_diseno, <span class="at">round =</span> F))) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ola) <span class="sc">%&gt;%</span> <span class="co">#agrupa por ola el comando que sigue</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">porcentaje=</span>Freq<span class="sc">/</span><span class="fu">sum</span>(Freq)) <span class="co">#calcula la freq relativa por año (ola)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos_grafico) <span class="co">#visualizar bbdd creada</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+# Groups:   ola [2]
+  conf_presi ola    Freq porcentaje
+  &lt;fct&gt;      &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
+1 Nada       2016  744.      0.407 
+2 Poco       2016  407.      0.222 
+3 Algo       2016  441.      0.241 
+4 Bastante   2016  173.      0.0946
+5 Mucho      2016   62.7     0.0343
+6 Nada       2017  703.      0.385 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(datos_grafico<span class="sc">$</span>porcentaje) <span class="co">#Verificar que en cada año las respuestas suman 1 </span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#en este caso suman 4 ya que son 4 años/olas (recordar que agrupamos por olas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ejemplo: [VARIABLE = conf_presi] y [VAR_Z = ola]</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>datos_grafico <span class="ot">&lt;-</span> <span class="fu">data.frame</span>((<span class="fu">svytable</span>(<span class="sc">~</span>conf_presi <span class="sc">+</span> ola, elsoc_diseno, <span class="at">round =</span> F))) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ola) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">porcentaje =</span> Freq<span class="sc">/</span><span class="fu">sum</span>(Freq)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Paso 3</strong>: Revisar la tabla recién creada: columnas y datos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos_grafico)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+# Groups:   ola [2]
+  conf_presi ola    Freq porcentaje
+  &lt;fct&gt;      &lt;fct&gt; &lt;dbl&gt;      &lt;dbl&gt;
+1 Nada       2016  744.      0.407 
+2 Poco       2016  407.      0.222 
+3 Algo       2016  441.      0.241 
+4 Bastante   2016  173.      0.0946
+5 Mucho      2016   62.7     0.0343
+6 Nada       2017  703.      0.385 </code></pre>
+</div>
+</div>
+<p>Luego de hacer esos 3 pasos, se realizan diversos gráficos que relacionan dos variables:</p>
+<ol type="1">
+<li><p>Variable categórica de interés <em>[VARIABLE]</em></p></li>
+<li><p>Variable que agrupa (ej: ola, tramo de edad, sexo, ciudad, zona, etc..) <em>[VAR_Z]</em></p></li>
+</ol>
+<section id="c.1.1-gráfico-de-barras-con-x-categoría-según-ola" class="level5">
+<h5 class="anchored" data-anchor-id="c.1.1-gráfico-de-barras-con-x-categoría-según-ola">c.1.1 Gráfico de Barras con X = ‘Categoría’ según Ola</h5>
+<p>Este tipo de gráfico es el más simple de crear y se utiliza para visualizar respuestas desglosada por año. Es útil en estudios longitudinales debido a su potencial de comparación de las respuestas señaladas por los encuestados en los distintos años de participación.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Nombrar el gráfico (c.1.1) y seleccionar datos (datos_grafico)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>datos_grafico <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#indicar el contenido del gráfico: ejes y relleno (fill) por ola</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> porcentaje, <span class="at">x =</span> conf_presi, <span class="at">fill =</span> ola, </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">label =</span> <span class="fu">as.character</span>(scales<span class="sc">::</span><span class="fu">percent</span>(porcentaje, <span class="at">accuracy =</span> .<span class="dv">1</span>)))) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#fijar el fondo y el marco del gráfico uniforme</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#geom_col para usar variable y=porcentaje. 'dodge2' para formato side-to-side</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">position=</span> <span class="st">'dodge2'</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#escala del eje y en porcentajes del 0 al 100%</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Nombres de los ejes se eliminan</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#colores oficiales por ola: degradé 'viridis'</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">'viridis'</span>) <span class="sc">+</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#etiquetas por sobre cada barra</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">size=</span> <span class="fl">2.75</span>) <span class="sc">+</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#posicionamiento de leyenda arriba</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'top'</span>,</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#titulo del gráfico</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Confianza en el Presidente(a) de la República según año'</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ejercicio-practico-6_files/figure-html/bar_x_categoría-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Profesor Cristóbal Ortiz Vilches · Carrera de Sociología, Universidad Católica del Maule (UCM)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Material bajo licencia CC BY-NC 4.0 · Desarrollado con <a href="https://quarto.org/">Quarto</a> y R</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

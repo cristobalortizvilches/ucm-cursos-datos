@@ -1,0 +1,85 @@
+---
+title: "Plantilla para Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos"
+subtitle: "Cursos: Data Science Aplicada (DSRS) y Ciencias Sociales Computacionales (CSCC)"
+author: "Profesor: Cristóbal Ortiz Vilches"
+editor: visual
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: false
+    code_folding: show
+    other-links:
+      - text: "Descargar en PDF"
+        href: plantilla-e1.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar plantilla (.qmd)"
+        href: plantilla-e1.qmd
+        icon: file-earmark-code
+lang: es
+---
+
+## 1. Introducción
+
+### 1.1. **Problematización**: presentación del problema de investigación
+
+-   Contexto social y/o político en donde se enmarca el problema
+-   Tema de investigación y pregunta general sobre la problemática
+
+### 1.2. **Antecedentes**: breve descripción de las principales explicaciones respecto al problema
+
+### 1.3. **Vacío/Gap**: identificar los principales vacíos o brechas de la investigación previa
+
+### 1.4. **Objetivo**: planteamiento del objetivo y/o hipótesis que pretende cerrar la brecha de conocimiento
+
+## 2. Diseño de investigación
+
+### 2.2. Proyecto trabajo de datos reproducible
+
+-   Identificar y fundamental el alcance de la investigación (explotario, correlacional, etc.)
+-   Describir el flujo y las fases del trabajo de datos utilizado (workflow).
+-   Describir el protocolo de trabajo de datos utilizado.
+
+```{r creación de directorios protocolo IPO}
+
+```
+
+### 2.3. Datos y variables
+
+-   Describir la base de datos utilizada (tipo de muestra, unidades de análisis y N).
+-   Describir las variables a utilizar (nombre de la variable, codificación, tipo/clase, valores y recodificación).
+-   Proponer posibles datos digitales para abordar el problema de investigación (fuente, tipo de dato digital y método de adquisición) y justifica su relevancia para abordar el problema de investigación de manera novedosa.
+
+::: callout-note
+Proponer fuente de datos digitales aún cuando no sean utilizados más adelante
+:::
+
+### 2.4. Justificación y aspectos éticos
+
+-   Describe el rol de la Ciencia de Datos en el análisis social.
+-   Reflexiona sobre los principios éticas sobre el procesamiento y análisis de datos respecto al problema de investigación abordado.
+
+## 3. Procesamiento inicial de datos
+
+```{r cargar paquetes}
+
+```
+
+```{r cargar base de datos}
+
+```
+
+```{r limpieza de datos}
+
+```
+
+```{r recodificación}
+
+```
+
+```{r visualizar las 5 primeras filas}
+
+```
+
+-   Breve descripción del procesamiento realizado

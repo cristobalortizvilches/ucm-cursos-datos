@@ -1,0 +1,152 @@
+---
+title: "DSRS & CSCC - Práctico V parte 2" 
+subtitle: "Introducción a Git y GitHub con RStudio" 
+author: "Cristóbal Ortiz Vilches" 
+date: "06 de noviembre de 2026" 
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-summary: "Mostrar código R"
+    other-links:
+      - text: "Descargar en PDF"
+        href: ejercicio-practico-5b.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.qmd)"
+        href: ejercicio-practico-5b.qmd
+        icon: file-earmark-code
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+## Objetivos del Taller
+
+Al finalizar este taller, serás capaz de:
+
+1.  Crear un proyecto en RStudio bajo control de versiones con Git.
+2.  Registrar cambios en tus archivos (`commit`).
+3.  Crear un repositorio remoto en GitHub.
+4.  Sincronizar tu proyecto local con el repositorio remoto en GitHub (`push`).
+
+### **Paso 0: Configuración Inicial (Hacer solo una vez)**
+
+Antes de empezar, necesitamos asegurarnos de que Git esté instalado y configurado en tu computador. También necesitamos conectar RStudio con Git.
+
+1.  **Instalar Git:** Si aún no lo tienes, descárgalo e instálalo desde [git-scm.com](https://git-scm.com/).
+
+2.  **Configurar Git:**
+
+- Tools \> Version Control \> Project Setup.
+- Luego Version control system: Git (aparece pestaña emergente, darle yes)
+
+3.  **Conectar RStudio y GitHub:** Vamos a usar el paquete `usethis` para facilitar la conexión. Ejecuta esto en la consola de R.
+
+```{r}
+install.packages("usethis")
+library(usethis)
+
+# Opción 1: clásica
+# Sigue las instrucciones que aparecerán en la consola.
+
+use_git_config(user.name = "cristobalortizvilches", 
+               user.email = "cristobalortizvi@gmail.com")
+
+# Opción 2: token
+
+# Esta función te guiará para generar un "token" de acceso personal y guardarlo para que RStudio pueda comunicarse con GitHub.
+# Sigue las instrucciones que aparecerán en la consola.
+create_github_token()
+
+gitcreds::gitcreds_set() # Pega el token que creaste cuando lo solicite la consola
+
+git_sitrep()
+```
+
+### **Paso 1: Crear un Nuevo Proyecto con Control de Versiones**
+
+Vamos a crear un nuevo proyecto en RStudio que estará "vigilado" por Git desde el principio.
+
+1.  Ve a `File > New Project...`.
+2.  Selecciona `New Directory`.
+3.  Selecciona `New Project`.
+4.  Elige un nombre para tu directorio (ej., `mi-primer-repo`).
+5.  **Importante:** Asegúrate de marcar la casilla que dice `Create a git repository`.
+6.  Haz clic en `Create Project`.
+
+¡Felicidades! Acabas de crear tu primer repositorio local de Git. Fíjate que ahora tienes una pestaña llamada `Git` en el panel superior derecho de RStudio.
+
+### **Paso 2: Realizar nuestro primer Commit**
+
+Un `commit` es como guardar un punto de control en un videojuego. Registra una versión de tus archivos en un momento específico.
+
+1.  **Crear un archivo:** Crea un nuevo R Script (`File > New File > R Script`). Escribe un comentario simple, como `# Este es mi primer script`.
+2.  **Guardar el archivo:** Guárdalo con el nombre `analisis.R`.
+3.  **Revisar el panel de Git:** Ve a la pestaña `Git`. Verás que `analisis.R` aparece en la lista. Esto significa que Git ha detectado un archivo nuevo que no está siendo rastreado.
+4.  **Staging (Preparar el archivo):** Marca la casilla bajo la columna `Staged` al lado de `analisis.R`. Esto le dice a Git: "quiero incluir los cambios de este archivo en mi próximo commit".
+5.  **Commit (Confirmar los cambios):**
+    - Haz clic en el botón `Commit`.
+    - Se abrirá una nueva ventana. En el campo `Commit message`, escribe un mensaje descriptivo. Para el primer commit, es una convención usar "Initial commit".
+    - Haz clic en `Commit`.
+
+Has guardado tu primera "foto" del proyecto. Ahora, si modificas `analisis.R`, el panel de Git te mostrará que hay nuevos cambios no guardados.
+
+### **Paso 3: Crear un Repositorio en GitHub**
+
+Ahora necesitamos un lugar en la nube para guardar nuestro proyecto y compartirlo.
+
+1.  Ve a [github.com](https://github.com) e inicia sesión.
+2.  Haz clic en el signo `+` en la esquina superior derecha y selecciona `New repository`.
+3.  **Repository name:** Usa el mismo nombre de tu proyecto de RStudio (`mi-primer-repo-cscc`).
+4.  **Description:** Añade una descripción breve.
+5.  **Public/Private:** Selecciona `Public` para que otros puedan verlo.
+6.  **Importante:** **NO** marques las casillas para añadir `README`, `.gitignore` o `license`. Nuestro proyecto de RStudio ya tiene contenido.
+7.  Haz clic en `Create repository`.
+
+GitHub te mostrará una página con varias opciones de línea de comandos. ¡No te preocupes! Usaremos `usethis` para conectar nuestro proyecto de forma más sencilla.
+
+### **Paso 4: Conectar RStudio con GitHub y hacer `Push`**
+
+El último paso es enviar nuestros commits locales (la historia de nuestro proyecto) al repositorio remoto en GitHub. A esta acción se le llama `push`.
+
+1.  Vuelve a RStudio.
+2.  En la **consola**, ejecuta el siguiente comando del paquete `usethis`. Asegúrate de reemplazar `"TU-USUARIO"` y `"NOMBRE-DEL-REPO"` con tu usuario de GitHub y el nombre del repositorio que acabas de crear.
+
+```{r}
+# library(usethis) # Cárgalo si no lo has hecho
+    
+use_github(protocol = "https")
+# Este comando hará lo siguiente:
+# 1. Conectará tu proyecto local al repositorio remoto en GitHub.
+# 2. Hará el primer "push" para sincronizar ambos.
+# Es posible que te pida confirmar algunas acciones. Dile que sí.
+```
+
+*Nota: Si el comando anterior da problemas, puedes usar la URL del repositorio que te entrega GitHub y ejecutar los siguientes comandos en la consola:*
+
+```{r}
+use_git_remote(
+  name = "origin",
+  url = "[https://github.com/TU-USUARIO/NOMBRE-DEL-REPO.git](https://github.com/TU-USUARIO/NOMBRE-DEL-REPO.git)"
+  )
+
+# Luego, haz el push manualmente desde la Terminal de RStudio o haciendo
+# clic en el botón verde "Push" en el panel de Git.
+```
+
+3.  **Verificar** Refresca la página de tu repositorio en GitHub. Deberías ver tus archivos `mi-primer-repo-cscc.Rproj` y `analisis.R` allí
+
+### **Flujo de Trabajo Típico**
+
+A partir de ahora, tu flujo de trabajo será un ciclo simple:
+
+1.  **Modificas** tus archivos en RStudio.
+2.  Vas al panel de **Git**, haces **`stage`** a tus cambios.
+3.  Escribes un mensaje de **`commit`** descriptivo y confirmas.
+4.  Haces **`push`** para enviar tus commits a GitHub.
+5.  Si trabajas con colaboradores, también usarás **`pull`** para traer los cambios que ellos hayan subido.
+
+Flujo de trabajo simplificado: 0. **Push** si es que un colaborador hizo cambios 1. **Modificas** tus archivos en RStudio. 2. **Commit** vía consola con `usethis::use_git(message = "insert message")` 3. **Push** vía consola con `system("git push")`

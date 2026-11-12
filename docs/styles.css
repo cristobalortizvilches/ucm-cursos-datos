@@ -1,0 +1,122 @@
+/* Estilos para el sitio web del curso (Quarto Website) */
+
+:root {
+  --ucm-navy: #003366;
+  --ucm-blue: #005599;
+  --ucm-light: #f4f7fa;
+}
+
+.navbar-brand img {
+  max-height: 36px;
+}
+
+h1, h2, h3 {
+  color: var(--ucm-navy);
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, #003366 0%, #005599 100%);
+  color: #ffffff;
+  padding: 2.2rem 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 14px rgba(0, 51, 102, 0.15);
+}
+
+.hero-banner h1,
+.hero-banner h2,
+.hero-banner h3,
+.hero-banner p {
+  color: #ffffff !important;
+}
+
+.course-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-top: 4px solid var(--ucm-blue);
+  border-radius: 8px;
+  padding: 1.4rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.slide-embed-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  margin: 1rem 0;
+  background: #f8fafc;
+}
+
+.slide-embed-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.btn-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.8rem 0 1.8rem 0;
+}
+
+.btn-ucm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+}
+
+.btn-ucm-primary {
+  background-color: var(--ucm-navy);
+  color: #ffffff !important;
+}
+
+.btn-ucm-primary:hover {
+  background-color: var(--ucm-blue);
+  color: #ffffff !important;
+}
+
+.btn-ucm-pdf {
+  background-color: #b91c1c;
+  color: #ffffff !important;
+}
+
+.btn-ucm-pdf:hover {
+  background-color: #991b1b;
+  color: #ffffff !important;
+}
+
+.btn-ucm-outline {
+  background-color: #ffffff;
+  color: var(--ucm-navy) !important;
+  border: 1px solid var(--ucm-navy);
+}
+
+.btn-ucm-outline:hover {
+  background-color: var(--ucm-light);
+}
+
+table {
+  width: 100%;
+}
+

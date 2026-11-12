@@ -1,0 +1,110 @@
+---
+title: "Talleres Prácticos Conjuntos (DSRS & CSCC)"
+subtitle: "Guías Paso a Paso en R, Quarto y RMarkdown"
+author: "Profesor: Cristóbal Ortiz Vilches"
+toc: true
+---
+
+Los talleres prácticos integran los contenidos de **Ciencia de Datos Aplicada con RStudio (DSRS)** y **Ciencias Sociales Computacionales (CSCC)**. Cada taller cuenta con una guía interactiva en formato web, una versión **descargable en PDF** para lectura e impresión, y el archivo de código fuente (`.qmd` o `.Rmd`) para ejecutar directamente en RStudio.
+
+---
+
+## Tabla General de Prácticos
+
+| Taller | Título | Librerías Clave | Guía Web | Descargar PDF | Código Fuente |
+|:---:|:---|:---|:---:|:---:|:---:|
+| **I** | Flujo de trabajo e importación de datos | `tidyverse`, `readxl`, `haven`, `writexl` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.pdf){download="ejercicio-practico-1.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.qmd){download="ejercicio-practico-1.qmd"} |
+| **II** | Procesamiento de datos | `tidyverse`, `dplyr`, `sjmisc` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.pdf){download="ejercicio-practico-2.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.qmd){download="ejercicio-practico-2.qmd"} |
+| **III** | Manipulación de Datos | `dplyr`, `car`, `sjlabelled`, `sjmisc` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.pdf){download="ejercicio-practico-3.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.qmd){download="ejercicio-practico-3.qmd"} |
+| **IV** | Visualización Inicial de Datos | `tidyverse`, `ggplot2` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.pdf){download="ejercicio-practico-4.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.qmd){download="ejercicio-practico-4.qmd"} |
+| **V (1)** | Procesamiento Avanzado de Datos | `dplyr`, `tidyr`, `ggplot2` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.pdf){download="ejercicio-practico-5a.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.qmd){download="ejercicio-practico-5a.qmd"} |
+| **V (2)** | Introducción a Git y GitHub con RStudio | `usethis`, `gitcreds` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.pdf){download="ejercicio-practico-5b.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.qmd){download="ejercicio-practico-5b.qmd"} |
+| **VI** | Análisis de Encuestas Complejas con `survey` | `survey`, `panelr`, `car`, `tidyverse` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.pdf){download="ejercicio-practico-6.pdf"} | [💻 .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.Rmd){download="ejercicio-practico-6.Rmd"} |
+| **VII** | Visualización de datos longitudinales | `panelr`, `ggplot2`, `sjlabelled`, `sjmisc` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.pdf){download="ejercicio-practico-7.pdf"} | [💻 .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.Rmd){download="ejercicio-practico-7.Rmd"} |
+| **VIII** | Visualización de datos espaciales | `sf`, `chilemapas`, `leaflet`, `shadowtext` | [📖 Ver Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.pdf){download="ejercicio-practico-8.pdf"} | [💻 .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.Rmd){download="ejercicio-practico-8.Rmd"} |
+
+---
+
+## Detalle por Sesión Práctica
+
+### Práctico I: Flujo de trabajo e importación de datos
+Creación de proyectos autocontenidos en RStudio (`RProject`), organización de directorios bajo el protocolo `IPO`, carga de librerías con `pacman` e importación de datos desde CSV, Excel, SPSS, Stata y `.RData`.
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-1.pdf"}
+[💻 Descargar .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.qmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-1.qmd"}
+:::
+
+### Práctico II: Procesamiento de datos
+Creación de *tibbles*, selección de variables con `select()`, filtrado de observaciones con `filter()` y ordenamiento con `arrange()` aplicados tanto a datos simulados como a la encuesta longitudinal ELSOC.
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-2.pdf"}
+[💻 Descargar .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.qmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-2.qmd"}
+:::
+
+### Práctico III: Manipulación de Datos
+Transformación y creación de variables con `mutate()`, recodificación condicional con `if_else()`, `case_when()`, `cut()` y `car::recode()`, etiquetado con `sjlabelled` y resúmenes agrupados con `group_by()` y `summarise()`.
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-3.pdf"}
+[💻 Descargar .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.qmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-3.qmd"}
+:::
+
+### Práctico IV: Visualización Inicial de Datos
+Introducción a la Gramática de los Gráficos con `ggplot2`: capas mínimas (`data`, `aes`, `geom`), gráficos univariados (`geom_bar`, `geom_histogram`) y bivariados (`geom_point`, `geom_boxplot`).
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-4.pdf"}
+[💻 Descargar .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.qmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-4.qmd"}
+:::
+
+### Práctico V (Parte 1): Procesamiento Avanzado de Datos
+Identificación y tratamiento de valores perdidos (`is.na()`, `drop_na()`), unión relacional de tablas (`left_join`, `inner_join`, `full_join`) y transformación entre formatos ancho y largo (`pivot_longer`).
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-5a.pdf"}
+[💻 Descargar .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.qmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-5a.qmd"}
+:::
+
+### Práctico V (Parte 2): Introducción a Git y GitHub con RStudio
+Configuración de Git, tokens de acceso personal (`usethis`, `gitcreds`), creación de repositorios versionados, registro de cambios (`stage` y `commit`) y sincronización con GitHub (`push` y `pull`).
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-5b.pdf"}
+[💻 Descargar .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.qmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-5b.qmd"}
+:::
+
+### Práctico VI: Análisis de Encuestas Complejas con `survey`
+Preparación de datos longitudinales ELSOC (2016–2019), declaración de diseño muestral complejo estratificado y por conglomerados (`svydesign`), estimación de tablas ponderadas (`svytable`) y visualización representativa.
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-6.pdf"}
+[💻 Descargar .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.Rmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-6.Rmd"}
+:::
+
+### Práctico VII: Visualización de datos longitudinales
+Transformación de datos panel con `panelr::long_panel()`, construcción de gráficos de barras agrupadas, barras apiladas, comparación de baterías de ítems y series temporales de líneas con `ggplot2`.
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-7.pdf"}
+[💻 Descargar .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.Rmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-7.Rmd"}
+:::
+
+### Práctico VIII: Visualización de datos espaciales
+Manejo de geometrías vectoriales (`sf`) a nivel de manzana censal y comunal en la Región del Maule, unión de atributos territoriales de seguridad (MBHT), mapas coropléticos estáticos (`ggplot2::geom_sf`) y visores interactivos (`leaflet`).
+
+::: {.btn-bar}
+[📖 Abrir Guía Web](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.pdf){.btn-ucm .btn-ucm-pdf download="ejercicio-practico-8.pdf"}
+[💻 Descargar .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.Rmd){.btn-ucm .btn-ucm-outline download="ejercicio-practico-8.Rmd"}
+:::
+

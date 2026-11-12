@@ -1,0 +1,121 @@
+---
+title: "Ciencia de Datos Aplicada con RStudio (DSRS)"
+subtitle: "OPR319 · Presentaciones de Clases y Descargas en PDF"
+author: "Profesor: Cristóbal Ortiz Vilches"
+toc: true
+---
+
+En esta sección encontrarás todas las presentaciones teóricas del curso **OPR319: Ciencia de Datos Aplicada con RStudio (DSRS)**. Puedes navegar las diapositivas directamente desde los visores interactivos de esta página, abrirlas en pantalla completa o **descargarlas en formato PDF**.
+
+---
+
+## Sesión I: Introducción a la ciencia de datos y programa del curso
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-1.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-1.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-1.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-1.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-1.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-1.qmd"}
+:::
+
+---
+
+## Sesión II: Introducción a R y RStudio
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-2.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-2.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-2.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-2.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-2.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-2.qmd"}
+:::
+
+---
+
+## Sesión III: Procesamiento de Datos
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-3.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-3.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-3.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-3.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-3.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-3.qmd"}
+:::
+
+---
+
+## Sesión IV: Modificación y Resumen de Datos
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-4.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-4.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-4.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-4.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-4.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-4.qmd"}
+:::
+
+---
+
+## Sesión V: Introducción a la Visualización de Datos con `ggplot2`
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-5.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-5.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-5.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-5.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-5.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-5.qmd"}
+:::
+
+---
+
+## Sesión VI: Procesamiento Avanzado (Datos Faltantes, Uniones y Datos Longitudinales)
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-6.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-6.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-6.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-6.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-6.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-6.qmd"}
+:::
+
+---
+
+## Sesión VII: Introducción al diseño muestral complejo
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-7.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-7.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-7.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-7.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-7.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-7.qmd"}
+:::
+
+---
+
+## Sesión VIII: Introducción a la Visualización de Datos Longitudinales
+
+::: {.slide-embed-container}
+<iframe src="1-data-science-rstudio/dsrs-clase-8.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](1-data-science-rstudio/dsrs-clase-8.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](1-data-science-rstudio/dsrs-clase-8.pdf){.btn-ucm .btn-ucm-pdf download="dsrs-clase-8.pdf"}
+[📄 Código fuente (.qmd)](1-data-science-rstudio/dsrs-clase-8.qmd){.btn-ucm .btn-ucm-outline download="dsrs-clase-8.qmd"}
+:::
+

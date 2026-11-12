@@ -1,0 +1,205 @@
+---
+title: "Ciencias Sociales Computacionales"
+subtitle: "Sesión IV: Control de versiones y trabajo colaborativo"
+author: "Profesor: Cristóbal Ortiz Vilches"
+format:
+  revealjs:
+    slide-number: false
+    progress: true
+    toc: false
+    theme: white
+    css: custom-styles.css 
+    transition: fade
+    navigation-mode: linear
+    slide-level: 2
+---
+
+# Estructura de la sesión
+
+1.  [Repaso y objetivos](#repaso)
+2.  [¿Por qué controlar las versiones?](#problema)
+3.  [Git: El sistema de control de versiones](#git)
+4.  [GitHub: La plataforma para colaborar](#github)
+5.  [Integración con RStudio](#rstudio)
+6.  [Resumen y próximos pasos](#resumen)
+
+# 1. Repaso y objetivos {#repaso}
+
+## ¿Qué vimos en la sesión anterior?
+
+- **Flujos reproducibles (protocolo IPO):** Discutimos la importancia de documentar los procesos de Input (Entrada), Processing (Procesamiento) y Output (Salida) para garantizar la trazabilidad y reproducibilidad de nuestra investigación.
+- **Ciencia abierta:** Analizamos cómo los principios de la ciencia abierta están transformando la investigación social, promoviendo la transparencia y el acceso al conocimiento.
+
+## ¿Qué veremos hoy?
+
+Hoy aprenderemos a usar herramientas esenciales para la investigación colaborativa y reproducible.
+
+- **Objetivo de aprendizaje:** Utilizar herramientas para el control de versiones y la gestión de proyectos, promoviendo el trabajo colaborativo.
+- **Herramientas:** Git, GitHub y su integración con RStudio.
+
+# 2. ¿Por qué controlar las versiones? {#problema}
+
+## El caos de la colaboración
+
+¿Te resulta familiar este escenario en tu carpeta de trabajo?
+
+  - Tesis_Final.docx
+  - Tesis_Final_v2.docx
+  - Tesis_Final_corregida_profe.docx
+  - Tesis_Final_AHORA_SI.docx
+  - Tesis_Final_ULTIMA_VERSION.docx
+  - Tesis_Final_ULTIMA_DE_VERDAD.docx
+
+::: fragment
+Este enfoque es propenso a errores, dificulta la colaboración y hace casi imposible rastrear los cambios de forma sistemática.
+:::
+
+
+> Este enfoque es propenso a errores, dificulta la colaboración y hace casi imposible rastrear los cambios de forma sistemática.
+
+## La solución: Control de Versiones
+
+Un sistema de control de versiones es un software que registra los cambios realizados en un archivo o conjunto de archivos a lo lo largo del tiempo.
+
+**Beneficios clave:**
+
+- **Trazabilidad:** Permite volver a cualquier versión anterior de tu proyecto. Es como una "máquina del tiempo" para tu trabajo.
+- **Colaboración:** Facilita que varias personas trabajen en los mismos archivos de forma simultánea y organizada, sin sobrescribir el trabajo de los demás.
+- **Reproducibilidad:** Asegura que cualquier persona (incluido tu "yo" del futuro) pueda replicar tu trabajo exactamente como lo hiciste.
+
+# 3. Git: El sistema de control de versiones {#git}
+
+## ¿Qué es Git?
+
+**Git** es un sistema de control de versiones distribuido, gratuito y de código abierto.
+
+- **Distribuido:** Cada colaborador tiene una copia completa del historial del proyecto en su máquina local. Esto permite trabajar sin conexión y ofrece mayor seguridad.
+- **Funcionamiento:** Git "toma fotos" (snapshots) de tus archivos cada vez que guardas una versión. A estas fotos las llama **commits**.
+
+## Conceptos básicos de Git
+
+- **Repositorio (Repo):** Es la carpeta que contiene todos los archivos de tu proyecto y el historial completo de cambios.
+- **Commit:** Es una "instantánea" guardada de tus archivos en un momento determinado. Cada commit tiene un mensaje que describe los cambios realizados.
+- **Branch (Rama):** Es una línea de desarrollo independiente. Permite trabajar en nuevas características sin afectar la versión principal del proyecto (llamada `main` o `master`).
+- **Merge (Fusión):** Es el proceso de combinar los cambios de una rama en otra.
+
+
+# 4. GitHub: La plataforma para colaborar {#github}
+
+## ¿Qué es GitHub?
+
+**GitHub** es una plataforma web que utiliza Git para alojar repositorios de forma remota. No es Git, sino un servicio construido sobre Git.
+
+**Funciones principales:**
+
+- **Alojamiento remoto:** Guarda una copia de tu repositorio en la nube, sirviendo como un respaldo y un punto central para la colaboración.
+- **Herramientas de colaboración:** Ofrece funcionalidades como:
+    - **Pull Requests:** Para proponer y revisar cambios antes de incorporarlos.
+    - **Issues:** Para reportar errores, sugerir ideas o discutir tareas.
+    - **Projects:** Para gestionar el flujo de trabajo del proyecto.
+
+## Git vs. GitHub: Una analogía
+
+- **Git** es como el motor de un auto: la tecnología fundamental que hace que todo funcione.
+- **GitHub** es como el auto completo: proporciona una interfaz gráfica, herramientas adicionales y un lugar para "conducir" (colaborar) con otros.
+
+# 5. Integración con RStudio {#rstudio}
+
+## El trío perfecto para la ciencia de datos
+
+RStudio tiene una integración nativa con Git y GitHub, lo que facilita enormemente el flujo de trabajo.
+
+- **Panel de Git:** RStudio añade un panel específico donde puedes visualizar los cambios, hacer `commits` y sincronizar con GitHub (`push`/`pull`) con solo unos clics.
+- **Proyectos de RStudio (`.Rproj`):** Al crear un proyecto versionado con Git, RStudio gestiona automáticamente el repositorio por ti.
+
+Este flujo de trabajo (RStudio + Git + GitHub) es el estándar de oro para la investigación social computacional reproducible y colaborativa.
+
+# 6. Resumen y próximos pasos {#resumen}
+
+## ¿Qué aprendimos hoy?
+
+- La importancia del control de versiones para evitar el caos y fomentar la reproducibilidad.
+- **Git** es la herramienta que rastrea los cambios en nuestro proyecto.
+- **GitHub** es la plataforma que nos permite alojar nuestros proyectos y colaborar con otros.
+- **RStudio** integra estas herramientas para un flujo de trabajo eficiente.
+
+## Próximos pasos
+
+- **Taller práctico:** Ahora aplicaremos estos conceptos en un ejercicio guiado. Creando un repositorio en GitHub para el proyecto del curso y realizar el primer `commit`.
+
+# ¡Gracias por la atención!
+
+<!-- ========================== -->
+<!-- BARRA SUPERIOR E INFERIOR -->
+<!-- ========================== -->
+
+```{=html}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Crear barra superior
+  var sectionBar = document.createElement('div');
+  sectionBar.id = 'section-bar';
+  sectionBar.innerHTML = `
+    <span id="current-section"></span>
+    <img id="logo" src="images/logo-ucm-render.png" alt="Logo COES">
+  `;
+  document.body.appendChild(sectionBar);
+
+  // Crear barra inferior
+  var footerBar = document.createElement('div');
+  footerBar.id = 'footer-bar';
+  footerBar.innerHTML = `
+    <span id="footer-text">Cristóbal Ortiz Vilches | CC BY-NC 4.0 2026 – Ciencia de Datos Aplicada con RStudio</span>
+    <span id="page-counter"></span>
+  `;
+  document.body.appendChild(footerBar);
+
+  // Capturar secciones principales
+  var sectionTitles = [];
+  var allSlides = document.querySelectorAll('.reveal .slides section');
+  allSlides.forEach(function(slide) {
+    let title = slide.querySelector('h1');
+    if (title) {
+      sectionTitles.push({ title: title.innerText, slide: slide });
+    }
+  });
+
+  function updateBar(event) {
+    let currentSlide = event.currentSlide;
+    let currentIndex = Reveal.getSlidePastCount(currentSlide);
+    let totalSlides = Reveal.getTotalSlides();
+
+    // Actualiza contador inferior
+    document.getElementById('page-counter').innerText = (currentIndex + 1) + "/" + totalSlides;
+
+    const sectionText = document.getElementById('current-section');
+
+    // Oculta la barra en la primera y última diapositiva
+    if (currentIndex === 0 || currentIndex === 1 || currentIndex === totalSlides - 1) {
+      sectionText.style.visibility = 'hidden';
+    } else {
+      sectionText.style.visibility = 'visible';
+
+      // Actualiza texto de la sección si corresponde
+      for (let i = 0; i < sectionTitles.length; i++) {
+        if (sectionTitles[i].slide === currentSlide || sectionTitles[i].slide.contains(currentSlide)) {
+          sectionText.innerText = sectionTitles[i].title;
+          return;
+        }
+      }
+
+      // Si no hay coincidencia exacta, busca la sección más cercana anterior
+      for (let i = sectionTitles.length - 1; i >= 0; i--) {
+        if (Reveal.getSlidePastCount(sectionTitles[i].slide) <= currentIndex) {
+          sectionText.innerText = sectionTitles[i].title;
+          return;
+        }
+      }
+    }
+  }
+
+  Reveal.on('slidechanged', updateBar);
+  Reveal.on('ready', updateBar);
+});
+</script>
+```

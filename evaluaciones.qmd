@@ -1,0 +1,91 @@
+---
+title: "Evaluaciones Conjuntas (2026)"
+subtitle: "Rúbricas y Plantillas Reproducibles para DSRS y CSCC"
+author: "Profesor: Cristóbal Ortiz Vilches"
+toc: true
+---
+
+Las evaluaciones de los cursos **Ciencia de Datos Aplicada con RStudio (DSRS)** y **Ciencias Sociales Computacionales (CSCC)** se articulan mediante **reportes automatizados y reproducibles** elaborados en `Quarto` (`.qmd`) o `RMarkdown` (`.Rmd`) dentro de un proyecto `RProject` estructurado bajo el protocolo `IPO` (*Input - Procesamiento - Output*).
+
+---
+
+## Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos
+
+- **Ponderación:** 20% de la nota final del curso.
+- **Componentes del reporte:**
+  1. Introducción al problema de investigación (200 a 400 palabras).
+  2. Diseño de investigación y protocolo reproducible (300 a 500 palabras).
+  3. Procesamiento inicial de datos (50 a 150 palabras).
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 📋 Rúbrica Evaluación I
+Criterios generales y específicos de evaluación para ambos cursos (DSRS y CSCC), escala de puntaje y recomendaciones de escritura académica.
+
+::: {.btn-bar}
+[📖 Ver en Web](4-evaluaciones-conjuntas/rubrica-e1.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](4-evaluaciones-conjuntas/rubrica-e1.pdf){.btn-ucm .btn-ucm-pdf download="rubrica-e1.pdf"}
+[📄 Código .qmd](4-evaluaciones-conjuntas/rubrica-e1.qmd){.btn-ucm .btn-ucm-outline download="rubrica-e1.qmd"}
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 📝 Plantilla Evaluación I
+Plantilla base en formato Quarto (`.qmd`) con todas las secciones y bloques de código (`chunks`) listos para completar en RStudio.
+
+::: {.btn-bar}
+[📖 Ver en Web](4-evaluaciones-conjuntas/plantilla-e1.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](4-evaluaciones-conjuntas/plantilla-e1.pdf){.btn-ucm .btn-ucm-pdf download="plantilla-e1.pdf"}
+[💻 Descargar Plantilla (.qmd)](4-evaluaciones-conjuntas/plantilla-e1.qmd){.btn-ucm .btn-ucm-outline download="plantilla-e1.qmd"}
+:::
+:::
+:::
+
+:::
+
+---
+
+## Evaluación II: Informe de Resultados de Ciencia de Datos
+
+- **Ponderación:** 40% de la nota final del curso.
+- **Componentes del reporte:**
+  1. Introducción al problema de investigación y propuesta (200 a 400 palabras).
+  2. Diseño de investigación reproducible (300 a 500 palabras).
+  3. Procesamiento de datos: importación y manipulación (50 a 150 palabras).
+  4. Análisis de datos/resultados: univariado, bivariado y adicionales (100 a 200 palabras).
+  5. Discusión de resultados y líneas futuras (100 a 200 palabras).
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 📋 Rúbrica Evaluación II
+Criterios generales y específicos de evaluación para el informe de resultados (DSRS: 24 pts máx. / CSCC: 18 pts máx.), formato y plazos de entrega.
+
+::: {.btn-bar}
+[📖 Ver en Web](4-evaluaciones-conjuntas/rubrica-e2.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](4-evaluaciones-conjuntas/rubrica-e2.pdf){.btn-ucm .btn-ucm-pdf download="rubrica-e2.pdf"}
+[📄 Código .qmd](4-evaluaciones-conjuntas/rubrica-e2.qmd){.btn-ucm .btn-ucm-outline download="rubrica-e2.qmd"}
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 📝 Plantilla Evaluación II
+Plantilla base en formato Quarto (`.qmd`) con las 5 secciones del informe de resultados listas para desarrollar tu análisis en RStudio.
+
+::: {.btn-bar}
+[📖 Ver en Web](4-evaluaciones-conjuntas/plantilla-e2.html){.btn-ucm .btn-ucm-primary}
+[📥 Descargar PDF](4-evaluaciones-conjuntas/plantilla-e2.pdf){.btn-ucm .btn-ucm-pdf download="plantilla-e2.pdf"}
+[💻 Descargar Plantilla (.qmd)](4-evaluaciones-conjuntas/plantilla-e2.qmd){.btn-ucm .btn-ucm-outline download="plantilla-e2.qmd"}
+:::
+:::
+:::
+
+:::
+

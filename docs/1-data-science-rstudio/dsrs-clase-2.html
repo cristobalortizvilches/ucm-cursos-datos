@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../1-data-science-rstudio/images/logo-ucm-render.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Profesor: Cristóbal Ortiz Vilches">
+  <title>Cursos Ciencia de Datos &amp; CCSS Computacionales – Ciencia de Datos Aplicada con RStudio</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link rel="stylesheet" href="custom-styles.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Ciencia de Datos Aplicada con RStudio</h1>
+  <p class="subtitle">Sesión II: Introducción a R y RStudio</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Profesor: Cristóbal Ortiz Vilches
+</div>
+</div>
+</div>
+
+</section>
+<section id="estructura-de-la-sesión" class="title-slide slide level1 center">
+<h1>Estructura de la sesión</h1>
+<ol type="1">
+<li><a href="#/repaso">Repaso y hoja de ruta</a></li>
+<li><a href="#/entornor">El entorno de RStudio</a></li>
+<li><a href="#/conceptos">Conceptos básicos del lenguaje R</a></li>
+<li><a href="#/reporte">Del script al reporte</a></li>
+<li><a href="#/rprojects">Organización con RProjects</a></li>
+<li><a href="#/import">Importación de datos</a></li>
+<li><a href="#/resumen">Resumen y próximos pasos</a></li>
+</ol>
+</section>
+
+<section>
+<section id="repaso" class="title-slide slide level1 center">
+<h1>1. Repaso y hoja de ruta</h1>
+
+</section>
+<section id="qué-vimos-en-la-sesión-anterior" class="slide level2">
+<h2>¿Qué vimos en la sesión anterior?</h2>
+<ul>
+<li><strong>Introducción a la Ciencia de Datos:</strong> Definimos qué es, su relevancia para la sociología y el flujo de trabajo de datos Tidyverse</li>
+<li><strong>Presentación del curso:</strong> Discutimos los objetivos de aprendizaje, la metodología y el sistema de evaluación.</li>
+</ul>
+</section>
+<section id="qué-veremos-hoy" class="slide level2">
+<h2>¿Qué veremos hoy?</h2>
+<p>Hoy sentaremos las bases de <strong>cómo</strong> vamos a trabajar en este curso.</p>
+<ul>
+<li class="fragment"><strong>Introducción a R y RStudio:</strong> Un primer vistazo a la interfaz y la consola.</li>
+<li class="fragment"><strong>Organización:</strong> Aprenderemos a organizar nuestros análisis en proyectos autocontenidos.</li>
+<li class="fragment"><strong>Flujo de trabajo:</strong> Conoceremos el <code>tidyverse</code>, un ecosistema de paquetes que facilitan la ciencia de datos.</li>
+<li class="fragment"><strong>Práctica:</strong> Crearemos nuestro primer proyecto e importaremos nuestros primeros datos.</li>
+</ul>
+</section></section>
+<section>
+<section id="entornor" class="title-slide slide level1 center">
+<h1>2. El entorno de RStudio</h1>
+
+</section>
+<section id="anatomía-de-rstudio" class="slide level2">
+<h2>Anatomía de RStudio</h2>
+<p>RStudio está organizado en paneles. La configuración más común es:</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ol type="1">
+<li class="fragment"><p><strong>Editor de Scripts (Arriba-Izquierda):</strong> Aquí escribes tu código (<code>.R</code>, <code>.Rmd</code>, <code>.qmd</code>). Es tu “hoja en blanco”.</p></li>
+<li class="fragment"><p><strong>Consola (Abajo-Izquierda):</strong> Aquí es donde R ejecuta el código. Ves los resultados, errores y mensajes. Es el “motor” de R.</p></li>
+<li class="fragment"><p><strong>Entorno/Historial (Arriba-Derecha):</strong></p>
+<ul>
+<li class="fragment"><em>Environment</em>: Muestra todos los objetos (datos, variables) que has creado en tu sesión.</li>
+<li class="fragment"><em>History</em>: Guarda un registro de todos los comandos que has ejecutado.</li>
+</ul></li>
+<li class="fragment"><p><strong>Archivos/Gráficos/Paquetes (Abajo-Derecha):</strong></p>
+<ul>
+<li class="fragment"><em>Files</em>: Navegador de archivos de tu proyecto.</li>
+<li class="fragment"><em>Plots</em>: Donde aparecen las visualizaciones que creas.</li>
+<li class="fragment"><em>Packages</em>: Lista de todos los paquetes instalados y cuáles están cargados.</li>
+</ul></li>
+</ol>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-right">
+<figure>
+<p><img data-src="images/rstudio-panels.png" class="quarto-figure quarto-figure-right"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="consola-vs.-script" class="slide level2">
+<h2>Consola vs.&nbsp;Script</h2>
+<p>Una distinción crucial para un trabajo ordenado y reproducible:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Consola ➡️</strong> - <strong>Interactiva y Efímera.</strong></p>
+<ul>
+<li>Ideal para pruebas rápidas, cálculos sencillos o explorar un objeto.</li>
+<li>Lo que escribes aquí se pierde cuando cierras RStudio (aunque queda en el historial).</li>
+<li><strong>Uso:</strong> Escritura de código directa y apretar Enter</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<p><strong>Script 📝</strong> - <strong>Permanente y Reproducible.</strong></p>
+<ul>
+<li>Es un archivo de texto (<code>.R</code>) donde guardas tu análisis completo.</li>
+<li>Es tu “receta”: cualquiera puede tomar tu script y tus datos y obtener los mismos resultados.</li>
+<li><strong>Uso:</strong> Aquí guardas todo tu flujo de trabajo, código se ejectuta con Ctrl+Enter (en <code>.R</code>) Ctrl+Shift+Enter (en <code>.Rmd</code> o <code>.qmd</code>)</li>
+</ul>
+</div>
+</div></div>
+<div class="fragment">
+<blockquote>
+<p><strong>Regla de oro: Si es un código que podrías necesitar de nuevo, ¡escríbelo en un script!</strong></p>
+</blockquote>
+</div>
+</section></section>
+<section>
+<section id="conceptos" class="title-slide slide level1 center">
+<h1>3. Conceptos básicos del lenguaje R</h1>
+
+</section>
+<section id="objetos-los-sustantivos-de-r" class="slide level2">
+<h2>Objetos: los “sustantivos” de R</h2>
+<p>En R, todo es un <strong>objeto</strong>. Piensa en ellos como contenedores que guardan información. En este sentido, se dice que <strong>R es un lenguaje de programación orientado a objetos</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># 'a' es un objeto que contiene el número 5</span></span>
+<span id="cb1-2"><a aria-label="2"></a>a <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-3"><a aria-label="3"></a></span>
+<span id="cb1-4"><a aria-label="4"></a><span class="co"># 'nombre' es un objeto que contiene el texto "Ana"</span></span>
+<span id="cb1-5"><a aria-label="5"></a>nombre <span class="ot">&lt;-</span> <span class="st">"Ana"</span></span>
+<span id="cb1-6"><a aria-label="6"></a></span>
+<span id="cb1-7"><a aria-label="7"></a><span class="co"># 'mis_datos' es un objeto (más complejo) que contiene un set de datos</span></span>
+<span id="cb1-8"><a aria-label="8"></a>mis_datos <span class="ot">&lt;-</span> <span class="fu">load</span>(<span class="st">"../0-datos/elsoc_base.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li class="fragment">Le damos un nombre a un objeto usando el operador de asignación <code>&lt;-</code> (atajo de teclado: Alt + -).</li>
+<li class="fragment">Los nombres de objetos deben empezar con una letra y no pueden contener espacios.</li>
+<li class="fragment">La convención en el Tidyverse es usar <code>snake_case</code> (nombres_separados_por_guion_bajo).</li>
+</ul>
+</section>
+<section id="funciones-los-verbos-de-r" class="slide level2">
+<h2>Funciones: los “verbos” de R</h2>
+<p>Las funciones hacen cosas. Toman uno o más objetos como entrada (llamados argumentos) y producen un resultado sobre ese objeto. Siempre se escriben con paréntesis al final: <code>nombre_funcion()</code>.</p>
+<div class="fragment">
+<p>Estructura típica de una función</p>
+<blockquote>
+<p>completa: <code>funcion(argumento1 = valor1, argumento2 = valor2)</code> simplificada: <code>funcion(valor1, valor2)</code></p>
+</blockquote>
+</div>
+<div class="fragment">
+<p>Algunas funciones</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># La función `mean()` calcula el promedio de un vector</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="fu">mean</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># La función `load()` lee un archivo y crea un data frame</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="co"># Su argumento principal es la ruta al archivo</span></span>
+<span id="cb4-3"><a aria-label="3"></a><span class="fu">load</span>(<span class="st">"../0-datos/elsoc_base.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="fragment">
+<p><strong>Para saber qué hace una función y qué argumentos necesita, usa <code>?nombre_funcion</code> en la consola</strong></p>
+</div>
+</section>
+<section id="paquetes-las-cajas-de-herramientas" class="slide level2">
+<h2>Paquetes: las “cajas de herramientas”</h2>
+<p>Los paquetes (o librerías) son colecciones de funciones, datos y documentación agrupados por un propósito común.</p>
+<ul>
+<li>R viene con un set base (R base), pero su verdadero poder está en los miles de paquetes que la comunidad ha desarrollado.</li>
+<li>El <code>tidyverse</code> es una colección de paquetes diseñados para la ciencia de datos (<code>ggplot2</code>, <code>dplyr</code>, <code>readr</code>, etc.).</li>
+</ul>
+<div class="fragment">
+<p>Para usar un paquete, debes:</p>
+<ul>
+<li>Instalarlo (una sola vez): <code>install.packages("nombre_del_paquete")</code></li>
+<li>Cargarlo (en cada sesión): <code>library(nombre_del_paquete)</code></li>
+</ul>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Error común</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><code>install.packages()</code> el argumento va entre comillas</li>
+<li><code>library()</code> el argumento <strong>no</strong> lleva comillas</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="estructura_script" class="slide level2">
+<h2>Estructura del Script para Análisis</h2>
+<p>Un script de análisis bien estructurado es fácil de leer y reutilizar. Una estructura recomendada es la siguiente:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># =============================================================================</span></span>
+<span id="cb5-2"><a aria-label="2"></a><span class="co"># 1. CARGAR LIBRERÍAS Y BASES DE DATOS</span></span>
+<span id="cb5-3"><a aria-label="3"></a><span class="co"># =============================================================================</span></span>
+<span id="cb5-4"><a aria-label="4"></a></span>
+<span id="cb5-5"><a aria-label="5"></a><span class="co"># 1.1 Cargar paquetes</span></span>
+<span id="cb5-6"><a aria-label="6"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-7"><a aria-label="7"></a><span class="co"># ...otros paquetes</span></span>
+<span id="cb5-8"><a aria-label="8"></a></span>
+<span id="cb5-9"><a aria-label="9"></a><span class="co"># 1.2 Cargar datos</span></span>
+<span id="cb5-10"><a aria-label="10"></a><span class="fu">load</span>(<span class="st">"../0-datos/elsoc_base.RData"</span>)</span>
+<span id="cb5-11"><a aria-label="11"></a></span>
+<span id="cb5-12"><a aria-label="12"></a><span class="co"># =============================================================================</span></span>
+<span id="cb5-13"><a aria-label="13"></a><span class="co"># 2. PROCESAMIENTO Y LIMPIEZA</span></span>
+<span id="cb5-14"><a aria-label="14"></a><span class="co"># =============================================================================</span></span>
+<span id="cb5-15"><a aria-label="15"></a></span>
+<span id="cb5-16"><a aria-label="16"></a><span class="co"># 2.1 Renombrar variables</span></span>
+<span id="cb5-17"><a aria-label="17"></a>datos_limpios <span class="ot">&lt;-</span> elsoc_base <span class="sc">%&gt;%</span></span>
+<span id="cb5-18"><a aria-label="18"></a>  <span class="co">#     nombre_nuevo = nombre_antiguo</span></span>
+<span id="cb5-19"><a aria-label="19"></a>  <span class="fu">rename</span>(<span class="at">id_encuesta =</span> idencuesta) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-20"><a aria-label="20"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(id_encuesta, ola) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-21"><a aria-label="21"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb5-22"><a aria-label="22"></a></span>
+<span id="cb5-23"><a aria-label="23"></a><span class="co"># 2.2 Recodificar valores</span></span>
+<span id="cb5-24"><a aria-label="24"></a><span class="co"># ...</span></span>
+<span id="cb5-25"><a aria-label="25"></a></span>
+<span id="cb5-26"><a aria-label="26"></a><span class="co"># =============================================================================</span></span>
+<span id="cb5-27"><a aria-label="27"></a><span class="co"># 3. ANÁLISIS DE DATOS</span></span>
+<span id="cb5-28"><a aria-label="28"></a><span class="co"># =============================================================================</span></span>
+<span id="cb5-29"><a aria-label="29"></a></span>
+<span id="cb5-30"><a aria-label="30"></a><span class="co"># 3.1 Análisis descriptivo</span></span>
+<span id="cb5-31"><a aria-label="31"></a><span class="fu">summary</span>(datos_limpios<span class="sc">$</span>ola)</span>
+<span id="cb5-32"><a aria-label="32"></a></span>
+<span id="cb5-33"><a aria-label="33"></a><span class="co"># 3.2 Tablas</span></span>
+<span id="cb5-34"><a aria-label="34"></a>tabla_1 <span class="ot">&lt;-</span> datos_limpios <span class="sc">%&gt;%</span></span>
+<span id="cb5-35"><a aria-label="35"></a>  <span class="fu">count</span>(ola)</span>
+<span id="cb5-36"><a aria-label="36"></a></span>
+<span id="cb5-37"><a aria-label="37"></a><span class="co"># 3.3 Gráficos</span></span>
+<span id="cb5-38"><a aria-label="38"></a><span class="fu">ggplot</span>(tabla_1, <span class="fu">aes</span>(<span class="at">x =</span> n)) <span class="sc">+</span></span>
+<span id="cb5-39"><a aria-label="39"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="reportes" class="title-slide slide level1 center">
+<h1>4. De Scripts a Reportes: R Markdown y Quarto</h1>
+
+</section>
+<section id="qué-son-r-markdown-.rmd-y-quarto-.qmd" class="slide level2">
+<h2>¿Qué son R Markdown (<code>.Rmd</code>) y Quarto (<code>.qmd</code>)?</h2>
+<p>Son formatos de archivo que permiten combinar texto plano, código de R y los resultados (output) de ese código -como tablas y gráficos- en un único documento. Piensa en ellos como un “cuaderno de laboratorio digital”. 🔬</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Componentes clave:</strong></p>
+<ol type="1">
+<li><strong>Encabezado YAML:</strong> Metadatos como el título, autor y tipo de salida (<code>html</code>, <code>pdf</code>, <code>docx</code>).</li>
+<li><strong>Texto en Markdown:</strong> Texto plano con <strong>marcas</strong> de formato.</li>
+<li><strong>Chunks de Código:</strong> Bloques de código R (<code>```{r}</code>) que se ejecutan al “renderizar” el documento.</li>
+</ol>
+<div class="fragment">
+<p><strong>Flujo de trabajo:</strong></p>
+<ol type="1">
+<li>Escribes en <code>.Rmd</code> o <code>.qmd</code>.</li>
+<li>Haces clic en “Render” (o “Knit”).</li>
+<li>R ejecuta el código y combina todo en un documento pulcro (HTML, PDF, Word, etc.).</li>
+<li>El reporte <strong>se regenere directamente desde el código</strong>, evitando el flujo copy/paste.</li>
+</ol>
+</div>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/rmarkdown-ejemplo.png"></p>
+</div></div>
+</section></section>
+<section>
+<section id="rprojects" class="title-slide slide level1 center">
+<h1>5. Organización con RProjects</h1>
+
+</section>
+<section id="antes-de-definir-un-rprojects-por-qué-no-solo-escribir-scripts-y-analizar-datos" class="slide level2">
+<h2>Antes de definir un RProjects ¿Por qué no solo escribir scripts y analizar datos?</h2>
+<p>En sociología, la <strong>reproducibilidad</strong> y la <strong>transparencia</strong> son fundamentales. Un análisis de datos no es solo el resultado final, <strong>sino un proceso</strong>.</p>
+<div class="fragment">
+<p>Un flujo de trabajo estandarizado nos ayuda a:</p>
+<ul>
+<li><strong>Organizar</strong> nuestros archivos (datos, código, reportes).</li>
+<li><strong>Colaborar</strong> con otros investigadores.</li>
+<li><strong>Asegurar</strong> que nuestros resultados puedan ser verificados por otros (<strong>¡y por nuestro “yo” del futuro!</strong>).</li>
+<li><strong>Evitar</strong> errores comunes, como las rutas de archivos locales (<code>C:/Users/Mi_Nombre/Documentos/...</code>).</li>
+</ul>
+</div>
+</section>
+<section id="la-solución-orden-y-buenas-prácticas" class="slide level2">
+<h2>La solución: Orden y buenas prácticas</h2>
+<p>Un flujo de trabajo estructurado y consistente nos permite:</p>
+<ul>
+<li><strong>Aislar dependencias:</strong> Cada proyecto es un mundo autocontenido.</li>
+<li><strong>Facilitar la portabilidad:</strong> Compartir tu trabajo es tan simple como comprimir una carpeta.</li>
+<li><strong>Automatizar tareas:</strong> El orden facilita la creación de reportes y análisis automáticos.</li>
+<li><strong>Colaborar eficazmente:</strong> Todos en el equipo saben dónde encontrar cada cosa.</li>
+</ul>
+</section>
+<section id="qué-es-un-rproject" class="slide level2">
+<h2>¿Qué es un RProject?</h2>
+<p>Un Proyecto de RStudio es la base de nuestro flujo de trabajo. Es un archivo (<code>.Rproj</code>) que “vive” en la carpeta principal de tu análisis y la convierte en el <strong>directorio de trabajo</strong> por defecto.</p>
+<p>Al abrir un archivo <code>.Rproj</code>, RStudio automáticamente:</p>
+<ol type="1">
+<li>Inicia una nueva sesión de R.</li>
+<li>Establece el <strong>directorio de trabajo</strong> en la carpeta donde se encuentra el <code>.Rproj</code>.</li>
+</ol>
+<p>Esto significa que todas las rutas a nuestros archivos (datos, imágenes, etc.) serán <strong>relativas</strong> a la carpeta del proyecto.</p>
+<div class="fragment">
+<div style="text-align: center">
+<p><strong>¡Adiós al <code>setwd()</code>!</strong> Usar <code>RProjects</code> es la práctica recomendada y nos ahorra muchos dolores de cabeza.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/rproject-logo.png" class="quarto-figure quarto-figure-center" style="width:15.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="principales-beneficios-rproject" class="slide level2">
+<h2>Principales beneficios RProject</h2>
+<ol type="1">
+<li class="fragment"><strong>Define el directorio de trabajo (Working Directory):</strong> Al abrir un proyecto, RStudio automáticamente sabe que la carpeta que lo contiene es el punto de partida. ¡Adiós <code>setwd()</code>!</li>
+<li class="fragment"><strong>Autocontenido y portable:</strong> Todo lo que necesitas para tu análisis (datos, código, salidas) está en una única carpeta. Puedes moverla, compartirla o enviarla por correo, y funcionará en cualquier máquina con R y RStudio.</li>
+<li class="fragment"><strong>Integración con control de versiones (Git):</strong> Facilita enormemente el seguimiento de cambios y la colaboración (lo veremos más adelante en el curso CSCC).</li>
+</ol>
+</section>
+<section id="cómo-crear-un-proyecto" class="slide level2">
+<h2>¿Cómo crear un Proyecto?</h2>
+<ol type="1">
+<li>Ve a <code>File &gt; New Project...</code></li>
+<li>Selecciona <code>New Directory</code> para una carpeta nueva o <code>Existing Directory</code> si ya tienes una carpeta para tu análisis.</li>
+<li>Elige <code>New Project</code>.</li>
+<li>Dale un nombre descriptivo a tu proyecto (ej. <code>analisis_desercion_escolar</code>) y elige dónde guardarlo.</li>
+<li>¡Listo! RStudio se reiniciará y estarás “dentro” del proyecto. Verás el nombre del proyecto en la esquina superior derecha.</li>
+</ol>
+</section>
+<section id="estructura-de-carpetas-sugerida" class="slide level2">
+<h2>Estructura de carpetas sugerida</h2>
+<p>Una buena práctica es organizar los proyectos con una estructura de carpetas clara. Para este curso. Una estructura típica es:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource plaintext number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a aria-label="1"></a>mi_proyecto/</span>
+<span id="cb6-2"><a aria-label="2"></a>├── mi_proyecto.Rproj</span>
+<span id="cb6-3"><a aria-label="3"></a>├── 1_datos</span>
+<span id="cb6-4"><a aria-label="4"></a>│   ├── 1_crudos        (datos originales, nunca los modifiques)</span>
+<span id="cb6-5"><a aria-label="5"></a>│   └── 2_procesados    (datos limpios o transformados)</span>
+<span id="cb6-6"><a aria-label="6"></a>├── 2_codigo</span>
+<span id="cb6-7"><a aria-label="7"></a>│   ├── 01_procesamiento_datos.R</span>
+<span id="cb6-8"><a aria-label="8"></a>│   ├── 02_analisis_descriptivo.R</span>
+<span id="cb6-9"><a aria-label="9"></a>│   └── 03_modelos.R</span>
+<span id="cb6-10"><a aria-label="10"></a>├── 3_resultados</span>
+<span id="cb6-11"><a aria-label="11"></a>│   ├── tablas</span>
+<span id="cb6-12"><a aria-label="12"></a>│   └── graficos</span>
+<span id="cb6-13"><a aria-label="13"></a>└── 4_documentos        (reportes, artículos, etc.)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section></section>
+<section>
+<section id="import" class="title-slide slide level1 center">
+<h1>6. Importación de datos</h1>
+
+</section>
+<section id="formatos-comunes-en-ciencias-sociales" class="slide level2">
+<h2>Formatos comunes en Ciencias Sociales</h2>
+<p>Los datos pueden venir en múltiples formatos. Los más comunes son:</p>
+<ul>
+<li><strong>Archivos de texto plano:</strong>
+<ul>
+<li><code>.csv</code> (Comma-Separated Values)</li>
+<li><code>.txt</code> (Tab-delimited, etc.)</li>
+</ul></li>
+<li><strong>Hojas de cálculo:</strong>
+<ul>
+<li><code>.xlsx</code> o <code>.xls</code> (Microsoft Excel)</li>
+</ul></li>
+<li><strong>Archivos de software estadístico:</strong>
+<ul>
+<li><code>.sav</code> (SPSS)</li>
+<li><code>.dta</code> (Stata)</li>
+</ul></li>
+</ul>
+</section>
+<section id="paquetes-del-tidyverse-para-la-importación" class="slide level2">
+<h2>Paquetes del Tidyverse para la importación</h2>
+<p>El <strong>Tidyverse</strong> ofrece paquetes especializados y optimizados para cada tipo de dato.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Paquete</th>
+<th>Función principal</th>
+<th>Formato de archivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{readr}</code></td>
+<td><code>read_csv()</code></td>
+<td><code>.csv</code> y otros texto plano</td>
+</tr>
+<tr class="even">
+<td><code>{readxl}</code></td>
+<td><code>read_excel()</code></td>
+<td><code>.xlsx</code>, <code>.xls</code></td>
+</tr>
+<tr class="odd">
+<td><code>{haven}</code></td>
+<td><code>read_sav()</code>, <code>read_dta()</code></td>
+<td><code>.sav</code>, <code>.dta</code>, etc.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ventajas:</strong></p>
+<ul>
+<li class="fragment">Son mucho más rápidos que las funciones base de R.</li>
+<li class="fragment">Importan los datos como <code>tibbles</code>, un formato de data frame mejorado.</li>
+<li class="fragment">Gestionan mejor las diferencias entre sistemas operativos.</li>
+</ul>
+</section></section>
+<section>
+<section id="resumen" class="title-slide slide level1 center">
+<h1>7. Resumen y próximos pasos</h1>
+
+</section>
+<section id="resumen-de-la-sesión" class="slide level2">
+<h2>Resumen de la sesión</h2>
+<ul>
+<li><strong>Organización es clave:</strong> Un flujo de trabajo basado en <strong>Proyectos de RStudio</strong> es fundamental para la reproducibilidad.</li>
+<li><strong>Estructura de carpetas:</strong> Adopta una estructura de directorios lógica (<code>datos</code>, <code>codigo</code>, <code>resultados</code>).</li>
+<li><strong>Importación con Tidyverse:</strong> Utiliza los paquetes <code>{readr}</code>, <code>{readxl}</code> y <code>{haven}</code> para cargar tus datos de manera eficiente y consistente.</li>
+</ul>
+</section>
+<section id="próxima-sesión" class="slide level2">
+<h2>Próxima sesión</h2>
+<p><strong>Sesión III: Transformación de datos con <code>{dplyr}</code></strong></p>
+<ul>
+<li>Aprenderemos los “verbos” fundamentales para la manipulación de datos:
+<ul>
+<li><code>select()</code>: seleccionar columnas.</li>
+<li><code>filter()</code>: filtrar filas.</li>
+<li><code>mutate()</code>: crear o modificar columnas.</li>
+<li><code>arrange()</code>: ordenar filas.</li>
+<li><code>summarise()</code> y <code>group_by()</code>: resumir datos.</li>
+</ul></li>
+</ul>
+</section></section>
+<section id="gracias-por-la-atención" class="title-slide slide level1 center">
+<h1>¡Gracias por la atención!</h1>
+<!-- ========================== -->
+<!-- BARRA SUPERIOR E INFERIOR -->
+<!-- ========================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Crear barra superior
+  var sectionBar = document.createElement('div');
+  sectionBar.id = 'section-bar';
+  sectionBar.innerHTML = `
+    <span id="current-section"></span>
+    <img id="logo" src="images/logo-ucm-render.png" alt="Logo COES">
+  `;
+  document.body.appendChild(sectionBar);
+
+  // Crear barra inferior
+  var footerBar = document.createElement('div');
+  footerBar.id = 'footer-bar';
+  footerBar.innerHTML = `
+    <span id="footer-text">Cristóbal Ortiz Vilches | CC BY-NC 4.0 2026 – Ciencia de Datos Aplicada con RStudio</span>
+    <span id="page-counter"></span>
+  `;
+  document.body.appendChild(footerBar);
+
+  // Capturar secciones principales
+  var sectionTitles = [];
+  var allSlides = document.querySelectorAll('.reveal .slides section');
+  allSlides.forEach(function(slide) {
+    let title = slide.querySelector('h1');
+    if (title) {
+      sectionTitles.push({ title: title.innerText, slide: slide });
+    }
+  });
+
+  function updateBar(event) {
+    let currentSlide = event.currentSlide;
+    let currentIndex = Reveal.getSlidePastCount(currentSlide);
+    let totalSlides = Reveal.getTotalSlides();
+
+    // Actualiza contador inferior
+    document.getElementById('page-counter').innerText = (currentIndex + 1) + "/" + totalSlides;
+
+    const sectionText = document.getElementById('current-section');
+
+    // Oculta la barra en la primera y última diapositiva
+    if (currentIndex === 0 || currentIndex === 1 || currentIndex === totalSlides - 1) {
+      sectionText.style.visibility = 'hidden';
+    } else {
+      sectionText.style.visibility = 'visible';
+
+      // Actualiza texto de la sección si corresponde
+      for (let i = 0; i < sectionTitles.length; i++) {
+        if (sectionTitles[i].slide === currentSlide || sectionTitles[i].slide.contains(currentSlide)) {
+          sectionText.innerText = sectionTitles[i].title;
+          return;
+        }
+      }
+
+      // Si no hay coincidencia exacta, busca la sección más cercana anterior
+      for (let i = sectionTitles.length - 1; i >= 0; i--) {
+        if (Reveal.getSlidePastCount(sectionTitles[i].slide) <= currentIndex) {
+          sectionText.innerText = sectionTitles[i].title;
+          return;
+        }
+      }
+    }
+  }
+
+  Reveal.on('slidechanged', updateBar);
+  Reveal.on('ready', updateBar);
+});
+</script>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

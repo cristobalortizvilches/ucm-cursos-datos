@@ -1,0 +1,173 @@
+/* ============================= */
+/* 0. VARIABLES DE ESPACIO SEGURO */
+/* ============================= */
+:root{
+  --top-bar-height: 50px;     /* antes 60px → -16% */
+  --bottom-bar-height: 36px;  /* antes 44px → -18% */
+  --safe-top: calc(var(--top-bar-height) + env(safe-area-inset-top));
+  --safe-bottom: calc(var(--bottom-bar-height) + env(safe-area-inset-bottom));
+  --slide-hpad: 1.2rem;   /* acolchado lateral (aplicado en section, NO en .slides) */
+  --slide-vpad: 0.9rem;
+  --caption-gap: 0.4em;
+  --title-room: 2.4em;
+}
+
+
+/* ============================= */
+/* 1. CONFIGURACIÓN GENERAL */
+/* ============================= */
+.reveal{
+  font-family: 'Merriweather', serif;
+  color:#333; font-size:1.4em; line-height:1.4;
+  z-index:1; /* sin cambiar position */
+}
+
+/* Reservamos espacio para barras; SIN padding horizontal aquí */
+.reveal .slides{
+  background:#fff;
+  margin-top: var(--safe-top);
+  margin-bottom: var(--safe-bottom);
+  /* ¡sin padding lateral para no romper el centrado de Reveal! */
+  padding: 0;
+  box-sizing: border-box;
+  z-index:1; /* sin cambiar position */
+}
+
+/* SIN SCROLL: acolchado dentro de cada slide + seguridad inferior */
+.reveal .slides section{
+  padding: var(--slide-vpad) var(--slide-hpad)
+           calc(var(--bottom-bar-height) + 10px) var(--slide-hpad);
+  overflow: visible;
+  transition: all .3s ease-in-out;
+  box-sizing: border-box;
+}
+
+.reveal .slides section > :last-child{
+  margin-bottom: .25rem !important;
+}
+
+/* ============================= */
+/* 2. TÍTULOS */
+/* ============================= */
+.reveal h1{ font-size:3.0em; font-weight:bold; color:#003366; margin:0 0 .5em 0; }
+.reveal h2{ font-size:2.0em; font-weight:bold; color:#005599; margin:0 0 .5em 0; }
+
+/* ============================= */
+/* 3. PROGRESS BAR (debajo de barras fijas) */
+/* ============================= */
+.reveal .progress{ background:#003366; z-index: 900; }
+
+/* ============================= */
+/* 5. BARRA SUPERIOR */
+/* ============================= */
+#section-bar{
+  position:fixed; top:0; left:0; width:100%;
+  background:#003366; color:#fff;
+  padding:.5em 1.2em; font-size:1.5em;
+  min-height: var(--top-bar-height);
+  z-index: 5000;
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'Merriweather', serif; font-weight:bold; box-sizing:border-box;
+  box-shadow: 0 2px 6px rgba(0,0,0,.12);
+}
+#section-bar img#logo{ height:48px; margin-left:auto; }
+
+/* ============================= */
+/* 6. BARRA INFERIOR (FOOTER) */
+/* ============================= */
+#footer-bar{
+  position:fixed; bottom:0; left:0; width:100%;
+  background:#eeeeee; color:#333;
+  padding:.4em 1.2em; font-size:1.25em;
+  min-height: var(--bottom-bar-height);
+  z-index: 5000;
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'Merriweather', serif; box-sizing:border-box;
+  box-shadow: 0 -2px 6px rgba(0,0,0,.10);
+}
+#page-counter{ font-weight:bold; padding-left:1em; }
+
+/* ============================= */
+/* 6.b. FIGURAS / IMÁGENES / TABLAS */
+/* ============================= */
+.reveal .slides section figure,
+.reveal .slides section .quarto-figure{
+  max-height: calc(100vh - var(--safe-top) - var(--safe-bottom)
+                   - var(--title-room) - var(--slide-vpad));
+  margin: 0 0 1.1em 0;
+  display: block;
+  box-sizing: border-box;
+}
+.reveal .slides section figure img,
+.reveal .slides section .quarto-figure img,
+.reveal .slides section img{
+  display:block; max-width:100%; height:auto;
+  max-height: calc(100vh - var(--safe-top) - var(--safe-bottom)
+                   - var(--title-room) - var(--slide-vpad) - var(--caption-gap));
+  margin: 0 auto;
+  object-fit: contain;
+}
+.reveal .slides section figure figcaption,
+.reveal .slides section .quarto-figure .figcaption,
+.reveal .slides section .figure-caption{
+  margin-top: var(--caption-gap); line-height:1.2;
+}
+
+/* Tablas grandes sin scroll vertical (rompe palabras si es necesario) */
+.reveal .slides section table{
+  width:100%; table-layout:auto; border-collapse:collapse;
+  margin: 0 0 1.1em 0; overflow:visible; word-wrap:break-word; white-space:normal;
+}
+.reveal .slides section table th,
+.reveal .slides section table td{ padding:.4em .6em; }
+
+.reveal .slides section img.nobot{ margin-bottom:.6em !important; }
+
+/* ============================= */
+/* 7. MENÚ REVEAL (si lo usas) */
+/* ============================= */
+.slide-menu{ z-index: 6000 !important; }
+
+/* ============================= */
+/* 8. PORTADA (YAML) */
+/* ============================= */
+.reveal .slides section#title-slide :is(.title,.subtitle,.author,.date),
+.reveal .slides section.title-slide :is(.title,.subtitle,.author,.date){
+  display:block; margin:.7em 0;
+}
+.reveal .slides section#title-slide .title,
+.reveal .slides section.title-slide .title{
+  font-size:3.0em; font-weight:800; color:#003366; line-height:1.1; margin-bottom:.5em;
+}
+.reveal .slides section#title-slide .subtitle,
+.reveal .slides section.title-slide .subtitle,
+.reveal .slides section#title-slide p.subtitle{
+  font-size:1.45em; font-weight:700; color:#005599; line-height:1.2;
+}
+.reveal .slides section#title-slide .author,
+.reveal .slides section.title-slide .author,
+.reveal .slides section#title-slide .quarto-title-author,
+.reveal .slides section.title-slide .quarto-title-author,
+.reveal .slides section#title-slide .quarto-title-authors .quarto-title-author,
+.reveal .slides section.title-slide .quarto-title-authors .quarto-title-author,
+.reveal .slides section#title-slide .quarto-title-author-name,
+.reveal .slides section.title-slide .quarto-title-author-name,
+.reveal .slides section#title-slide .quarto-title-meta .quarto-title-author,
+.reveal .slides section.title-slide .quarto-title-meta .quarto-title-author{
+  font-size:1em; font-weight:700; color:#003366; line-height:1.2;
+}
+.reveal .slides section#title-slide .date,
+.reveal .slides section.title-slide .date{
+  font-size:1.05em; font-weight:700; color:#333; line-height:1.2;
+}
+
+/* ============================= */
+/* 9. RESPONSIVO */
+/* ============================= */
+@media (max-width: 900px){
+  .reveal{ font-size:1.3em; }
+  :root{ --top-bar-height: 54px; --bottom-bar-height: 40px; }
+  #section-bar{ padding:.45em 1em; font-size:1.35em; }
+  #footer-bar{ padding:.35em 1em; font-size:1.15em; }
+}
+

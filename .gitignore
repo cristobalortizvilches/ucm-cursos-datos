@@ -1,0 +1,21 @@
+.Rproj.user
+**/.Rproj.user/
+.Rhistory
+**/.Rhistory
+.RData
+**/.RData
+.Ruserdata
+.httr-oauth
+.DS_Store
+**/desktop.ini
+
+/.quarto/
+**/.quarto/
+**/*.quarto_ipynb
+
+# Carpetas privadas de evaluaciones y notas de estudiantes
+4-evaluaciones-conjuntas/1-version-2025/
+4-evaluaciones-conjuntas/2-version-2026/
+
+# Archivos de microdatos censales nacionales (>100 MB límite de GitHub)
+3-practicos-conjuntos/1_datos/1_originales/Microdatos_Manzana/

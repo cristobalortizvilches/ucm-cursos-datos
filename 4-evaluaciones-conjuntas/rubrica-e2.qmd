@@ -1,0 +1,123 @@
+---
+title: "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos"
+subtitle: "Cursos: Data Science Aplicada (DSRS) y Ciencias Sociales Computacionales (CSCC)"
+author: "Profesor: Cristóbal Ortiz Vilches"
+editor: visual
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: false
+    code_folding: show
+    other-links:
+      - text: "Descargar en PDF"
+        href: rubrica-e2.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.qmd)"
+        href: rubrica-e2.qmd
+        icon: file-earmark-code
+lang: es
+---
+
+## Descripción General de la Evaluación
+
+La segunda evaluación consiste en la elaboración de un **reporte de resultados automatizado** (utilizando Quarto o RMarkdown) dentro de un proyecto de investigación reproducible. El reporte considera tres aspectos del flujo de investigación: (i) **problematización de investigación**, (ii) **diseño de un flujo de trabajo** y (iii) **análisis de resultados**. Aunque el formato del reporte es común para ambos cursos, los criterios de evaluación se diferencian según el enfoque de cada uno.
+
+El reporte automatizado contiene 5 partes:
+
+1.  Introducción al problema de investigación (entre 200 y 400 palabras)
+2.  Diseño de investigación (entre 300 y 500 palabras)
+3.  Procesamiento de datos (entre 50 y 150 palabras)
+4.  Análisis de datos/resultados (entre 100 y 200 palabras)
+5.  Discusión de resultados (entre 100 y 200 palabras)
+
+**Ponderación:** 40% de la nota final del curso.
+
+------------------------------------------------------------------------
+
+## Criterios Generales de Evaluación (Comunes para DSRS y CSCC)
+
+Estos criterios evalúan la estructura, claridad y reproducibilidad del reporte.
+
+| Criterio | Logrado (3 pts) | Medianamente Logrado (2 pts) | No Logrado (1 pto) |
+|:-----------------|:-----------------|:-----------------|:------------------|
+| **Estructura del Reporte** | El documento presenta una estructura lógica y clara (introducción, diseño, procesamiento, análisis y discusión), utilizando correctamente los encabezados y secciones. | La estructura del documento es comprensible, pero podría mejorar en su organización y jerarquía de secciones. | El documento carece de una estructura clara, dificultando su lectura y comprensión. |
+| **Claridad y Redacción** | La redacción es clara, precisa y coherente. No presenta errores ortográficos ni gramaticales. | El texto es en general claro, pero presenta algunas imprecisiones o errores menores de redacción. | La redacción es confusa, imprecisa y/o contiene errores recurrentes que dificultan la comprensión. |
+| **Reproducibilidad y Código** | El código en R es funcional, está bien comentado y sigue las convenciones del `tidyverse`. El reporte compila sin errores. | El código es funcional en su mayoría, pero podría estar mejor comentado o estructurado. El reporte compila con advertencias. | El código no es funcional o es muy difícil de seguir. El reporte no compila o genera errores que impiden ver el resultado. |
+
+------------------------------------------------------------------------
+
+## Criterios Específicos por Curso
+
+A continuación, se detallan los criterios específicos que serán evaluados para cada curso.
+
+### Rúbrica para `Data Science Aplicada en RStudio (DSRS)`
+
+| Criterio | Logrado (3 pts) | Medianamente Logrado (2 pts) | No Logrado (1 pto) |
+|:-----------------|:-----------------|:-----------------|:-----------------|
+| **1. Problematización en Ciencia de Datos** | Define un problema de investigación relevante y bien delimitado, justificando claramente su pertinencia desde el campo de la ciencia de datos aplicada a lo social. Incluye objetivos e hipótesis. | El problema de investigación está definido, pero su justificación o delimitación desde la ciencia de datos es parcial o poco clara. No incluye objetivos e hipótesis. | No se define un problema de investigación claro o este no tiene relación con la ciencia de datos. No incluye objetivos e hipótesis. |
+| **2. Rol de la Ciencia de Datos en el Análisis Social** | Explica y fundamenta con solidez cómo las herramientas y enfoques de la ciencia de datos pueden aportar a la comprensión del fenómeno social estudiado. | Se menciona el rol de la ciencia de datos, pero la explicación es superficial o no se conecta de forma robusta con el problema de investigación planteado. | No se reflexiona sobre el aporte de la ciencia de datos al análisis del problema social. |
+| **3. Diseño de Flujo de Trabajo en RStudio** | Diseña y describe un flujo de trabajo (`workflow`) coherente y detallado (importación, limpieza, transformación, visualización) para abordar el problema. Especifica la base de datos a utilizar. | El flujo de trabajo diseñado es pertinente, pero carece de detalle en algunas de sus etapas o presenta inconsistencias lógicas. No especifica la base de datos. | No se presenta un flujo de trabajo o el diseño propuesto es incoherente y no responde al problema de investigación. No especifica la base de datos. |
+| **4. Análisis de Datos/Resultados** | El análisis es pertinente y utiliza funciones del **Tidyverse** (como `dplyr` y `ggplot2`) para generar **tablas y/o visualizaciones** claras, bien etiquetadas y que responden directamente a la pregunta de investigación. | El análisis es en general pertinente, pero las salidas (tablas/gráficos) presentan **fallas de claridad** (ej. falta de etiquetas, títulos confusos) o el uso de las herramientas del **Tidyverse** es superficial. El análisis de datos no responde directamente a la pregunta de investigación. | El análisis de datos es **irrelevante** para el problema planteado o las salidas (tablas/gráficos) son **confusas** e imposibles de interpretar. El análisis de datos no responde a la pregunta de investigación. |
+| **5. Discusión de Resultados** | La discusión **interpreta** los resultados del análisis (tablas/gráficos), los **conecta** con la problematización inicial y reflexiona sobre futuras líneas de investigación en el contexto de la **ciencia de datos aplicada**. | La discusión **describe** los resultados, pero la interpretación es **superficial** o la conexión con el problema inicial y la reflexión sobre futuras líneas de investigación es **débil**. | La discusión es una **mera repetición** de los resultados o es **irrelevante** para el análisis realizado. Y no reflexiona sobre futuras líneas de investigación. |
+
+### Rúbrica para `Ciencias Sociales Computacionales (CSCC)`
+
+| Criterio | Logrado (3 pts) | Medianamente Logrado (2 pts) | No Logrado (1 pto) |
+|:-----------------|:-----------------|:-----------------|:-----------------|
+| **1. Rol de los datos digitales** | Propone potenciales fuentes de datos digitales y explica por qué permiten abordar el problema de investigación de forma novedosa. | Propone potenciales fuentes de datos digitales, pero no explica por qué esta aportan novedad al problema de investigación. | No propone ni explicita el rol de los datos digitales en el problema de investigación. |
+| **2. Reflexión sobre los aspectos éticos** | Identifica los principios y dilemas éticos de trabajar con datos digitales y los conecta directamente a su problema de investigación | Identifica parcialmente los principios y dilemas éticos de trabajar con datos digitales y no los conecta directamente con su problema de investigación | No identifica los principios y dilemas éticos de trabajar con datos digitales y ni los conecta con su problema de investigación. |
+| **3. Diseño de un Protocolo de Trabajo con datos** | Propone un protocolo de trabajo de datos con una estructura clara (Protocolo `IPO` para Ciencia Abierta) y crea sus carpetas a partir de un código autocontenido en `RProject`. | El protocolo de trabajo de datos presenta una estructura, pero esta estructura no es organizada y las carpetas no son creadas a partir del código. | No se presenta un protocolo de trabajo claro ni organizado, no crea carpetas para organizar la información. |
+
+------------------------------------------------------------------------
+
+## Cálculo de la Nota
+
+La nota final de la evaluación se calculará sumando los puntajes obtenidos en los **criterios generales** y los **criterios específicos** del curso correspondiente. El puntaje máximo total para el curso **DSRS es de 24 puntos** (9 de criterios generales y **15 de criterios específicos**), mientras que para **CSCC es de 18 puntos** (9 de criterios generales y **9 de criterios específicos**).
+
+La fórmula para la nota (en escala de 1.0 a 7.0) será la siguiente:
+
+Para **DSRS (Máximo 24 puntos)**: `Nota = (Puntaje Obtenido / 24) * 6 + 1`
+
+Para **CSCC (Máximo 18 puntos)**: `Nota = (Puntaje Obtenido / 18) * 6 + 1`
+
+## Formato de entrega
+
+El proyecto debe ser entregado en una carpeta RProject comprimida la cual debe ser enviado al correo cristobalortizvi@gmail.com.
+
+::: callout-note
+### **Plazo de entrega miércoles 02 de diciembre hasta las 18:30hrs**
+:::
+
+## Otras consideraciones
+
+-   Se promueve y alienta el uso de inteligencia artificial en la generación de código con R. No se aconseja y será penalizado el uso de IA en la escritura académica.
+
+-   No se puede hacer copy/paste ni plagio de las diapositivas, puesto que será penalizado. El contenido de las diapositivas puede ser utilizado, pero debe ser reapropiado y puesto en diálogo con el problema de investigación.
+
+## Recomendaciones generales
+
+Sobre escritura académica y técnica
+
+-   Premisa de buena escritura: una idea un párrafo
+
+-   Cada párrafo inicia con una ***topic sentence***, esta es la oración que presenta la idea principal del párrafo completo.
+
+-   Intentar escribir utilizando la estructura gramatical básica del idioma Español: sujeto + verbo + predicado/complemento. Limitar la voz pasiva a citas parafraseadas. Por ejemplo:
+
+    | Tipo de voz | Acción regular | Parafraseo cita |
+    |------------------------|------------------------|------------------------|
+    | Activa | **El gobierno local diseñó barrios sin acceso a servicios (enfatiza rol del sujeto)** | Jacobs (1969) afirma que la presencia activa de las personas en la calle reduce la inseguridad. (foco en el sujeto) |
+    | Pasiva | Los barrios fueron diseñados sin acceso a servicios por el gobierno (debilita el rol del sujeto) | **Pasiva parafraseada: Se afirma que la inseguridad se reduce cuando hay presencia activa de personas en la calle (Jacobs, 1969) (foco en la idea)** |
+
+-   Procurar diseñar oraciones cortas (no más de 4 líneas), lo cual obliga a acudir al:
+
+    -   Punto seguido
+
+    -   Uso de conectores
+
+-   Procurar diseñar párrafos cortos (no más de 300 palabras)
+
+-   Oración final sintetiza y concluye la idea general del párrafo, a la vez que sirve de enlace con el párrafo siguiente.
+

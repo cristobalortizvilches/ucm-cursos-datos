@@ -1,0 +1,243 @@
+---
+title: "DSRS & CSCC - Práctico VIII"
+subtitle: "Visualización de datos espaciales"
+author: "Cristóbal Ortiz Vilches"
+format:
+  html:
+    toc: true
+    toc-title: "Índice"
+    toc-depth: 3
+    theme: cosmo
+    other-links:
+      - text: "Descargar en PDF"
+        href: ejercicio-practico-8.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.Rmd)"
+        href: ejercicio-practico-8.Rmd
+        icon: file-earmark-code
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+El objetivo de este ejercicio es cargar, limpiar y visualizar datos
+espaciales a nivel de manzana y comuna para la región del Maule, para lo
+cual utilizaremos dos bases de datos:
+
+> MBHT, la cual contiene datos territoriales a nivel de manzana
+
+```         
+- https://plataformabht.subdere.gov.cl/visualizations
+```
+
+> Microdatos, la cual contiene datos censales a nivel de manzana y sus
+> geometrías
+
+```         
+- https://www.geoportal.cl/geoportal/catalog/35396/Microdatos%20Censo%202017:%20Manzana
+```
+
+# Librerías
+
+```{r load-pckgs}
+library(tidyverse)  # herramientas para manipulación y visualización de datos
+library(sjlabelled) # manejo de etiquetas de variables
+library(sjmisc)     # herramientas para inspeccionar y manejar variables
+library(sf)         # herramientas para trabajar con datos espaciales (geográficos)
+library(chilemapas) # geometrías de mapas y coberturas territoriales de Chile
+library(leaflet)    # visualizador de mapas interactivos
+```
+
+```{r load-data}
+getwd() # obtener el directorio de trabajo actual
+rm(list=ls()) # limpiar el entorno de trabajo (borrar objetos previos)
+options(scipen = 999) # evitar la notación científica en números
+
+mbht_segu_mzn <- readxl::read_xlsx("../1_datos/1_originales/data_seguridad_maule.xlsx") # cargar datos de seguridad
+
+geom_mzn <- sf::st_read("../1_datos/1_originales/Microdatos_Manzana/Microdatos_Manzana.shp") # cargar geometría de manzanas (shapefile)
+
+class(mbht_segu_mzn) # verificar la clase del objeto cargado
+
+glimpse(geom_mzn)
+```
+
+# Visualización a nivel micro (manzana)
+
+```{r data-wrangle-mzn}
+mbht_segu_maule <- mbht_segu_mzn %>%
+  rename(cod_mzn = id_manzcit) %>% # renombrar columna de identificación
+  mutate(cod_mzn = str_sub(cod_mzn, end = -4)) %>% # recortar el código para ajustar formato
+  sjlabelled::var_labels(dim_seg  = "Indice de seguridad") %>% # asignar etiqueta descriptiva a la variable
+  mutate(cod_mzn = as.character(cod_mzn)) %>% # asegurar que el código sea texto
+  distinct(cod_mzn, .keep_all = TRUE) # eliminar duplicados manteniendo la primera aparición
+
+geom_mzn_maule <- geom_mzn %>% 
+  filter(REGION == "REGIÓN DEL MAULE") %>% # filtrar solo la región de interés
+  select(CUT, MANZENT, REGION, COMUNA, geometry) %>% # seleccionar columnas relevantes
+  rename(cod_mzn = MANZENT) %>% # renombrar código de manzana para el cruce
+  mutate(cod_mzn = as.character(cod_mzn)) %>% # asegurar formato texto para el cruce
+  distinct(cod_mzn, .keep_all = TRUE) %>% # eliminar geometrías duplicadas
+  mutate(geometry = st_make_valid(geometry)) # corregir errores topológicos en la geometría
+```
+
+## Visualizar manzanas
+
+```{r map-plot-mzn-1}
+geom_mzn_maule %>%
+  filter(COMUNA == "TALCA") %>% # filtrar una comuna específica para visualizar
+  ggplot() +
+  geom_sf(aes(), color = "black") + # dibujar los límites de las manzanas
+  theme_minimal() # aplicar un tema visual limpio
+```
+
+```{r map-visual-mzn-1}
+# Visualizar la geometría de las manzanas censales
+geom_mzn_maule %>%
+  filter(COMUNA == "TALCA") %>% # filtrar una comuna específica para visualizar
+  st_transform(4326) %>% # transformar proyección a WGS84 (requerido por leaflet)
+  leaflet() %>%
+  addProviderTiles("CartoDB.Positron") %>% # agregar mapa base ligero
+  addPolygons(fillColor = "red", # color de relleno de los polígonos
+              color = "white",   # color del borde
+              weight = 0.5, # grosor de la línea
+              popup = ~as.character(cod_mzn)) # ventana emergente con el código
+```
+
+## Visualizar seguridad a nivel manzana
+
+```{r join-data-mzn}
+data_maule_mzn <- geom_mzn_maule %>%
+  left_join(mbht_segu_maule, by = "cod_mzn") # unir datos espaciales con datos de seguridad
+```
+
+```{r map-mzn-2}
+data_maule_mzn %>% 
+  filter(COMUNA == "CURICÓ") %>% # filtrar para visualizar Curicó
+  ggplot() +
+  geom_sf(aes(fill = dim_seg), color = NA) + # colorear según índice de seguridad sin bordes
+  scale_fill_viridis_c(option = "D", name = "Seguridad") + # escala de colores viridis
+  theme_minimal() # tema limpio
+```
+
+```{r map-visual-mzn-2}
+# Definir variable a mapear
+var_to_map <- "dim_seg"
+
+# Transformar datos y crear paleta de colores
+mzn_map <- data_maule_mzn %>%
+  filter(COMUNA == "CURICÓ") %>% # filtrar para visualizar Curicó
+  st_transform(4326) %>% # reproyectar para mapa web
+  mutate(var_plot = .data[[var_to_map]]) # crear columna auxiliar para graficar
+
+pal <- colorNumeric("viridis", domain = mzn_map$var_plot, reverse = T) # función de paleta de colores
+
+# Construir mapa leaflet
+leaflet(data = mzn_map) %>%
+  addProviderTiles("CartoDB.Positron") %>% # mapa base
+  addPolygons(fillColor = ~pal(var_plot), # colorear según la variable
+              fillOpacity = 0.7, # transparencia del relleno
+              color = "white", # color de borde
+              weight = 0.3, # grosor de borde
+              popup = ~as.character(var_plot)) %>% # valor al hacer clic
+  addLegend(pal = pal, 
+            values = ~var_plot, 
+            title = var_to_map, 
+            position = "bottomright") # leyenda en la esquina inferior derecha
+```
+
+# Visualización a nivel macro (Comuna)
+
+```{r data-wrangle-com}
+mbht_segu_com <- mbht_segu_mzn %>% 
+  group_by(cod_com) %>% # agrupamos por zona (comuna)
+  summarise_all(mean, na.rm = T) # calcular promedio de todas las variables
+
+geom_comunas <- mapa_comunas %>% 
+  mutate(comuna_cod = str_remove(codigo_comuna, "^0")) %>% # quitar el 0 inicial de la codificación de comunas 
+  #filter(codigo_region == "07") %>%                        # podemos filtrar Maule, pero no lo haremos aun
+  dplyr::select(cod_com = comuna_cod, geometry) %>% # seleccionar y renombrar columnas
+  mutate(cod_com = as.numeric(cod_com)) # convertir código a numérico para el cruce
+
+data_maule_com <- geom_comunas %>% 
+  left_join(mbht_segu_com, by = "cod_com") %>% # unir geometría comunal con datos agregados
+  st_as_sf(sf_column_name = "geometry") # asegurar que sea objeto espacial sf
+```
+
+## Visualizar seguridad a nivel de comuna
+
+```{r map-plot-com}
+data_maule_com %>% 
+  st_transform(31979) %>% # transformar a proyección local (SIRGAS Chile)
+  ggplot() +
+  geom_sf(aes(fill = dim_seg), color = NA) + # mapa estático coloreado
+  scale_fill_viridis_c(option = "D", name = "Seguridad") + # escala de colores
+  theme_minimal() # tema visual
+
+data_maule_com %>% 
+  st_transform(4326) %>% # transformar a WGS84
+  ggplot() +
+  geom_sf(aes(fill = dim_seg), color = NA) + # mapa estático alternativo
+  scale_fill_viridis_c(option = "D", name = "Seguridad") + 
+  theme_minimal()
+
+# Mostrar efecto filtrando Maule con: 
+# filter(str_starts(cod_com, "7")) # filtrar códigos que empiezan con 7 (Región del Maule)
+```
+
+```{r map-visual-com}
+# Definir variable a mapear
+var_to_map <- "dim_seg"
+
+# Transformar datos y crear paleta de colores
+com_map <- data_maule_com %>%
+  st_transform(4326) %>% # reproyectar para web
+  mutate(var_plot = .data[[var_to_map]]) # asignar variable a graficar
+
+# Construir mapa leaflet
+leaflet(data = com_map) %>%
+  addProviderTiles("CartoDB.Positron") %>% # mapa base
+  addPolygons(fillColor = ~pal(var_plot), # relleno según datos
+              fillOpacity = 0.7, 
+              color = "white", 
+              weight = 0.3, 
+              popup = ~as.character(var_plot)) %>% # popup interactivo
+  addLegend(pal = colorNumeric("viridis", 
+                               domain = com_map$var_plot, 
+                               reverse = T), # leyenda con colores invertidos
+            values = ~var_plot, 
+            title = var_to_map, 
+            position = "bottomright") # posición de la leyenda
+```
+
+```{r map-com-final}
+comuna_key <- distinct(geom_mzn_maule, nombre_comuna = COMUNA, cod_com = CUT) # crear llave con nombres de comunas
+
+seguridad_maule <- data_maule_com %>% 
+  filter(str_starts(cod_com, "7")) %>% # filtrar región del Maule 
+  left_join(comuna_key, by = c("cod_com" = "cod_com")) %>% # asignamos el nombre base a la llave
+  st_transform(4326) %>% # reproyectar datos
+  ggplot() +
+  geom_sf(aes(fill = dim_seg), color = "black") + # mapa base con bordes negros
+  shadowtext::geom_shadowtext( # añadir texto con sombra (halo)
+    aes(label = str_wrap(nombre_comuna, width = 10), # obliga a saltar de línea si el nombre es muy largo
+        geometry = geometry), 
+    stat = "sf_coordinates", # Esto calcula el centroide automáticamente
+    color = "black",         # Color de la letra
+    bg.color = "white",      # Color del buffer (fondo del texto)
+    bg.r = 0.15,             # Grosor del buffer 
+    size = 3                 # Tamaño de la letra
+  ) +
+  scale_fill_viridis_c(option = "D", name = "Seguridad") + # escala de colores
+  theme_minimal() + # tema minimalista
+  labs(y = NULL, x = NULL) # quitar etiquetas de los ejes X e Y
+
+seguridad_maule # imprimir el objeto gráfico
+
+ggsave("../3_resultados/seguridad_maule.jpg", dpi = 300, width = 10, height = 8) # guardar el gráfico como imagen
+```
+
+```{r save-sf-data}
+# exportar datos procesados a shapefile
+st_write(data_maule_mzn, dsn = "../1_datos/2_procesados/data_maule_mzn/data_maule_mzn.shp", delete_layer = TRUE)
+```

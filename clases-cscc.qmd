@@ -1,0 +1,65 @@
+---
+title: "Ciencias Sociales Computacionales (CSCC)"
+subtitle: "OPR219 · Presentaciones de Clases y Descargas en PDF"
+author: "Profesor: Cristóbal Ortiz Vilches"
+toc: true
+---
+
+En esta sección encontrarás todas las presentaciones teóricas del curso **OPR219: Ciencias Sociales Computacionales (CSCC)**. Puedes navegar las diapositivas directamente desde los visores interactivos de esta página, abrirlas en pantalla completa o **descargarlas en formato PDF**.
+
+---
+
+## Sesión I: Introducción a la ciencia social computacional y programa del curso
+
+::: {.slide-embed-container}
+<iframe src="2-ccss-computacionales/cscc-clase-1.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](2-ccss-computacionales/cscc-clase-1.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](2-ccss-computacionales/cscc-clase-1.pdf){.btn-ucm .btn-ucm-pdf download="cscc-clase-1.pdf"}
+[📄 Código fuente (.qmd)](2-ccss-computacionales/cscc-clase-1.qmd){.btn-ucm .btn-ucm-outline download="cscc-clase-1.qmd"}
+:::
+
+---
+
+## Sesión II: Diseño de investigación en la era digital
+
+::: {.slide-embed-container}
+<iframe src="2-ccss-computacionales/cscc-clase-2.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](2-ccss-computacionales/cscc-clase-2.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](2-ccss-computacionales/cscc-clase-2.pdf){.btn-ucm .btn-ucm-pdf download="cscc-clase-2.pdf"}
+[📄 Código fuente (.qmd)](2-ccss-computacionales/cscc-clase-2.qmd){.btn-ucm .btn-ucm-outline download="cscc-clase-2.qmd"}
+:::
+
+---
+
+## Sesión III: Reproducibilidad y ciencia abierta
+
+::: {.slide-embed-container}
+<iframe src="2-ccss-computacionales/cscc-clase-3.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](2-ccss-computacionales/cscc-clase-3.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](2-ccss-computacionales/cscc-clase-3.pdf){.btn-ucm .btn-ucm-pdf download="cscc-clase-3.pdf"}
+[📄 Código fuente (.qmd)](2-ccss-computacionales/cscc-clase-3.qmd){.btn-ucm .btn-ucm-outline download="cscc-clase-3.qmd"}
+:::
+
+---
+
+## Sesión IV: Control de versiones y trabajo colaborativo
+
+::: {.slide-embed-container}
+<iframe src="2-ccss-computacionales/cscc-clase-4.html" loading="lazy" allowfullscreen></iframe>
+:::
+
+::: {.btn-bar}
+[🖥️ Pantalla completa](2-ccss-computacionales/cscc-clase-4.html){.btn-ucm .btn-ucm-primary target="_blank"}
+[📥 Descargar PDF](2-ccss-computacionales/cscc-clase-4.pdf){.btn-ucm .btn-ucm-pdf download="cscc-clase-4.pdf"}
+[📄 Código fuente (.qmd)](2-ccss-computacionales/cscc-clase-4.qmd){.btn-ucm .btn-ucm-outline download="cscc-clase-4.qmd"}
+:::
+

@@ -1,0 +1,192 @@
+---
+title: "DSRS & CSCC - Práctico II"
+subtitle: "Procesamiento de datos"
+author: "Cristóbal Ortiz Vilches"
+date: "12 de septiembre de 2025"
+format:
+  html:
+    toc: true
+    toc-title: "Índice"
+    toc-depth: 3
+    theme: cosmo
+    mainfont: "Inter"
+    fontsize: 1.1em
+    other-links:
+      - text: "Descargar en PDF"
+        href: ejercicio-practico-2.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.qmd)"
+        href: ejercicio-practico-2.qmd
+        icon: file-earmark-code
+---
+
+# Encabezado
+
+## Ecabezado nivel 2
+
+```{r}
+# Me sirve para comentar el código y que se entienda lo que quiero hacer
+## 
+getwd() # aca también
+```
+
+```{r setup-initial, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 0. Objetivos de la sesión práctica
+
+En esta sesión, aprenderemos a:
+
+a.  Crear un dataset en formato tibble
+b.  Importar y explorar un dataset real
+c.  Procesar (limpiar) un detaset real
+
+# 1. Ejemplo ficticio
+
+## Preparación
+
+Carguemos los paquetes que usaremos hoy y limpiemos nuestro entorno de trabajo.
+
+```{r setup-package}
+knitr::opts_chunk$set(warning = TRUE, message = TRUE)
+# 0. Limpiar el entorno de trabajo
+rm(list = ls())
+
+# 1. Cargar paquetes
+#install.packages("tidyverse")
+library(tidyverse)
+#library(haven)
+#library(readxl)
+```
+
+Primero, creamos una base de datos de ejemplo. La función `set.seed()` asegura que siempre obtengamos los mismos resultados "aleatorios".
+
+```{r crear_datos}
+set.seed(123) # Para que los resultados aleatorios sean reproducibles
+
+encuesta_ejemplo <- tibble(
+  folio = 1:10,
+  edad = sample(18:70, 10, replace = TRUE),
+  sexo = sample(c("Hombre", "Mujer"), 10, replace = TRUE),
+  region = sample(c("Metropolitana", "Valparaíso", "Biobío", "Maule"), 10, replace = TRUE),
+  educ = sample(c("Básica", "Media", "Superior"), 10, replace = TRUE),
+  ingreso = round(runif(10, 350000, 1500000), 0)
+)
+
+print(encuesta_ejemplo)
+```
+
+## Limpieza de Datos con `dplyr`
+
+### `select()`: Seleccionar variables
+
+```{r select, echo=TRUE}
+# Seleccionar solo folio y región
+encuesta_subselect <- encuesta_ejemplo |> 
+  select(folio:region) |> 
+  filter(edad > 40)
+
+# Seleccionar todas MENOS folio
+encuesta_ejemplo |> select(-folio)
+
+# Seleccionar un rango de columnas
+encuesta_ejemplo |> select(edad:educ)
+```
+
+### `filter()`: Filtrar observaciones
+
+```{r filter, echo=TRUE}
+# Personas de la Región Metropolitana
+encuesta_maule <- encuesta_ejemplo %>% 
+  filter(region %in% c("Maule", "Valparaíso"))
+
+class(encuesta_ejemplo$region)
+
+# Mujeres con ingresos superiores a 1,000,000
+encuesta_ejemplo |> filter(sexo == "Mujer" & ingreso > 500000)
+
+# Personas de Valparaíso O Biobío (usando %in%)
+encuesta_ejemplo |> filter(region %in% c("Valparaíso", "Biobío"))
+```
+
+## Ordenamiento y Reestructuración
+
+### `arrange()`: Ordenar filas
+
+```{r arrange, echo=TRUE}
+# Ordenar por ingreso, de mayor a menor
+ejemplo_ordenado <- encuesta_ejemplo |> arrange(desc(ingreso)) 
+
+# Ordenar por región (alfabético) y luego por edad (ascendente)
+asd <- encuesta_ejemplo |> 
+  arrange(region) %>% 
+  arrange(desc(edad))
+```
+
+# 2. Ejemplo real
+
+```{r load-packges}
+#| message: false
+library(tidyverse)
+library(sjmisc)
+```
+
+```{r import-dataset}
+remove(list = ls())
+
+getwd()
+
+load("../1_datos/1_originales/ELSOC_Wide_2016_2023.RData")
+elsoc_wide <- elsoc_wide_2016_2023
+
+frq(elsoc_wide$region_w07)
+```
+
+```{r select-dataset}
+elsoc_select <- elsoc_wide %>% 
+  select(idencuesta, #id individual
+                estrato_w07, region_w07, region_cod_w07, #id geográficos
+                starts_with("t02_"), # pertenencia  
+                starts_with("t08_"), # reputación
+                starts_with("t10_"), # seguridad
+                m0_sexo_w07, # sexo 
+                m0_edad_w07, # edad
+                starts_with("m01_"), # escolaridad 
+                starts_with("m34_03_")) # tiempo de residencia
+
+elsoc_select2 <- elsoc_select %>% 
+  select(idencuesta, estrato_w07, region_w07, region_cod_w07, #id geográficos
+         ends_with("_w07"))
+#view(summarytools::dfSummary(elsoc_select, plain.ascii  = FALSE, style = "grid", graph.magnif = 0.75, valid.col = FALSE))
+
+```
+
+```{r filter-dataset}
+
+frq(elsoc_select2$region_w07)
+
+elsoc_2023 <- elsoc_select2 %>% 
+  filter(region_w07 == "Nnuble")
+```
+
+```{r arrange-dataset}
+#| eval: false
+# Ordenar por ingreso, de mayor a menor
+elsoc_2023 |> arrange(desc(ingreso))
+
+# Ordenar por región (alfabético) y luego por edad (ascendente)
+elsoc_2023 |> arrange(region, edad)
+```
+
+```{r exploring-dataset}
+# Dimensiones (filas, columnas)
+dim(elsoc_wide_2016_2023)
+
+# Estructura
+glimpse(elsoc_select2)
+
+# Resumen estadístico
+summary(elsoc_wide_2016_2023$t01_w01)
+```

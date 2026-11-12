@@ -1,0 +1,183 @@
+---
+title: "DSRS & CSCC - Práctico I"
+subtitle: "Flujo de trabajo e importación de datos"
+author: "Cristóbal Ortiz Vilches"
+date: "29 de agosto de 2025"
+format:
+  html:
+    toc: true
+    toc-title: "Índice"
+    toc-depth: 3
+    theme: cosmo
+    mainfont: "Inter"
+    fontsize: 1.1em
+    other-links:
+      - text: "Descargar en PDF"
+        href: ejercicio-practico-1.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.qmd)"
+        href: ejercicio-practico-1.qmd
+        icon: file-earmark-code
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 0. Objetivos de la sesión práctica
+
+En esta sesión, aprenderemos a:
+
+a.  Crear y organizar un Proyecto de RStudio.
+b.  Cargar librerías y datos de distintos formatos (.csv, .xlsx, .sav).
+c.  Realizar una primera inspección de los datos cargados.
+
+# 1. Creación del Proyecto y Directorios
+
+Antes de escribir este código, deberías haber creado un Proyecto de RStudio. Si no lo has hecho, sigue estos pasos:
+
+`File > New Project > New Directory > New Project`
+
+Nombra tu proyecto, por ejemplo, `ejercicios-practicos-ucm`.
+
+Guarda este archivo (`ejercicio-practico-1.Rmd`) dentro de ese proyecto.
+
+Ahora, vamos a crear nuestra estructura de carpetas usando código. La función `dir.create()` de R base nos permite crear carpetas.
+
+```{r}
+# eval=FALSE para que no se ejecute cada vez, solo mostrar el código.
+# El alumno debe ejecutar esto línea por línea en su consola.
+
+#dir.create("1_datos")
+#dir.create("1_datos/1_originales")
+#dir.create("1_datos/2_procesados")
+#dir.create("2_codigo")
+#dir.create("3_resultados")
+#dir.create("3_resultados/graficos")
+#dir.create("3_resultados/tablas")
+#dir.create("4_documentos")
+```
+
+¡Importante! Después de ejecutar el código anterior, mira el panel "Files" en RStudio (abajo a la derecha). Deberías ver las nuevas carpetas que has creado.
+
+# 2. Carga de librerías
+
+Todo análisis en R comienza cargando los paquetes que vamos a necesitar. Usamos la función library(). El paquete {pacman} es útil para instalar y cargar paquetes a la vez.
+
+```{r}
+# install.packages("pacman") # Si no lo tienes, ejecuta esta línea una vez
+
+pacman::p_load(
+  tidyverse, # El corazón de nuestro flujo de trabajo (incluye dplyr, ggplot2, readr, etc.)
+  readxl,    # Para leer archivos de Excel
+  haven      # Para leer archivos de SPSS, Stata, SAS
+)
+```
+
+# 3. Importación de datos
+
+Para esta sección, necesitamos algunos datos de ejemplo. Descárgalos y guárdalos en tu carpeta 1_datos/1_originales/.
+
+Datos de ELSOC (formato SPSS, STATA y R): Puedes usar una versión de los datos ELSOC desde su repositorio online.
+
+- https://dataverse.harvard.edu/dataverse/coes_data_repository
+
+Datos de Excel y CSV: Crearemos un archivo de ejemplo.
+
+## 3.1. Importar desde SPSS y STATA con `{haven}`
+
+Los sociólogos trabajamos mucho con datos de encuestas en formato SPSS (.sav) y algunas en formato STATA (.dta). El paquete {haven} es la mejor herramienta para esto.
+
+```{r}
+#| eval: false
+# Cargar los datos
+## SPSS:
+datos_elsoc_sav <- read_sav("../1_datos/1_originales/ELSOC_Wide_2016_2023.sav")
+## STATA:
+datos_elsoc_dta <- read_dta("../1_datos/1_originales/ELSOC_Long_2016_2023.dta")
+```
+
+Nota sobre {haven}: importa las variables con etiquetas (labels) de SPSS. Esto es muy útil, pero a veces queremos trabajar con los valores numéricos. Podemos usar la función as_factor() para convertir variables a factores usando sus etiquetas, o zap_labels() para removerlas.
+
+## 3.2. Importar desde CSV con `{readr}` parte de `tidyverse`
+
+Usaremos read_csv() para cargar un archivo ficticio que previamente hemos creado
+
+```{r}
+# Creamos un dataframe de prueba
+df_prueba1 <- data.frame(
+  id = 1:5,
+  nombre = c("Ana", "Juan", "Pedro", "Maria", "Luis"),
+  nota = c(5.5, 6.1, 4.9, 7.0, 5.8)
+)
+
+
+# Escribimos el dataframe a un archivo CSV en la carpeta de datos originales
+# Usamos la función write.csv()
+# El argumento 'row.names = FALSE' evita que se escriba una columna de números de fila
+write.csv(df_prueba1, "../1_datos/2_procesados/df_prueba1.csv", row.names = FALSE)
+
+# Ahora, leemos el archivo CSV que acabamos de crear
+# Usamos la función read.csv()
+datos_csv <- read.csv("../1_datos/2_procesados/df_prueba1.csv")
+
+# Mostramos los datos leídos
+print(datos_csv)
+```
+
+## 3.3. Importar desde Excel con `{readxl}`
+
+A menudo recibimos datos en formato Excel. read_excel() nos permite leerlos. Podemos especificar la hoja que queremos leer con el argumento sheet.
+
+```{r}
+# Para este ejemplo, primero vamos a crear un archivo de Excel de prueba
+# Creamos un dataframe
+df_prueba2 <- data.frame(
+  id = 1:5,
+  nombre = c("Ana", "Juan", "Pedro", "Maria", "Luis"),
+  nota = c(5.5, 6.1, 4.9, 7.0, 5.8)
+)
+
+# Escribimos el dataframe a un archivo .xlsx en nuestra carpeta de datos crudos
+# Usamos el paquete writexl para esto. Si no está instalado: install.packages("writexl")
+writexl::write_xlsx(df_prueba2, "../1_datos/1_originales/df_prueba2.xlsx")
+
+# Ahora, leemos el archivo que acabamos de crear
+datos_excel <- read_excel("../1_datos/1_originales/df_prueba2.xlsx")
+
+# Mostramos los datos
+print(datos_excel)
+```
+
+## 3.4. Cargar base en formato RData
+
+```{r}
+
+load("../1_datos/1_originales/ELSOC_Wide_2016_2023.RData")
+
+# También puedo guardarlas en formato RData
+save(df_prueba1, file = "../1_datos/2_procesados/df_prueba1.RData")
+```
+
+# 4. Primera inspección de los datos
+
+Una vez cargados los datos, los primeros pasos son siempre: 
+- Ver las dimensiones (dim()). 
+- Ver la estructura (glimpse() o str()). 
+- Ver las primeras y últimas filas (head(), tail()). 
+- Obtener un resumen estadístico (summary()). 
+- Vamos a hacerlo con nuestro dataset de diamantes.
+
+```{r}
+# Dimensiones (filas, columnas)
+dim(elsoc_wide_2016_2023)
+
+# Estructura
+glimpse(df_prueba1)
+
+# Resumen estadístico
+summary(elsoc_wide_2016_2023$t01_w01)
+```
+
+¡Excelente! Con esto ya sabes cómo organizar un proyecto y cargar datos de manera ordenada y reproducible. Estás listo para el siguiente paso: la transformación y limpieza de datos. Esto lo veremos en la siguiente sesión.

@@ -1,0 +1,115 @@
+---
+title: "Ciencia de Datos Aplicada y Ciencias Sociales Computacionales"
+subtitle: "Repositorio Académico y Material Docente · Sociología UCM (2026)"
+author: "Profesor: Cristóbal Ortiz Vilches"
+toc: true
+---
+
+::: {.hero-banner}
+### Universidad Católica del Maule · Carrera de Sociología
+
+Bienvenido/a al portal unificado de los cursos electivos de formación profesional (**X Semestre**):
+
+- **OPR319 · Ciencia de Datos Aplicada con RStudio (DSRS)**
+- **OPR219 · Ciencias Sociales Computacionales (CSCC)**
+
+Aquí podrás visualizar y descargar todas las **presentaciones de clases (en HTML y PDF)**, **guías de talleres prácticos**, **bases de datos**, **plantillas** y **rúbricas de evaluación**.
+:::
+
+## Accesos Rápidos al Material
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 📊 Ciencia de Datos Aplicada (DSRS)
+Flujo de trabajo con `R`, `RStudio` y `tidyverse`: importación, transformación, visualización con `ggplot2`, diseños muestrales complejos (`survey`), datos longitudinales y espaciales.
+
+[Ir a Clases DSRS →](clases-dsrs.qmd){.btn-ucm .btn-ucm-primary}
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 🌐 Ciencias Sociales Computacionales (CSCC)
+Investigación social en la era digital, rastros digitales, diseño de investigación reproducible (Protocolo `IPO`), ciencia abierta, control de versiones (`Git`/`GitHub`) y ética digital.
+
+[Ir a Clases CSCC →](clases-cscc.qmd){.btn-ucm .btn-ucm-primary}
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 💻 Talleres Prácticos Conjuntos
+8 sesiones prácticas paso a paso con código ejecutable en `Quarto` / `RMarkdown` y bases de datos reales (ELSOC-COES, Censo 2017 y MBHT).
+
+[Ir a Prácticos →](practicos.qmd){.btn-ucm .btn-ucm-primary}
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.course-card}
+### 📋 Evaluaciones y Bases de Datos
+Plantillas reproducibles en formato `.qmd`, rúbricas de evaluación en **PDF** y descarga directa de todas las bases de datos del curso.
+
+[Evaluaciones →](evaluaciones.qmd){.btn-ucm .btn-ucm-primary} [Datos →](datos.qmd){.btn-ucm .btn-ucm-outline}
+:::
+:::
+
+:::
+
+---
+
+## Resumen de Contenidos y Descargas Directas
+
+### 1. Clases Teóricas: Ciencia de Datos Aplicada con RStudio (DSRS)
+
+| Sesión | Tema de la Sesión | Presentación Web | Descargar PDF | Código Fuente |
+|:---:|:---|:---:|:---:|:---:|
+| **I** | Introducción a la ciencia de datos y programa del curso | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-1.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-1.pdf){download="dsrs-clase-1.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-1.qmd){download="dsrs-clase-1.qmd"} |
+| **II** | Introducción a R y RStudio | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-2.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-2.pdf){download="dsrs-clase-2.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-2.qmd){download="dsrs-clase-2.qmd"} |
+| **III** | Procesamiento de Datos (`readr`, `haven`, `dplyr`) | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-3.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-3.pdf){download="dsrs-clase-3.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-3.qmd){download="dsrs-clase-3.qmd"} |
+| **IV** | Modificación y Resumen de Datos (`mutate`, `summarise`) | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-4.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-4.pdf){download="dsrs-clase-4.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-4.qmd){download="dsrs-clase-4.qmd"} |
+| **V** | Introducción a la Visualización de Datos con `ggplot2` | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-5.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-5.pdf){download="dsrs-clase-5.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-5.qmd){download="dsrs-clase-5.qmd"} |
+| **VI** | Procesamiento Avanzado (`NA`, `joins` y `pivot`) | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-6.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-6.pdf){download="dsrs-clase-6.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-6.qmd){download="dsrs-clase-6.qmd"} |
+| **VII** | Introducción al diseño muestral complejo (`survey`) | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-7.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-7.pdf){download="dsrs-clase-7.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-7.qmd){download="dsrs-clase-7.qmd"} |
+| **VIII** | Visualización de Datos Longitudinales | [🖥️ Ver Slides](1-data-science-rstudio/dsrs-clase-8.html){target="_blank"} | [📥 PDF](1-data-science-rstudio/dsrs-clase-8.pdf){download="dsrs-clase-8.pdf"} | [📄 .qmd](1-data-science-rstudio/dsrs-clase-8.qmd){download="dsrs-clase-8.qmd"} |
+
+---
+
+### 2. Clases Teóricas: Ciencias Sociales Computacionales (CSCC)
+
+| Sesión | Tema de la Sesión | Presentación Web | Descargar PDF | Código Fuente |
+|:---:|:---|:---:|:---:|:---:|
+| **I** | Introducción a la Ciencia Social Computacional y programa | [🖥️ Ver Slides](2-ccss-computacionales/cscc-clase-1.html){target="_blank"} | [📥 PDF](2-ccss-computacionales/cscc-clase-1.pdf){download="cscc-clase-1.pdf"} | [📄 .qmd](2-ccss-computacionales/cscc-clase-1.qmd){download="cscc-clase-1.qmd"} |
+| **II** | Diseño de investigación en la era digital | [🖥️ Ver Slides](2-ccss-computacionales/cscc-clase-2.html){target="_blank"} | [📥 PDF](2-ccss-computacionales/cscc-clase-2.pdf){download="cscc-clase-2.pdf"} | [📄 .qmd](2-ccss-computacionales/cscc-clase-2.qmd){download="cscc-clase-2.qmd"} |
+| **III** | Reproducibilidad, Ciencia Abierta y Protocolo IPO | [🖥️ Ver Slides](2-ccss-computacionales/cscc-clase-3.html){target="_blank"} | [📥 PDF](2-ccss-computacionales/cscc-clase-3.pdf){download="cscc-clase-3.pdf"} | [📄 .qmd](2-ccss-computacionales/cscc-clase-3.qmd){download="cscc-clase-3.qmd"} |
+| **IV** | Control de versiones (`Git`) y trabajo colaborativo (`GitHub`) | [🖥️ Ver Slides](2-ccss-computacionales/cscc-clase-4.html){target="_blank"} | [📥 PDF](2-ccss-computacionales/cscc-clase-4.pdf){download="cscc-clase-4.pdf"} | [📄 .qmd](2-ccss-computacionales/cscc-clase-4.qmd){download="cscc-clase-4.qmd"} |
+
+---
+
+### 3. Talleres Prácticos Conjuntos (DSRS & CSCC)
+
+| Práctico | Tema del Taller | Guía Web | Descargar PDF | Script R/Quarto |
+|:---:|:---|:---:|:---:|:---:|
+| **I** | Flujo de trabajo (`RProject`) e importación de datos | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.pdf){download="ejercicio-practico-1.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-1.qmd){download="ejercicio-practico-1.qmd"} |
+| **II** | Procesamiento y limpieza de datos (`select`, `filter`, `arrange`) | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.pdf){download="ejercicio-practico-2.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-2.qmd){download="ejercicio-practico-2.qmd"} |
+| **III** | Manipulación, recodificación y etiquetado (`mutate`, `sjlabelled`) | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.pdf){download="ejercicio-practico-3.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-3.qmd){download="ejercicio-practico-3.qmd"} |
+| **IV** | Visualización inicial de datos con `ggplot2` | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.pdf){download="ejercicio-practico-4.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-4.qmd){download="ejercicio-practico-4.qmd"} |
+| **V (Parte 1)** | Procesamiento avanzado: datos faltantes (`NA`), `joins` y `pivot` | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.pdf){download="ejercicio-practico-5a.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.qmd){download="ejercicio-practico-5a.qmd"} |
+| **V (Parte 2)** | Introducción a `Git` y `GitHub` con RStudio (`usethis`) | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.pdf){download="ejercicio-practico-5b.pdf"} | [💻 .qmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.qmd){download="ejercicio-practico-5b.qmd"} |
+| **VI** | Análisis de encuestas complejas con `survey` | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.pdf){download="ejercicio-practico-6.pdf"} | [💻 .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-6.Rmd){download="ejercicio-practico-6.Rmd"} |
+| **VII** | Visualización de datos longitudinales (`panelr`, `ggplot2`) | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.pdf){download="ejercicio-practico-7.pdf"} | [💻 .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-7.Rmd){download="ejercicio-practico-7.Rmd"} |
+| **VIII** | Visualización de datos espaciales (`sf`, `chilemapas`, `leaflet`) | [📖 Abrir](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html) | [📥 PDF](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.pdf){download="ejercicio-practico-8.pdf"} | [💻 .Rmd](3-practicos-conjuntos/2_codigo/ejercicio-practico-8.Rmd){download="ejercicio-practico-8.Rmd"} |
+
+---
+
+### 4. Evaluaciones Conjuntas (2026)
+
+| Documento | Descripción | Ver en Web | Descargar PDF | Descargar Plantilla `.qmd` |
+|:---|:---|:---:|:---:|:---:|
+| **Rúbrica Evaluación I** | Criterios de evaluación Entrega 1 (Problematización y Diseño, 20%) | [📖 Ver](4-evaluaciones-conjuntas/rubrica-e1.html) | [📥 PDF](4-evaluaciones-conjuntas/rubrica-e1.pdf){download="rubrica-e1.pdf"} | [📄 .qmd](4-evaluaciones-conjuntas/rubrica-e1.qmd){download="rubrica-e1.qmd"} |
+| **Plantilla Evaluación I** | Estructura base en Quarto para el reporte de la Entrega 1 | [📖 Ver](4-evaluaciones-conjuntas/plantilla-e1.html) | [📥 PDF](4-evaluaciones-conjuntas/plantilla-e1.pdf){download="plantilla-e1.pdf"} | [📄 .qmd](4-evaluaciones-conjuntas/plantilla-e1.qmd){download="plantilla-e1.qmd"} |
+| **Rúbrica Evaluación II** | Criterios de evaluación Entrega 2 (Informe de Resultados, 40%) | [📖 Ver](4-evaluaciones-conjuntas/rubrica-e2.html) | [📥 PDF](4-evaluaciones-conjuntas/rubrica-e2.pdf){download="rubrica-e2.pdf"} | [📄 .qmd](4-evaluaciones-conjuntas/rubrica-e2.qmd){download="rubrica-e2.qmd"} |
+| **Plantilla Evaluación II** | Estructura base en Quarto para el reporte de la Entrega 2 | [📖 Ver](4-evaluaciones-conjuntas/plantilla-e2.html) | [📥 PDF](4-evaluaciones-conjuntas/plantilla-e2.pdf){download="plantilla-e2.pdf"} | [📄 .qmd](4-evaluaciones-conjuntas/plantilla-e2.qmd){download="plantilla-e2.qmd"} |
+

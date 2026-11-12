@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../1-data-science-rstudio/images/logo-ucm-render.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Profesor: Cristóbal Ortiz Vilches">
+  <title>Cursos Ciencia de Datos &amp; CCSS Computacionales – Ciencia de Datos Aplicada con RStudio</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
+  <link rel="stylesheet" href="custom-styles.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Ciencia de Datos Aplicada con RStudio</h1>
+  <p class="subtitle">Sesión VI: Procesamiento Avanzado (Datos Faltantes, Uniones y Datos Longitudinales)</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Profesor: Cristóbal Ortiz Vilches
+</div>
+</div>
+</div>
+
+</section>
+<section id="estructura-de-la-sesión" class="title-slide slide level1 center">
+<h1>Estructura de la sesión</h1>
+<ol type="1">
+<li><a href="#/repaso">Repaso y objetivos</a></li>
+<li><a href="#/na">Manejo de Datos Faltantes (<code>NA</code>)</a></li>
+<li><a href="#/joins">Uniendo bases de datos: los <code>joins</code></a></li>
+<li><a href="#/pivot">Transformando datos: de Ancho a Largo</a></li>
+<li><a href="#/aplicacion">Aplicación práctica integrada</a></li>
+<li><a href="#/resumen">Resumen y próximos pasos</a></li>
+</ol>
+</section>
+
+<section>
+<section id="repaso" class="title-slide slide level1 center">
+<h1>1. Repaso y objetivos</h1>
+
+</section>
+<section id="qué-vimos-en-la-sesión-anterior" class="slide level2">
+<h2>¿Qué vimos en la sesión anterior?</h2>
+<ul>
+<li><strong>Modificación de variables</strong>: Usamos <code>select()</code>, <code>filter()</code> y <code>mutate()</code> para procesar nuestra base de datos</li>
+<li><strong>Resumen de datos</strong>: Agregamos datos con <code>group_by()</code> y <code>summarise()</code>.</li>
+<li><strong>Introducción a ggplot2</strong>: Con las herramientas de procesamiento, introdujimos el concepto de visualización con el paquete <code>{ggplot2}</code></li>
+</ul>
+</section>
+<section id="objetivos-de-hoy" class="slide level2">
+<h2>Objetivos de hoy</h2>
+<p>Hoy abordaremos tres tareas avanzadas en la preparación de datos:</p>
+<ol type="1">
+<li class="fragment"><strong>Gestionar datos ausentes (<code>NA</code>)</strong>: Identificar, contar y decidir qué hacer con los valores perdidos.</li>
+<li class="fragment"><strong>Combinar múltiples fuentes de datos</strong>: Aprender a unir datos de diferentes fuentes usando los distintos tipos de <code>joins</code>.</li>
+<li class="fragment"><strong>Reestructurar datos longitudinales</strong>: Transformar datos entre formatos “ancho” y “largo” con <code>pivot_longer()</code> y <code>pivot_wider()</code>.</li>
+</ol>
+<div class="fragment">
+<p><img data-src="images/tidyverse-workflow.svg"></p>
+</div>
+</section></section>
+<section>
+<section id="na" class="title-slide slide level1 center">
+<h1>2. Manejo de Datos Faltantes (<code>NA</code>)</h1>
+
+</section>
+<section id="qué-es-na-y-por-qué-importa" class="slide level2">
+<h2>¿Qué es <code>NA</code> y por qué importa?</h2>
+<p>En R, <code>NA</code> (Not Available) representa la ausencia de un valor.</p>
+<ul>
+<li>No es cero,</li>
+<li>no es un espacio en blanco,</li>
+<li>es la declaración de que <strong>“no sabemos”</strong> cuál es el dato.</li>
+</ul>
+<p><strong>¿Por qué es importante?</strong></p>
+<ul>
+<li class="fragment">Casi todas las bases de datos del mundo real tienen valores faltantes.</li>
+<li class="fragment">Las operaciones matemáticas con <code>NA</code> suelen resultar en <code>NA</code> (ej. <code>5 + NA</code> es <code>NA</code>).</li>
+<li class="fragment">Ignorarlos puede sesgar nuestros análisis o romper nuestro código.</li>
+</ul>
+</section>
+<section id="manejo-de-na" class="slide level2">
+<h2>Manejo de <code>NA</code></h2>
+<p>Principales herramientas:</p>
+<ol type="1">
+<li class="fragment"><strong>Identificar</strong>: La función <code>is.na()</code> nos devuelve <code>TRUE</code> si un valor es <code>NA</code>.</li>
+<li class="fragment"><strong>Contar</strong>: Podemos combinar <code>is.na()</code> con <code>sum()</code> para contar cuántos <code>NA</code> hay en una variable.</li>
+<li class="fragment"><strong>Eliminar</strong>:
+<ul>
+<li class="fragment"><code>na.omit()</code>: Elimina cualquier fila que contenga al menos un <code>NA</code>. Pero cuidado, puede eliminar demasiados datos.</li>
+<li class="fragment"><code>drop_na()</code> de <code>tidyr</code>: Una versión más controlada que permite especificar en qué columnas buscar <code>NA</code>.</li>
+</ul></li>
+<li class="fragment"><strong>Ignorar en cálculos</strong>: Muchas funciones (como <code>mean()</code>, <code>sum()</code>, <code>sd()</code>) tienen un argumento <code>na.rm = TRUE</code> para remover los <code>NA</code> antes de calcular.</li>
+</ol>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a aria-label="2"></a></span>
+<span id="cb1-3"><a aria-label="3"></a><span class="co"># Contar NAs en una columna específica</span></span>
+<span id="cb1-4"><a aria-label="4"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(datos<span class="sc">$</span>mi_columna))</span>
+<span id="cb1-5"><a aria-label="5"></a></span>
+<span id="cb1-6"><a aria-label="6"></a><span class="co"># Eliminar filas con NAs en CUALQUIER columna</span></span>
+<span id="cb1-7"><a aria-label="7"></a>datos_limpios <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(datos)</span>
+<span id="cb1-8"><a aria-label="8"></a></span>
+<span id="cb1-9"><a aria-label="9"></a><span class="co"># Calcular el promedio ignorando los NAs</span></span>
+<span id="cb1-10"><a aria-label="10"></a><span class="fu">mean</span>(datos<span class="sc">$</span>mi_columna, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="joins" class="title-slide slide level1 center">
+<h1>3. Uniendo bases de datos: los joins</h1>
+
+</section>
+<section id="por-qué-unir-datos" class="slide level2">
+<h2>¿Por qué unir datos?</h2>
+<p>Es muy raro que toda la información que necesitamos esté en una única base de datos. Lo común es tener:</p>
+<ul>
+<li class="fragment">Una base con datos demográficos de encuestados.</li>
+<li class="fragment">Otra base con sus respuestas a una encuesta.</li>
+<li class="fragment">Quizás una tercera base con datos de su comuna.</li>
+</ul>
+<div class="fragment">
+<p>Para analizarlos juntos, necesitamos unirlos. Las funciones <code>_join()</code> de <code>{dplyr}</code> lo hacen posible, siempre que tengamos una <strong>llave</strong> (una o más columnas en común).</p>
+</div>
+</section>
+<section id="tipos-de-uniones" class="slide level2">
+<h2>Tipos de uniones</h2>
+<p>Imaginemos que tenemos dos tablas, x (izquierda) e y (derecha).</p>
+<ul>
+<li class="fragment"><p><code>inner_join(x, y)</code>: Mantiene solo las filas que tienen una llave coincidente en ambas tablas.</p></li>
+<li class="fragment"><p><code>left_join(x, y)</code>: Mantiene todas las filas de la tabla x (izquierda) y agrega los datos de y donde las llaves coinciden. Si no hay coincidencia, se rellena con NA. ¡Es el más usado!</p></li>
+<li class="fragment"><p><code>right_join(x, y)</code>: Lo contrario. Mantiene todas las filas de y (derecha).</p></li>
+<li class="fragment"><p><code>full_join(x, y)</code>: Mantiene todas las filas de ambas tablas. Rellena con NA donde no hay coincidencias.</p></li>
+</ul>
+<div class="fragment">
+<p>Sintaxis de un join</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># El join más común:</span></span>
+<span id="cb2-2"><a aria-label="2"></a>datos_unidos <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
+<span id="cb2-3"><a aria-label="3"></a>  tabla_izquierda,</span>
+<span id="cb2-4"><a aria-label="4"></a>  tabla_derecha,</span>
+<span id="cb2-5"><a aria-label="5"></a>  <span class="at">by =</span> <span class="st">"id_columna"</span> <span class="co"># Nombre de la columna que sirve como llave</span></span>
+<span id="cb2-6"><a aria-label="6"></a>)</span>
+<span id="cb2-7"><a aria-label="7"></a></span>
+<span id="cb2-8"><a aria-label="8"></a><span class="co"># Si las columnas llave tienen nombres diferentes:</span></span>
+<span id="cb2-9"><a aria-label="9"></a><span class="fu">left_join</span>(tabla_a, tabla_b, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"id_a"</span> <span class="ot">=</span> <span class="st">"id_b"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="pivot" class="title-slide slide level1 center">
+<h1>4. Transformando datos: de Ancho a Largo</h1>
+
+</section>
+<section id="por-qué-son-importantes" class="slide level2">
+<h2>¿Por qué son importantes?</h2>
+<p>En sociología, no solo nos interesa una “foto” del momento, sino también entender cómo cambian los fenómenos sociales a lo largo del tiempo.</p>
+<ul>
+<li><strong>Trayectorias laborales</strong>: ¿Cómo evoluciona el ingreso de una persona tras titularse?</li>
+<li><strong>Opinión pública</strong>: ¿Ha cambiado el apoyo a una política pública a lo largo de una década?</li>
+<li><strong>Salud y bienestar</strong>: ¿Cómo varía la percepción de bienestar en diferentes etapas de la vida?</li>
+</ul>
+<p>Los <strong>datos longitudinales</strong> o de <strong>panel</strong> siguen a las mismas unidades de análisis (personas, hogares, países) a través de múltiples momentos en el tiempo.</p>
+</section>
+<section id="datos-longitudinales-y-su-estructura" class="slide level2">
+<h2>Datos longitudinales y su estructura</h2>
+<p>Cuando tenemos más de una medición en el tiempo, podemos estructurar los datos de dos formas:</p>
+<div class="fragment">
+<ul>
+<li><p>Formato Ancho (Wide): Cada punto en el tiempo es una columna. Intuitivo, pero malo para analizar.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>ingreso_2020</th>
+<th>ingreso_2021</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>500</td>
+<td>550</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1000</td>
+<td>900</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><p>Formato Largo (Long): Cada punto en el tiempo es una fila. Ideal para el análisis y la visualización con tidyverse.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>año</th>
+<th>ingreso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2020</td>
+<td>500</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>2021</td>
+<td>550</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>2020</td>
+<td>1000</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>2021</td>
+<td>900</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</div>
+</section>
+<section id="ventajas-y-desventajas" class="slide level2">
+<h2>Ventajas y desventajas</h2>
+<h3 id="formato-ancho-wide">Formato Ancho (Wide)</h3>
+<ul>
+<li><strong>Características</strong>: Cada fila es una observación única (ej. una persona) y las mediciones repetidas en el tiempo se almacenan en columnas separadas.</li>
+<li><strong>Ventajas</strong>: Intuitivo para la entrada de datos y fácil de leer para pocas mediciones.</li>
+<li><strong>Desventajas</strong>: Difícil de analizar. ¿Cómo calculamos el ingreso promedio <em>por año</em>? ¿Cómo graficamos la evolución del ingreso? Se vuelve inmanejable con muchos puntos de tiempo.</li>
+</ul>
+<h3 id="formato-largo-long">Formato Largo (Long)</h3>
+<ul>
+<li><strong>Características</strong>: Cada fila es una observación en <em>un punto del tiempo</em>. Hay columnas que identifican la unidad de análisis (<code>id_persona</code>), el tiempo (<code>año</code>) y el valor observado (<code>ingreso</code>).</li>
+<li><strong>Ventajas</strong>: Es el formato “tidy” o limpio para el análisis. Facilita el uso de <code>group_by()</code>, <code>ggplot()</code> y modelos estadísticos.</li>
+<li><strong>Desventajas</strong>: Puede ser menos intuitivo de leer al principio, ya que hay múltiples filas para la misma persona.</li>
+</ul>
+</section>
+<section id="cómo-hacerlo-en-r" class="slide level2">
+<h2>¿Cómo hacerlo en R?</h2>
+<p>En R usaremos dos funciones clave del paquete <code>{tidyr}</code>.</p>
+<ul>
+<li class="fragment"><p><code>pivot_longer()</code>: “Alarga” los datos. Toma múltiples columnas y las colapsa en un par de columnas de “nombre” y “valor”.</p></li>
+<li class="fragment"><p><code>pivot_wider()</code>: “Ensancha” los datos. Es la operación inversa, útil para reportes o tablas de resumen.</p></li>
+</ul>
+</section>
+<section id="de-ancho-a-largo" class="slide level2">
+<h2>De ancho a largo</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># En general</span></span>
+<span id="cb3-2"><a aria-label="2"></a></span>
+<span id="cb3-3"><a aria-label="3"></a>datos_long <span class="ot">&lt;-</span> datos_wide <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a aria-label="4"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb3-5"><a aria-label="5"></a>    <span class="at">cols =</span> <span class="fu">c</span>(columna1, columna2, columna3), <span class="co"># Las columnas que queremos alargar</span></span>
+<span id="cb3-6"><a aria-label="6"></a>    <span class="at">names_to =</span> <span class="st">"nueva_columna_nombres"</span>,     <span class="co"># Nombre de la nueva columna para las llaves</span></span>
+<span id="cb3-7"><a aria-label="7"></a>    <span class="at">values_to =</span> <span class="st">"nueva_columna_valores"</span>     <span class="co"># Nombre de la nueva columna para los valores</span></span>
+<span id="cb3-8"><a aria-label="8"></a>  )</span>
+<span id="cb3-9"><a aria-label="9"></a></span>
+<span id="cb3-10"><a aria-label="10"></a><span class="co"># En nuestro ejemplo</span></span>
+<span id="cb3-11"><a aria-label="11"></a>datos_long <span class="ot">&lt;-</span> datos_wide <span class="sc">%&gt;%</span>  </span>
+<span id="cb3-12"><a aria-label="12"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"ingreso_"</span>), </span>
+<span id="cb3-13"><a aria-label="13"></a>               <span class="at">names_to =</span> <span class="st">"año"</span>, </span>
+<span id="cb3-14"><a aria-label="14"></a>               <span class="at">values_to =</span> <span class="st">"ingreso"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="de-largo-a-ancho" class="slide level2">
+<h2>De largo a ancho</h2>
+</section></section>
+<section id="resumen" class="title-slide slide level1 center">
+<h1>5. Resumen y próximos pasos</h1>
+<p>Resumen de la sesión</p>
+<ul>
+<li class="fragment"><p>Datos Faltantes (NA): Aprendimos a identificar, contar y manejar valores perdidos para no comprometer nuestros análisis.</p></li>
+<li class="fragment"><p>Unión de Datos (joins): Vimos cómo combinar diferentes tablas de manera inteligente usando una columna llave y las funciones de dplyr.</p></li>
+<li class="fragment"><p>Datos Longitudinales (pivot): Reforzamos cómo reestructurar datos para facilitar el análisis de tendencias a lo largo del tiempo.</p></li>
+</ul>
+<p>Próximos pasos</p>
+<ul>
+<li class="fragment">Taller práctico: Pondremos en acción todo lo aprendido hoy.</li>
+<li class="fragment">Próxima sesión: Abordaremos el diseño muestral complejo, un factor clave para la validez de nuestros análisis con datos de encuestas.</li>
+</ul>
+</section>
+
+<section id="gracias-por-la-atención" class="title-slide slide level1 center">
+<h1>¡Gracias por la atención!</h1>
+<!-- ========================== -->
+<!-- BARRA SUPERIOR E INFERIOR -->
+<!-- ========================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Crear barra superior
+  var sectionBar = document.createElement('div');
+  sectionBar.id = 'section-bar';
+  sectionBar.innerHTML = `
+    <span id="current-section"></span>
+    <img id="logo" src="images/logo-ucm-render.png" alt="Logo COES">
+  `;
+  document.body.appendChild(sectionBar);
+
+  // Crear barra inferior
+  var footerBar = document.createElement('div');
+  footerBar.id = 'footer-bar';
+  footerBar.innerHTML = `
+    <span id="footer-text">Cristóbal Ortiz Vilches | CC BY-NC 4.0 2026 – Ciencia de Datos Aplicada con RStudio</span>
+    <span id="page-counter"></span>
+  `;
+  document.body.appendChild(footerBar);
+
+  // Capturar secciones principales
+  var sectionTitles = [];
+  var allSlides = document.querySelectorAll('.reveal .slides section');
+  allSlides.forEach(function(slide) {
+    let title = slide.querySelector('h1');
+    if (title) {
+      sectionTitles.push({ title: title.innerText, slide: slide });
+    }
+  });
+
+  function updateBar(event) {
+    let currentSlide = event.currentSlide;
+    let currentIndex = Reveal.getSlidePastCount(currentSlide);
+    let totalSlides = Reveal.getTotalSlides();
+
+    // Actualiza contador inferior
+    document.getElementById('page-counter').innerText = (currentIndex + 1) + "/" + totalSlides;
+
+    const sectionText = document.getElementById('current-section');
+
+    // Oculta la barra en la primera y última diapositiva
+    if (currentIndex === 0 || currentIndex === 1 || currentIndex === totalSlides - 1) {
+      sectionText.style.visibility = 'hidden';
+    } else {
+      sectionText.style.visibility = 'visible';
+
+      // Actualiza texto de la sección si corresponde
+      for (let i = 0; i < sectionTitles.length; i++) {
+        if (sectionTitles[i].slide === currentSlide || sectionTitles[i].slide.contains(currentSlide)) {
+          sectionText.innerText = sectionTitles[i].title;
+          return;
+        }
+      }
+
+      // Si no hay coincidencia exacta, busca la sección más cercana anterior
+      for (let i = sectionTitles.length - 1; i >= 0; i--) {
+        if (Reveal.getSlidePastCount(sectionTitles[i].slide) <= currentIndex) {
+          sectionText.innerText = sectionTitles[i].title;
+          return;
+        }
+      }
+    }
+  }
+
+  Reveal.on('slidechanged', updateBar);
+  Reveal.on('ready', updateBar);
+});
+</script>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

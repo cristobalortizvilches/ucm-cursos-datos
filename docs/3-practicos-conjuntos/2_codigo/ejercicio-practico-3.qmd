@@ -1,0 +1,202 @@
+---
+title: "DSRS & CSCC - Práctico III"
+subtitle: "Manipulación de Datos"
+author: "Cristóbal Ortiz Vilches"
+date: "26 de septiembre de 2025"
+format:
+  html:
+    toc: true
+    toc-title: "Índice"
+    toc-depth: 3
+    theme: cosmo
+    other-links:
+      - text: "Descargar en PDF"
+        href: ejercicio-practico-3.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.qmd)"
+        href: ejercicio-practico-3.qmd
+        icon: file-earmark-code
+---
+
+## Objetivos de la sesión
+
+El objetivo de esta sesión es aplicar de manera práctica los conceptos de manipulación de datos que vimos en la sesión teórica. Nos enfocaremos en técnicas recodificación de variables y etiquetado de datos y agrupamiento. Utilizaremos las siguientes funciones del paquete `{dplyr}`:
+
+-   `mutate()`: Para crear o modificar variables.
+
+-   `summarise()`: Para resumir datos de una o más variables.
+
+-   `group_by()`: Para agrupar los datos y aplicar funciones de resumen por grupo.
+
+-   Funciones de recodificación condicional: **`if_else()`** y **`case_when()`**.
+
+-   Recodificación de variables categóricas con **`car::recode()`**.
+
+-   Etiquetado de variables y valores con el paquete **`{sjlabelled}`**.
+
+Trabajaremos con una base de datos ficticia, creada para esta sesión, lo que te permitirá practicar la manipulación de datos de forma reproducible.
+
+## Requisito previo
+
+Asegúrate de tener instalado y cargado el paquete `tidyverse`. Si no lo tienes, puedes instalarlo con el siguiente comando y luego cargarlo.
+
+```{r}
+# Instala el paquete si no lo tienes
+# install.packages("tidyverse")
+
+# Carga el paquete necesario
+library(tidyverse)
+```
+
+## 1. Creación de la base de datos ficticia
+
+En lugar de cargar una base de datos externa, crearemos una directamente en R. Esta base de datos simula información de encuestados con variables como `id`, `region`, `sexo` y `edad`.
+
+```{r}
+# Crear una base de datos ficticia
+df_base <- tibble(
+  id = 1:10,
+  region = c(13, 13, 5, 5, 8, 8, 7, 7, 5, 8),
+  sexo = c(1, 2, 1, 2, 1, 2, 1, 2, 1, 2),
+  edad = c(25, 31, 45, 60, 22, 55, 35, 28, 41, 65),
+  ingreso = c(850000, 1100000, 500000, 250000, 780000, 950000, 1200000, 600000, 750000, 300000),
+  nivel_educativo = c(1, 2, 3, 2, 1, 3, 2, 1, 3, 2)
+)
+
+# Visualizar la base de datos creada
+df_base
+```
+
+## 2. Creando variables con `mutate()`
+
+`mutate()` es una función clave del paquete `dplyr` que te permite crear nuevas variables o modificar variables existentes. Esto es fundamental para recodificar, realizar operaciones matemáticas o transformar datos.
+
+### 2.1. Recodificación simple (o binaria) con `if_else()`
+
+```{r}
+# la variable se llama sexo
+# se que sexo=1->mujer & que sexo=2->hombre
+
+df_base_sexo <- df_base |>
+  mutate(sexo_cat = if_else(sexo == 1, "Hombre", "Mujer"))
+
+
+df_base_sexo
+```
+
+### 2.2. Recodificación con múltiples condiciones con `case_when()`
+
+Recodifica la variable `ingreso` en tres categorías:
+
+-   `Bajo` (ingreso menor o igual 500.000) -\> $(-Inf, 500000]$
+-   `Medio` (ingreso entre 500.001 y 1.000.000) -\> $(500000, 1000000]$
+-   `Alto` (ingreso mayor a 1.000.000) -\> $(1000000, Inf)$
+
+```{r}
+df_ingreso <- df_base %>% 
+  mutate(tramo_ingreso = case_when(ingreso <= 500000 ~ "Bajo",
+                                   ingreso <= 1000000 ~ "Medio",
+                                   ingreso > 1000000 ~ "Alto"))
+```
+
+### 2.2b. Alternativa de recodificación múltiple para tramos con `cut` de R base
+
+```{r}
+# Crear un nuevo dataframe llamado df_ingreso basado en df_base
+df_ingreso_2 <- df_ingreso %>%
+  mutate(tramo_ingreso_2 = cut(ingreso, 
+                               breaks = c(-Inf, 500000, 1000000, Inf),
+                               labels = c("Bajo", "Medio", "Alto"),
+                               right = TRUE, # Intervalos son cerrados a la derecha (ej. (500000, 1000000])
+                               include.lowest = TRUE)) # Valor más bajo sea incluido en el primer intervalo
+```
+
+### 2.3. Recodificación con `car::recode()`
+
+El paquete `car` es popular en sociología por su función `recode()`, que permite una sintaxis similar a la de otros programas estadísticos como SPSS.
+
+En el ejemplo recodificamos `nivel_educativo` a un formato más descriptivo usando `car::recode()`.
+
+-   `1` a `"Básica"`
+-   `2` a `"Media"`
+-   `3` a `"Superior"`
+
+```{r}
+df_car <- df_base %>% 
+  mutate(nivel_educativo_cat = car::recode(nivel_educativo,
+                                           "1 = 'Básica'; 
+                                            2 = 'Media'; 
+                                            3 = 'Superior'"))
+
+df_car2 <- df_base |> 
+  mutate(nivel_educativo_cat = case_when(nivel_educativo == 1 ~ "Basica",
+                                         nivel_educativo == 2 ~ "Media",
+                                         nivel_educativo == 3 ~ "Superior"))
+```
+
+## 3. Etiquetado de datos con `{sjlabelled}`
+
+Una buena práctica en la ciencia de datos para las ciencias sociales es el uso de **etiquetas**, que son metadatos que describen el significado de las variables y sus valores. El paquete `{sjlabelled}` es ampliamente utilizado para este fin.
+
+Etiqueta las variables `sexo` y `region` y sus valores para que sean más legibles.
+
+```{r}
+#install.packages("sjlabelled")
+library(tidyverse)
+library(sjlabelled)
+library(sjmisc)
+
+frq(df_base$region)
+
+df_label <- df_base %>% 
+  var_labels(sexo = "Sexo del entrevistado") %>% 
+  set_labels(region,
+             labels = c("Valparaíso" = 5, "Bío-Bío" = 8, 
+                        "Metropolitana" = 13, "Maule" = 7))
+
+df_label2 <- df_label %>% 
+  as_label(region)
+
+frq(df_label2$region)
+
+# Mostrar etiquetas con frq
+# Mostrar utilidad de etiquetas con as_label
+```
+
+## 4. Resumiendo datos con `summarise()` y `group_by()`
+
+`summarise()` colapsa múltiples valores en un solo resumen. Es útil para calcular promedios, medianas, desviaciones estándar, etc.
+
+`group_by()` es una función auxiliar que, al usarse antes de `summarise()`, le dice a R que aplique la función de resumen a cada grupo de datos, no a toda la base.
+
+```{r}
+
+class(df_label$region)
+
+df_sum <- df_label %>% 
+  as_label(region) |> 
+  group_by(region) %>% 
+  summarise(ingreso_prom_region = mean(ingreso, na.rm = TRUE)) %>% 
+  arrange(desc(ingreso_prom_region))
+  
+df_sum
+# aplicar la utilidad de as_label
+# ordenar con arrange(desc())
+```
+
+## 5. Ejercicio Integrador
+
+Ahora combinaremos todo lo aprendido: `select()`, `filter()`, `mutate()`, `group_by()` y `summarise()`.
+
+```{r}
+df_final <- df_label %>% 
+  select(id, region, sexo, ingreso) %>% 
+  filter(region %in% c(13, 7)) %>% 
+  mutate(
+    sexo = if_else(sexo == 1, "Mujer", "Hombre")
+    ) %>% 
+  as_label(region) %>% 
+  group_by(sexo, region) %>% 
+  summarise(promedio_ingreso = mean(ingreso, na.rm = TRUE)) 
+  
+```

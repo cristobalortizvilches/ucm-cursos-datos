@@ -1,0 +1,65 @@
+---
+title: "Bases de Datos y Recursos"
+subtitle: "Descarga de Datasets e Instalación de Software"
+author: "Profesor: Cristóbal Ortiz Vilches"
+toc: true
+---
+
+Aquí puedes descargar directamente todas las bases de datos utilizadas en las clases teóricas, talleres prácticos y evaluaciones del curso.
+
+---
+
+## 1. Bases de Datos del Curso
+
+| Archivo | Formato | Tamaño aprox. | Uso en el Curso | Descarga Directa |
+|:---|:---:|:---:|:---|:---:|
+| `ELSOC_Wide_2016_2023.RData` | `.RData` | 6.9 MB | Prácticos I y II (ELSOC formato ancho 2016–2023) | [📥 Descargar](3-practicos-conjuntos/1_datos/1_originales/ELSOC_Wide_2016_2023.RData){download="ELSOC_Wide_2016_2023.RData"} |
+| `elsoc-long.RData` | `.RData` | 1.9 MB | Prácticos VI y VII (ELSOC formato largo panel) | [📥 Descargar](3-practicos-conjuntos/1_datos/1_originales/elsoc-long.RData){download="elsoc-long.RData"} |
+| `elsoc_chile.RData` | `.RData` | 5.5 MB | Clases DSRS y ejercicios generales | [📥 Descargar](0-datos/elsoc_chile.RData){download="elsoc_chile.RData"} |
+| `elsoc_base.RData` | `.RData` | 152 KB | Clases DSRS (Sesiones I y II) | [📥 Descargar](0-datos/elsoc_base.RData){download="elsoc_base.RData"} |
+| `data_seguridad_maule.xlsx` | `.xlsx` | 5.5 MB | Práctico VIII (Índice de seguridad MBHT - Maule) | [📥 Descargar](3-practicos-conjuntos/1_datos/1_originales/data_seguridad_maule.xlsx){download="data_seguridad_maule.xlsx"} |
+| `data_maule_mzn.zip` | `.zip` (`sf`) | 5.6 MB | Práctico VIII (Shapefile manzanas Región del Maule) | [📥 Descargar](3-practicos-conjuntos/1_datos/2_procesados/data_maule_mzn.zip){download="data_maule_mzn.zip"} |
+| `df_prueba1.csv` | `.csv` | 1 KB | Práctico I (Ejemplo importación CSV) | [📥 Descargar](3-practicos-conjuntos/1_datos/1_originales/df_prueba1.csv){download="df_prueba1.csv"} |
+| `df_prueba2.xlsx` | `.xlsx` | 5 KB | Práctico I (Ejemplo importación Excel) | [📥 Descargar](3-practicos-conjuntos/1_datos/1_originales/df_prueba2.xlsx){download="df_prueba2.xlsx"} |
+
+---
+
+## 2. Repositorios Externos Oficiales
+
+Algunas bases de datos completas (en formato SPSS `.sav`, Stata `.dta` o cartografías nacionales completas) superan los 100 MB y pueden descargarse directamente desde sus fuentes oficiales:
+
+- **Estudio Longitudinal Social de Chile (ELSOC - COES):** [Repositorio oficial en Harvard Dataverse](https://dataverse.harvard.edu/dataverse/coes_data_repository)
+- **Matriz de Bienestar Humano Territorial (MBHT - SUBDERE):** [Plataforma BHT](https://plataformabht.subdere.gov.cl/visualizations)
+- **Microdatos Censo 2017 a nivel de Manzana (Geoportal de Chile):** [Catálogo Geoportal Censo 2017](https://www.geoportal.cl/geoportal/catalog/35396/Microdatos%20Censo%202017:%20Manzana)
+
+---
+
+## 3. Instalación de Paquetes en R
+
+Para ejecutar todos los talleres prácticos y plantillas del curso en tu computador, abre **RStudio** y ejecuta el siguiente bloque en la consola:
+
+```r
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(
+  tidyverse,   # Manipulación (dplyr, tidyr) y visualización (ggplot2)
+  readxl,      # Lectura de archivos Excel (.xlsx)
+  writexl,     # Escritura de archivos Excel (.xlsx)
+  haven,       # Lectura de archivos SPSS (.sav) y Stata (.dta)
+  sjlabelled,  # Etiquetado de variables y valores
+  sjmisc,      # Tablas de frecuencias e inspección (frq)
+  car,         # Recodificación de variables
+  panelr,      # Manejo de datos longitudinales / panel
+  survey,      # Diseños muestrales complejos y ponderadores
+  sf,          # Datos espaciales y vectoriales
+  chilemapas,  # Cartografías comunales y regionales de Chile
+  leaflet,     # Mapas interactivos
+  shadowtext,  # Etiquetas de texto con halo en gráficos
+  ggrepel,     # Etiquetas sin superposición en ggplot2
+  broom,       # Tablas ordenadas de modelos
+  texreg,      # Reporte de modelos estadísticos
+  usethis,     # Configuración de proyectos, Git y GitHub
+  gitcreds     # Gestión de credenciales de GitHub
+)
+```
+

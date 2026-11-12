@@ -1,0 +1,215 @@
+---
+title: "DSRS & CSCC - Práctico V parte 1"
+subtitle: "Procesamiento Avanzado de Datos"
+author: "Cristóbal Ortiz Vilches"
+date: "09 de octubre de 2026"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-summary: "Mostrar código R"
+    other-links:
+      - text: "Descargar en PDF"
+        href: ejercicio-practico-5a.pdf
+        icon: file-earmark-pdf
+      - text: "Descargar código (.qmd)"
+        href: ejercicio-practico-5a.qmd
+        icon: file-earmark-code
+editor: visual
+---
+
+## Objetivo
+
+Este taller integra tres habilidades esenciales: 1. Limpiar datos faltantes (NA). 2. Unir diferentes sets de datos (joins). 3. Reestructurar datos para análisis longitudinal (pivot).
+
+```{r setup}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# Cargar librerías
+library(tidyverse)
+```
+
+## 1. Manejo de Datos Faltantes (NA)
+
+Vamos a crear un pequeño set de datos con valores NA para practicar.
+
+```{r}
+rm(list = ls())
+
+datos_pacientes <- tribble(
+  ~id, ~nombre, ~edad, ~presion,
+  "p01", "Ana", 28, 120,
+  "p02", "Luis", 45, NA,
+  "p03", "Marta", NA, 140,
+  "p04", "Juan", 32, 115,
+  "p05", "Sofía", 50, 135
+)
+
+datos_pacientes
+
+summary(datos_pacientes$edad)
+
+```
+
+### Ejercicio 1.1: Identificar y contar NA
+
+- Usa `is.na()` y `sum()` para contar cuántos valores faltantes hay en la columna edad.
+
+```{r}
+is.na(datos_pacientes$edad)
+
+sum(is.na(datos_pacientes$edad))
+```
+
+### Ejercicio 1.2: Eliminar filas con NA
+
+- Crea un nuevo dataframe llamado pacientes_completos que no contenga ninguna fila con NA, usando drop_na().
+
+```{r}
+pacientes_completos <- datos_pacientes |>  
+  drop_na(presion)
+
+datos_pacientes
+pacientes_completos
+```
+
+### Ejercicio 1.3: Calcular ignorando NA
+
+- Calcula la edad promedio y la presión promedio del dataframe original (datos_pacientes), asegurándote de manejar los NA correctamente en el cálculo.
+
+```{r}
+
+summary(datos_pacientes$edad) # 38.75 
+
+datos_pacientes |>
+  #drop_na() |> 
+  summarise(
+    edad_media = mean(edad, na.rm = T),
+    presion_media = mean(presion, na.rm = T)
+  )
+```
+
+## 2. Unión de Bases de Datos (joins)
+
+Ahora, imaginemos que tenemos dos tablas. Una con información demográfica y otra con los resultados de una prueba médica.
+
+```{r}
+# Tabla 1: Datos demográficos
+demografia <- tribble(
+  ~id_paciente, ~ciudad,
+  "p01", "Santiago",
+  "p02", "Valparaíso",
+  "p03", "Talca",
+  "p04", "Concepción"
+)
+
+# Tabla 2: Resultados de una prueba
+resultados <- tribble(
+  ~id, ~resultado_test,
+  "p01", "Negativo",
+  "p02", "Positivo",
+  "p03", "Negativo",
+  "p05", "Negativo" # Este paciente no está en la tabla demografia
+)
+
+demografia
+resultados
+
+```
+
+### Ejercicio 2.1: unión por la izquierda
+
+- Une las tablas demografia y resultados usando un `left_join`. La tabla de la izquierda debe ser demografia. ¿Qué pasó con el paciente p05? ¿Y con el paciente p04?
+
+```{r}
+demografia_id <- demografia %>% 
+  select(id = id_paciente, ciudad)
+
+resultados
+
+left_join(demografia_id, resultados, by = "id")
+
+
+nueva_base <- demografia |> 
+  select(id = id_paciente, ciudad) |> 
+  left_join(resultados, by = "id")
+
+nueva_base
+```
+
+Respuesta: - El paciente p04 se mantiene, pero su resultado_test es NA porque no estaba en la tabla de resultados. - El paciente p05 desaparece porque no estaba en la tabla de la izquierda (demografia).
+
+### Ejercicio 2.2: inner_join & full_join
+
+- Ahora únelas con un inner_join. ¿Qué pacientes permanecen en el resultado?
+
+```{r}
+inner_join(demografia_id, resultados, by = "id")
+
+full_join(demografia_id, resultados, by = "id")
+```
+
+Respuesta: Solo permanecen los pacientes p01, p02 y p03, que estaban presentes en ambas tablas.
+
+## 3. Reestructuración de Datos Longitudinales Volvamos a nuestro ejemplo de la encuesta ELSOC, pero ahora con datos de 3 olas y algunos NA.
+
+```{r}
+
+elsoc_wide <- tribble(
+  ~id, ~sexo, ~inseguridad_16, ~inseguridad_18, ~inseguridad_21,
+  101, "Mujer", 4, 5, 5,
+  102, "Hombre", 2, 2, NA,
+  103, "Mujer", 5, 6, 6,
+  104, "Hombre", 3, NA, 4
+)
+
+elsoc_wide
+```
+
+### Ejercicio 3.1: Transformar a formato largo
+
+- Convierte elsoc_wide a un formato largo (elsoc_long)
+
+```{r}
+elsoc_long <- elsoc_wide |> 
+  pivot_longer(
+    cols = starts_with("inseguridad_"),
+    names_to = "año",
+    values_to = "percepcion_inseguridad",
+    names_prefix = "inseguridad_",
+    names_transform = list(año = as.integer) # Convierte "16" a 2016
+  ) |> 
+  mutate(año = año + 2000)
+
+elsoc_long
+```
+
+### Ejercicio 3.2: Análisis y visualización con datos limpios
+
+- Ahora, usando elsoc_long, calcula la percepción de inseguridad promedio por sexo y año, excluyendo los valores NA. Luego, crea el gráfico de líneas para visualizar la tendencia.
+
+```{r}
+# 1. Calcular promedio (manejando NA)
+promedios_limpios <- elsoc_long |>
+  group_by(sexo, año) |>
+  summarise(
+    inseguridad_media = mean(percepcion_inseguridad, na.rm = TRUE)
+  )
+
+promedios_limpios
+```
+
+```{r}
+# 2. Visualización
+ggplot(promedios_limpios, aes(x = año, y = inseguridad_media, group = sexo, color = sexo)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  labs(
+    title = "Percepción de Inseguridad en el Barrio",
+    subtitle = "Evolución por sexo (Datos ELSOC Ficticios)",
+    x = "Año",
+    y = "Promedio de Percepción de Inseguridad"
+  ) +
+  theme_minimal() +
+  scale_x_continuous(breaks = c(2016, 2018, 2021))
+```

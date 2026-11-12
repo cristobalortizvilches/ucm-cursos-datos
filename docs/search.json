@@ -1,0 +1,686 @@
+[
+  {
+    "objectID": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html",
+    "href": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html",
+    "title": "DSRS & CSCC - Práctico VIII",
+    "section": "",
+    "text": "El objetivo de este ejercicio es cargar, limpiar y visualizar datos espaciales a nivel de manzana y comuna para la región del Maule, para lo cual utilizaremos dos bases de datos:",
+    "crumbs": [
+      "Inicio",
+      "Talleres Prácticos",
+      "Práctico VIII: Datos Espaciales"
+    ]
+  },
+  {
+    "objectID": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html#visualizar-manzanas",
+    "href": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html#visualizar-manzanas",
+    "title": "DSRS & CSCC - Práctico VIII",
+    "section": "Visualizar manzanas",
+    "text": "Visualizar manzanas\n\ngeom_mzn_maule %&gt;%\n  filter(COMUNA == \"TALCA\") %&gt;% # filtrar una comuna específica para visualizar\n  ggplot() +\n  geom_sf(aes(), color = \"black\") + # dibujar los límites de las manzanas\n  theme_minimal() # aplicar un tema visual limpio\n\n\n\n\n\n\n\n\n\n# Visualizar la geometría de las manzanas censales\ngeom_mzn_maule %&gt;%\n  filter(COMUNA == \"TALCA\") %&gt;% # filtrar una comuna específica para visualizar\n  st_transform(4326) %&gt;% # transformar proyección a WGS84 (requerido por leaflet)\n  leaflet() %&gt;%\n  addProviderTiles(\"CartoDB.Positron\") %&gt;% # agregar mapa base ligero\n  addPolygons(fillColor = \"red\", # color de relleno de los polígonos\n              color = \"white\",   # color del borde\n              weight = 0.5, # grosor de la línea\n              popup = ~as.character(cod_mzn)) # ventana emergente con el código",
+    "crumbs": [
+      "Inicio",
+      "Talleres Prácticos",
+      "Práctico VIII: Datos Espaciales"
+    ]
+  },
+  {
+    "objectID": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html#visualizar-seguridad-a-nivel-manzana",
+    "href": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html#visualizar-seguridad-a-nivel-manzana",
+    "title": "DSRS & CSCC - Práctico VIII",
+    "section": "Visualizar seguridad a nivel manzana",
+    "text": "Visualizar seguridad a nivel manzana\n\ndata_maule_mzn &lt;- geom_mzn_maule %&gt;%\n  left_join(mbht_segu_maule, by = \"cod_mzn\") # unir datos espaciales con datos de seguridad\n\n\ndata_maule_mzn %&gt;% \n  filter(COMUNA == \"CURICÓ\") %&gt;% # filtrar para visualizar Curicó\n  ggplot() +\n  geom_sf(aes(fill = dim_seg), color = NA) + # colorear según índice de seguridad sin bordes\n  scale_fill_viridis_c(option = \"D\", name = \"Seguridad\") + # escala de colores viridis\n  theme_minimal() # tema limpio\n\n\n\n\n\n\n\n\n\n# Definir variable a mapear\nvar_to_map &lt;- \"dim_seg\"\n\n# Transformar datos y crear paleta de colores\nmzn_map &lt;- data_maule_mzn %&gt;%\n  filter(COMUNA == \"CURICÓ\") %&gt;% # filtrar para visualizar Curicó\n  st_transform(4326) %&gt;% # reproyectar para mapa web\n  mutate(var_plot = .data[[var_to_map]]) # crear columna auxiliar para graficar\n\npal &lt;- colorNumeric(\"viridis\", domain = mzn_map$var_plot, reverse = T) # función de paleta de colores\n\n# Construir mapa leaflet\nleaflet(data = mzn_map) %&gt;%\n  addProviderTiles(\"CartoDB.Positron\") %&gt;% # mapa base\n  addPolygons(fillColor = ~pal(var_plot), # colorear según la variable\n              fillOpacity = 0.7, # transparencia del relleno\n              color = \"white\", # color de borde\n              weight = 0.3, # grosor de borde\n              popup = ~as.character(var_plot)) %&gt;% # valor al hacer clic\n  addLegend(pal = pal, \n            values = ~var_plot, \n            title = var_to_map, \n            position = \"bottomright\") # leyenda en la esquina inferior derecha",
+    "crumbs": [
+      "Inicio",
+      "Talleres Prácticos",
+      "Práctico VIII: Datos Espaciales"
+    ]
+  },
+  {
+    "objectID": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html#visualizar-seguridad-a-nivel-de-comuna",
+    "href": "3-practicos-conjuntos/2_codigo/ejercicio-practico-8.html#visualizar-seguridad-a-nivel-de-comuna",
+    "title": "DSRS & CSCC - Práctico VIII",
+    "section": "Visualizar seguridad a nivel de comuna",
+    "text": "Visualizar seguridad a nivel de comuna\n\ndata_maule_com %&gt;% \n  st_transform(31979) %&gt;% # transformar a proyección local (SIRGAS Chile)\n  ggplot() +\n  geom_sf(aes(fill = dim_seg), color = NA) + # mapa estático coloreado\n  scale_fill_viridis_c(option = \"D\", name = \"Seguridad\") + # escala de colores\n  theme_minimal() # tema visual\n\n\n\n\n\n\n\ndata_maule_com %&gt;% \n  st_transform(4326) %&gt;% # transformar a WGS84\n  ggplot() +\n  geom_sf(aes(fill = dim_seg), color = NA) + # mapa estático alternativo\n  scale_fill_viridis_c(option = \"D\", name = \"Seguridad\") + \n  theme_minimal()\n\n\n\n\n\n\n\n# Mostrar efecto filtrando Maule con: \n# filter(str_starts(cod_com, \"7\")) # filtrar códigos que empiezan con 7 (Región del Maule)\n\n\n# Definir variable a mapear\nvar_to_map &lt;- \"dim_seg\"\n\n# Transformar datos y crear paleta de colores\ncom_map &lt;- data_maule_com %&gt;%\n  st_transform(4326) %&gt;% # reproyectar para web\n  mutate(var_plot = .data[[var_to_map]]) # asignar variable a graficar\n\n# Construir mapa leaflet\nleaflet(data = com_map) %&gt;%\n  addProviderTiles(\"CartoDB.Positron\") %&gt;% # mapa base\n  addPolygons(fillColor = ~pal(var_plot), # relleno según datos\n              fillOpacity = 0.7, \n              color = \"white\", \n              weight = 0.3, \n              popup = ~as.character(var_plot)) %&gt;% # popup interactivo\n  addLegend(pal = colorNumeric(\"viridis\", \n                               domain = com_map$var_plot, \n                               reverse = T), # leyenda con colores invertidos\n            values = ~var_plot, \n            title = var_to_map, \n            position = \"bottomright\") # posición de la leyenda\n\nWarning in pal(var_plot): Some values were outside the color scale and will be\ntreated as NA\n\n\n\n\n\n\n\ncomuna_key &lt;- distinct(geom_mzn_maule, nombre_comuna = COMUNA, cod_com = CUT) # crear llave con nombres de comunas\n\nseguridad_maule &lt;- data_maule_com %&gt;% \n  filter(str_starts(cod_com, \"7\")) %&gt;% # filtrar región del Maule \n  left_join(comuna_key, by = c(\"cod_com\" = \"cod_com\")) %&gt;% # asignamos el nombre base a la llave\n  st_transform(4326) %&gt;% # reproyectar datos\n  ggplot() +\n  geom_sf(aes(fill = dim_seg), color = \"black\") + # mapa base con bordes negros\n  shadowtext::geom_shadowtext( # añadir texto con sombra (halo)\n    aes(label = str_wrap(nombre_comuna, width = 10), # obliga a saltar de línea si el nombre es muy largo\n        geometry = geometry), \n    stat = \"sf_coordinates\", # Esto calcula el centroide automáticamente\n    color = \"black\",         # Color de la letra\n    bg.color = \"white\",      # Color del buffer (fondo del texto)\n    bg.r = 0.15,             # Grosor del buffer \n    size = 3                 # Tamaño de la letra\n  ) +\n  scale_fill_viridis_c(option = \"D\", name = \"Seguridad\") + # escala de colores\n  theme_minimal() + # tema minimalista\n  labs(y = NULL, x = NULL) # quitar etiquetas de los ejes X e Y\n\nseguridad_maule # imprimir el objeto gráfico\n\nWarning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not\ngive correct results for longitude/latitude data\n\n\n\n\n\n\n\n\nggsave(\"../3_resultados/seguridad_maule.jpg\", dpi = 300, width = 10, height = 8) # guardar el gráfico como imagen\n\nWarning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not\ngive correct results for longitude/latitude data\n\n\n\n# exportar datos procesados a shapefile\nst_write(data_maule_mzn, dsn = \"../1_datos/2_procesados/data_maule_mzn/data_maule_mzn.shp\", delete_layer = TRUE)\n\nDeleting layer `data_maule_mzn' using driver `ESRI Shapefile'\nWriting layer `data_maule_mzn' to data source \n  `../1_datos/2_procesados/data_maule_mzn/data_maule_mzn.shp' using driver `ESRI Shapefile'\nWriting 9624 features with 15 fields and geometry type Unknown (any).",
+    "crumbs": [
+      "Inicio",
+      "Talleres Prácticos",
+      "Práctico VIII: Datos Espaciales"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e1.html",
+    "href": "4-evaluaciones-conjuntas/plantilla-e1.html",
+    "title": "Plantilla para Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "",
+    "text": "Contexto social y/o político en donde se enmarca el problema\nTema de investigación y pregunta general sobre la problemática",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e1.html#introducción",
+    "href": "4-evaluaciones-conjuntas/plantilla-e1.html#introducción",
+    "title": "Plantilla para Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "",
+    "text": "Contexto social y/o político en donde se enmarca el problema\nTema de investigación y pregunta general sobre la problemática",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e1.html#diseño-de-investigación",
+    "href": "4-evaluaciones-conjuntas/plantilla-e1.html#diseño-de-investigación",
+    "title": "Plantilla para Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "2. Diseño de investigación",
+    "text": "2. Diseño de investigación\n\n2.2. Proyecto trabajo de datos reproducible\n\nIdentificar y fundamental el alcance de la investigación (explotario, correlacional, etc.)\nDescribir el flujo y las fases del trabajo de datos utilizado (workflow).\nDescribir el protocolo de trabajo de datos utilizado.\n\n\n\n2.3. Datos y variables\n\nDescribir la base de datos utilizada (tipo de muestra, unidades de análisis y N).\nDescribir las variables a utilizar (nombre de la variable, codificación, tipo/clase, valores y recodificación).\nProponer posibles datos digitales para abordar el problema de investigación (fuente, tipo de dato digital y método de adquisición) y justifica su relevancia para abordar el problema de investigación de manera novedosa.\n\n\n\n\n\n\n\nNota\n\n\n\nProponer fuente de datos digitales aún cuando no sean utilizados más adelante\n\n\n\n\n2.4. Justificación y aspectos éticos\n\nDescribe el rol de la Ciencia de Datos en el análisis social.\nReflexiona sobre los principios éticas sobre el procesamiento y análisis de datos respecto al problema de investigación abordado.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e1.html#procesamiento-inicial-de-datos",
+    "href": "4-evaluaciones-conjuntas/plantilla-e1.html#procesamiento-inicial-de-datos",
+    "title": "Plantilla para Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "3. Procesamiento inicial de datos",
+    "text": "3. Procesamiento inicial de datos\n\nBreve descripción del procesamiento realizado",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e2.html",
+    "href": "4-evaluaciones-conjuntas/plantilla-e2.html",
+    "title": "Plantilla para Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "",
+    "text": "Contexto social y/o político en donde se enmarca el problema\nTema de investigación y pregunta general sobre la problemática\n\n\n\n\n\n\n\n\n\n\n\nFormulación de la propuesta\nObjetivos e hipótesis",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e2.html#introducción",
+    "href": "4-evaluaciones-conjuntas/plantilla-e2.html#introducción",
+    "title": "Plantilla para Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "",
+    "text": "Contexto social y/o político en donde se enmarca el problema\nTema de investigación y pregunta general sobre la problemática\n\n\n\n\n\n\n\n\n\n\n\nFormulación de la propuesta\nObjetivos e hipótesis",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e2.html#diseño-de-investigación",
+    "href": "4-evaluaciones-conjuntas/plantilla-e2.html#diseño-de-investigación",
+    "title": "Plantilla para Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "2. Diseño de investigación",
+    "text": "2. Diseño de investigación\n\n2.2. Proyecto trabajo de datos reproducible\n\nIdentificar y fundamentar el alcance de la investigación (exploratorio, correlacional, etc.)\nDescribir el flujo y las fases del trabajo de datos utilizado (workflow).\nDescribir el protocolo de trabajo de datos utilizado.\n\n\n\n2.3. Datos y variables\n\nDescribir la base de datos utilizada (tipo de muestra, unidades de análisis y N).\nDescribir las variables a utilizar (nombre de la variable, codificación, tipo/clase, valores y recodificación).\nProponer posibles datos digitales para abordar el problema de investigación (fuente, tipo de dato digital y método de adquisición) y justifica su relevancia para abordar el problema de investigación de manera novedosa.\n\n\n\n\n\n\n\nNota\n\n\n\nProponer fuente de datos digitales aún cuando no sean utilizados más adelante\n\n\n\n\n2.4. Justificación y aspectos éticos\n\nDescribe el rol de la Ciencia de Datos en el análisis social.\nReflexiona sobre los principios éticos sobre el procesamiento y análisis de datos respecto al problema de investigación abordado.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e2.html#procesamiento-de-datos",
+    "href": "4-evaluaciones-conjuntas/plantilla-e2.html#procesamiento-de-datos",
+    "title": "Plantilla para Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "3. Procesamiento de datos",
+    "text": "3. Procesamiento de datos\n\n3.1. Importación de datos\n\n\n3.2. Manipulación de datos\n\nBreve descripción del procesamiento realizado",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e2.html#análisis-de-datos",
+    "href": "4-evaluaciones-conjuntas/plantilla-e2.html#análisis-de-datos",
+    "title": "Plantilla para Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "4. Análisis de datos",
+    "text": "4. Análisis de datos\n\n4.1. Análisis descriptivo (univariado)\n\n\n4.2. Análisis correlacional (bivariado)\n\n\n4.3. Análisis adicionales",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/plantilla-e2.html#discusión-de-resultados",
+    "href": "4-evaluaciones-conjuntas/plantilla-e2.html#discusión-de-resultados",
+    "title": "Plantilla para Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "5. Discusión de resultados",
+    "text": "5. Discusión de resultados\n\n5.1. Resumen del hallazgo principal (respuesta a la pregunta)\n\n\n5.2. Discusión de resultados en línea con las hipótesis y antecedentes previos (punto 1.2.)\n\n\n5.3. Reflexión sobre futuras líneas de investigación en el campo y con respecto a la Ciencia de Datos",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Plantilla Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "",
+    "text": "La primera evaluación consiste en la elaboración de un reporte automatizado (utilizando Quarto o RMarkdown) dentro de un proyecto de investigación reproducible. El reporte presenta una problema de investigación y el diseño de un flujo de trabajo para abordarla. Aunque el formato del reporte es común para ambos cursos, los criterios de evaluación se diferencian según el enfoque de cada uno.\nEl reporte automatizado contiene tres partes: 1. Introducción (entre 200 y 400 palabras) 2. Diseño (entre 300 y 500 palabras) 3. Procesamiento inicial (entre 50 y 150 palabras)\nPonderación: 20% de la nota final del curso.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html#descripción-general-de-la-evaluación",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html#descripción-general-de-la-evaluación",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "",
+    "text": "La primera evaluación consiste en la elaboración de un reporte automatizado (utilizando Quarto o RMarkdown) dentro de un proyecto de investigación reproducible. El reporte presenta una problema de investigación y el diseño de un flujo de trabajo para abordarla. Aunque el formato del reporte es común para ambos cursos, los criterios de evaluación se diferencian según el enfoque de cada uno.\nEl reporte automatizado contiene tres partes: 1. Introducción (entre 200 y 400 palabras) 2. Diseño (entre 300 y 500 palabras) 3. Procesamiento inicial (entre 50 y 150 palabras)\nPonderación: 20% de la nota final del curso.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html#criterios-generales-de-evaluación-comunes-para-dsrs-y-cscc",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html#criterios-generales-de-evaluación-comunes-para-dsrs-y-cscc",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "Criterios Generales de Evaluación (Comunes para DSRS y CSCC)",
+    "text": "Criterios Generales de Evaluación (Comunes para DSRS y CSCC)\nEstos criterios evalúan la estructura, claridad y reproducibilidad del reporte.\n\n\n\n\n\n\n\n\n\nCriterio\nLogrado (3 pts)\nMedianamente Logrado (2 pts)\nNo Logrado (1 pto)\n\n\n\n\nEstructura del Reporte\nEl documento presenta una estructura lógica y clara (introducción, diseño, procesamiento), utilizando correctamente los encabezados y secciones.\nLa estructura del documento es comprensible, pero podría mejorar en su organización y jerarquía de secciones.\nEl documento carece de una estructura clara, dificultando su lectura y comprensión.\n\n\nClaridad y Redacción\nLa redacción es clara, precisa y coherente. No presenta errores ortográficos ni gramaticales.\nEl texto es en general claro, pero presenta algunas imprecisiones o errores menores de redacción.\nLa redacción es confusa, imprecisa y/o contiene errores recurrentes que dificultan la comprensión.\n\n\nReproducibilidad y Código\nEl código en R es funcional, está bien comentado y sigue las convenciones del tidyverse. El reporte compila sin errores.\nEl código es funcional en su mayoría, pero podría estar mejor comentado o estructurado. El reporte compila con advertencias.\nEl código no es funcional o es muy difícil de seguir. El reporte no compila o genera errores que impiden ver el resultado.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html#criterios-específicos-por-curso",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html#criterios-específicos-por-curso",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "Criterios Específicos por Curso",
+    "text": "Criterios Específicos por Curso\nA continuación, se detallan los criterios específicos que serán evaluados para cada curso.\n\nRúbrica para Data Science Aplicada en RStudio (DSRS)\n\n\n\n\n\n\n\n\n\nCriterio\nLogrado (3 pts)\nMedianamente Logrado (2 pts)\nNo Logrado (1 pto)\n\n\n\n\n1. Problematización en Ciencia de Datos\nDefine un problema de investigación relevante y bien delimitado, justificando claramente su pertinencia desde el campo de la ciencia de datos aplicada a lo social.\nEl problema de investigación está definido, pero su justificación o delimitación desde la ciencia de datos es parcial o poco clara.\nNo se define un problema de investigación claro o este no tiene relación con la ciencia de datos.\n\n\n2. Rol de la Ciencia de Datos en el Análisis Social\nExplica y fundamenta con solidez cómo las herramientas y enfoques de la ciencia de datos pueden aportar a la comprensión del fenómeno social estudiado.\nSe menciona el rol de la ciencia de datos, pero la explicación es superficial o no se conecta de forma robusta con el problema de investigación planteado.\nNo se reflexiona sobre el aporte de la ciencia de datos al análisis del problema social.\n\n\n3. Diseño de Flujo de Trabajo en RStudio\nDiseña y describe un flujo de trabajo (workflow) coherente y detallado (importación, limpieza, transformación, visualización) para abordar el problema. Especifica la base de datos a utilizar.\nEl flujo de trabajo diseñado es pertinente, pero carece de detalle en algunas de sus etapas o presenta inconsistencias lógicas. No especifica la base de datos.\nNo se presenta un flujo de trabajo o el diseño propuesto es incoherente y no responde al problema de investigación. No especifica la base de datos.\n\n\n\n\n\nRúbrica para Ciencias Sociales Computacionales (CSCC)\n\n\n\n\n\n\n\n\n\nCriterio\nLogrado (3 pts)\nMedianamente Logrado (2 pts)\nNo Logrado (1 pto)\n\n\n\n\n1. Rol de los datos digitales\nPropone potenciales fuentes de datos digitales y explica por qué permiten abordar el problema de investigación de forma novedosa.\nPropone potenciales fuentes de datos digitales, pero no explica por qué esta aportan novedad al problema de investigación.\nNo propone ni explicita el rol de los datos digitales en el problema de investigación.\n\n\n2. Reflexión sobre los aspectos éticos\nIdentifica los principios y dilemas éticos de trabajar con datos digitales y los conecta directamente a su problema de investigación\nIdentifica parcialmente los principios y dilemas éticos de trabajar con datos digitales y nos los conecta directamente con su problema de investigación\nNo identifica los principios y dilemas éticos de trabajar con datos digitales y ni los conecta con su problema de investigación.\n\n\n3. Diseño de un Protocolo de Trabajo con datos\nPropone un protocolo de trabajo de datos con una estructura clara (Protocolo IPO para Ciencia Abierta) y crea sus carpetas a partir de un código autocontenido en RProject.\nEl protocolo de trabajo de datos presenta una estructura, pero esta estructura no es organizada y las carpetas no son creadas a partir del código.\nNo se presenta un protocolo de trabajo claro ni organizado, no crea carpetas para organizar la información.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html#cálculo-de-la-nota",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html#cálculo-de-la-nota",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "Cálculo de la Nota",
+    "text": "Cálculo de la Nota\nLa nota final de la evaluación para cada curso se calculará sumando los puntajes obtenidos en los criterios generales y los criterios específicos del curso correspondiente. El puntaje máximo total es de 18 puntos (9 de criterios generales y 9 de criterios específicos).\nLa fórmula para la nota (en escala de 1.0 a 7.0) será la siguiente:\nNota = (Puntaje Obtenido / 18) * 6 + 1",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html#formato-de-entrega",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html#formato-de-entrega",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "Formato de entrega",
+    "text": "Formato de entrega\nEl proyecto debe ser entregado en una carpeta RProject comprimida la cual debe ser enviado al correo cristobalortizvi@gmail.com.\n\n\n\n\n\n\nNotaPlazo de entrega miércoles 30 de septiembre hasta las 18:00hrs",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html#otras-consideraciones",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html#otras-consideraciones",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "Otras consideraciones",
+    "text": "Otras consideraciones\n\nSe promueve y alienta el uso de inteligencia artificial en la generación de código con R. No se aconseja y será penalizado el uso de IA en la escritura académica.\nNo se puede hacer copy/paste ni plagio de las diapositivas, puesto que será penalizado. El contenido de las diapositivas puede ser utilizado, pero debe ser reapropiado y puesto en diálogo con el problema de investigación.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e1.html#recomendaciones-generales",
+    "href": "4-evaluaciones-conjuntas/rubrica-e1.html#recomendaciones-generales",
+    "title": "Rúbrica de Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "section": "Recomendaciones generales",
+    "text": "Recomendaciones generales\nSobre escritura académica y técnica\n\nPremisa de buena escritura: una idea un párrafo\nCada párrafo inicia con una topic sentence, esta es la oración que presenta la idea principal del párrafo completo.\nIntentar escribir utilizando la estructura gramatical básica del idioma Español: sujeto + verbo + predicado/complemento. Limitar la voz pasiva a citas parafraseadas. Por ejemplo:\n\n\n\n\n\n\n\n\nTipo de voz\nAcción regular\nParafraseo cita\n\n\n\n\nActiva\nEl gobierno local diseñó barrios sin acceso a servicios (enfatiza rol del sujeto)\nJacobs (1969) afirma que la presencia activa de las personas en la calle reduce la inseguridad. (foco en el sujeto)\n\n\nPasiva\nLos barrios fueron diseñados sin acceso a servicios por el gobierno (debilita el rol del sujeto)\nPasiva parafraseada: Se afirma que la inseguridad se reduce cuando hay presencia activa de personas en la calle (Jacobs, 1969) (foco en la idea)\n\n\n\nProcurar diseñar oraciones cortas (no más de 4 líneas), lo cual obliga a acudir al:\n\nPunto seguido\nUso de conectores\n\nProcurar diseñar párrafos cortos (no más de 300 palabras)\nOración final sintetiza y concluye la idea general del párrafo, a la vez que sirve de enlace con el párrafo siguiente.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación I"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "",
+    "text": "La segunda evaluación consiste en la elaboración de un reporte de resultados automatizado (utilizando Quarto o RMarkdown) dentro de un proyecto de investigación reproducible. El reporte considera tres aspectos del flujo de investigación: (i) problematización de investigación, (ii) diseño de un flujo de trabajo y (iii) análisis de resultados. Aunque el formato del reporte es común para ambos cursos, los criterios de evaluación se diferencian según el enfoque de cada uno.\nEl reporte automatizado contiene 5 partes:\n\nIntroducción al problema de investigación (entre 200 y 400 palabras)\nDiseño de investigación (entre 300 y 500 palabras)\nProcesamiento de datos (entre 50 y 150 palabras)\nAnálisis de datos/resultados (entre 100 y 200 palabras)\nDiscusión de resultados (entre 100 y 200 palabras)\n\nPonderación: 40% de la nota final del curso.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html#descripción-general-de-la-evaluación",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html#descripción-general-de-la-evaluación",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "",
+    "text": "La segunda evaluación consiste en la elaboración de un reporte de resultados automatizado (utilizando Quarto o RMarkdown) dentro de un proyecto de investigación reproducible. El reporte considera tres aspectos del flujo de investigación: (i) problematización de investigación, (ii) diseño de un flujo de trabajo y (iii) análisis de resultados. Aunque el formato del reporte es común para ambos cursos, los criterios de evaluación se diferencian según el enfoque de cada uno.\nEl reporte automatizado contiene 5 partes:\n\nIntroducción al problema de investigación (entre 200 y 400 palabras)\nDiseño de investigación (entre 300 y 500 palabras)\nProcesamiento de datos (entre 50 y 150 palabras)\nAnálisis de datos/resultados (entre 100 y 200 palabras)\nDiscusión de resultados (entre 100 y 200 palabras)\n\nPonderación: 40% de la nota final del curso.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html#criterios-generales-de-evaluación-comunes-para-dsrs-y-cscc",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html#criterios-generales-de-evaluación-comunes-para-dsrs-y-cscc",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "Criterios Generales de Evaluación (Comunes para DSRS y CSCC)",
+    "text": "Criterios Generales de Evaluación (Comunes para DSRS y CSCC)\nEstos criterios evalúan la estructura, claridad y reproducibilidad del reporte.\n\n\n\n\n\n\n\n\n\nCriterio\nLogrado (3 pts)\nMedianamente Logrado (2 pts)\nNo Logrado (1 pto)\n\n\n\n\nEstructura del Reporte\nEl documento presenta una estructura lógica y clara (introducción, diseño, procesamiento, análisis y discusión), utilizando correctamente los encabezados y secciones.\nLa estructura del documento es comprensible, pero podría mejorar en su organización y jerarquía de secciones.\nEl documento carece de una estructura clara, dificultando su lectura y comprensión.\n\n\nClaridad y Redacción\nLa redacción es clara, precisa y coherente. No presenta errores ortográficos ni gramaticales.\nEl texto es en general claro, pero presenta algunas imprecisiones o errores menores de redacción.\nLa redacción es confusa, imprecisa y/o contiene errores recurrentes que dificultan la comprensión.\n\n\nReproducibilidad y Código\nEl código en R es funcional, está bien comentado y sigue las convenciones del tidyverse. El reporte compila sin errores.\nEl código es funcional en su mayoría, pero podría estar mejor comentado o estructurado. El reporte compila con advertencias.\nEl código no es funcional o es muy difícil de seguir. El reporte no compila o genera errores que impiden ver el resultado.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html#criterios-específicos-por-curso",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html#criterios-específicos-por-curso",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "Criterios Específicos por Curso",
+    "text": "Criterios Específicos por Curso\nA continuación, se detallan los criterios específicos que serán evaluados para cada curso.\n\nRúbrica para Data Science Aplicada en RStudio (DSRS)\n\n\n\n\n\n\n\n\n\nCriterio\nLogrado (3 pts)\nMedianamente Logrado (2 pts)\nNo Logrado (1 pto)\n\n\n\n\n1. Problematización en Ciencia de Datos\nDefine un problema de investigación relevante y bien delimitado, justificando claramente su pertinencia desde el campo de la ciencia de datos aplicada a lo social. Incluye objetivos e hipótesis.\nEl problema de investigación está definido, pero su justificación o delimitación desde la ciencia de datos es parcial o poco clara. No incluye objetivos e hipótesis.\nNo se define un problema de investigación claro o este no tiene relación con la ciencia de datos. No incluye objetivos e hipótesis.\n\n\n2. Rol de la Ciencia de Datos en el Análisis Social\nExplica y fundamenta con solidez cómo las herramientas y enfoques de la ciencia de datos pueden aportar a la comprensión del fenómeno social estudiado.\nSe menciona el rol de la ciencia de datos, pero la explicación es superficial o no se conecta de forma robusta con el problema de investigación planteado.\nNo se reflexiona sobre el aporte de la ciencia de datos al análisis del problema social.\n\n\n3. Diseño de Flujo de Trabajo en RStudio\nDiseña y describe un flujo de trabajo (workflow) coherente y detallado (importación, limpieza, transformación, visualización) para abordar el problema. Especifica la base de datos a utilizar.\nEl flujo de trabajo diseñado es pertinente, pero carece de detalle en algunas de sus etapas o presenta inconsistencias lógicas. No especifica la base de datos.\nNo se presenta un flujo de trabajo o el diseño propuesto es incoherente y no responde al problema de investigación. No especifica la base de datos.\n\n\n4. Análisis de Datos/Resultados\nEl análisis es pertinente y utiliza funciones del Tidyverse (como dplyr y ggplot2) para generar tablas y/o visualizaciones claras, bien etiquetadas y que responden directamente a la pregunta de investigación.\nEl análisis es en general pertinente, pero las salidas (tablas/gráficos) presentan fallas de claridad (ej. falta de etiquetas, títulos confusos) o el uso de las herramientas del Tidyverse es superficial. El análisis de datos no responde directamente a la pregunta de investigación.\nEl análisis de datos es irrelevante para el problema planteado o las salidas (tablas/gráficos) son confusas e imposibles de interpretar. El análisis de datos no responde a la pregunta de investigación.\n\n\n5. Discusión de Resultados\nLa discusión interpreta los resultados del análisis (tablas/gráficos), los conecta con la problematización inicial y reflexiona sobre futuras líneas de investigación en el contexto de la ciencia de datos aplicada.\nLa discusión describe los resultados, pero la interpretación es superficial o la conexión con el problema inicial y la reflexión sobre futuras líneas de investigación es débil.\nLa discusión es una mera repetición de los resultados o es irrelevante para el análisis realizado. Y no reflexiona sobre futuras líneas de investigación.\n\n\n\n\n\nRúbrica para Ciencias Sociales Computacionales (CSCC)\n\n\n\n\n\n\n\n\n\nCriterio\nLogrado (3 pts)\nMedianamente Logrado (2 pts)\nNo Logrado (1 pto)\n\n\n\n\n1. Rol de los datos digitales\nPropone potenciales fuentes de datos digitales y explica por qué permiten abordar el problema de investigación de forma novedosa.\nPropone potenciales fuentes de datos digitales, pero no explica por qué esta aportan novedad al problema de investigación.\nNo propone ni explicita el rol de los datos digitales en el problema de investigación.\n\n\n2. Reflexión sobre los aspectos éticos\nIdentifica los principios y dilemas éticos de trabajar con datos digitales y los conecta directamente a su problema de investigación\nIdentifica parcialmente los principios y dilemas éticos de trabajar con datos digitales y no los conecta directamente con su problema de investigación\nNo identifica los principios y dilemas éticos de trabajar con datos digitales y ni los conecta con su problema de investigación.\n\n\n3. Diseño de un Protocolo de Trabajo con datos\nPropone un protocolo de trabajo de datos con una estructura clara (Protocolo IPO para Ciencia Abierta) y crea sus carpetas a partir de un código autocontenido en RProject.\nEl protocolo de trabajo de datos presenta una estructura, pero esta estructura no es organizada y las carpetas no son creadas a partir del código.\nNo se presenta un protocolo de trabajo claro ni organizado, no crea carpetas para organizar la información.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html#cálculo-de-la-nota",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html#cálculo-de-la-nota",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "Cálculo de la Nota",
+    "text": "Cálculo de la Nota\nLa nota final de la evaluación se calculará sumando los puntajes obtenidos en los criterios generales y los criterios específicos del curso correspondiente. El puntaje máximo total para el curso DSRS es de 24 puntos (9 de criterios generales y 15 de criterios específicos), mientras que para CSCC es de 18 puntos (9 de criterios generales y 9 de criterios específicos).\nLa fórmula para la nota (en escala de 1.0 a 7.0) será la siguiente:\nPara DSRS (Máximo 24 puntos): Nota = (Puntaje Obtenido / 24) * 6 + 1\nPara CSCC (Máximo 18 puntos): Nota = (Puntaje Obtenido / 18) * 6 + 1",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html#formato-de-entrega",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html#formato-de-entrega",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "Formato de entrega",
+    "text": "Formato de entrega\nEl proyecto debe ser entregado en una carpeta RProject comprimida la cual debe ser enviado al correo cristobalortizvi@gmail.com.\n\n\n\n\n\n\nNotaPlazo de entrega miércoles 02 de diciembre hasta las 18:30hrs",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html#otras-consideraciones",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html#otras-consideraciones",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "Otras consideraciones",
+    "text": "Otras consideraciones\n\nSe promueve y alienta el uso de inteligencia artificial en la generación de código con R. No se aconseja y será penalizado el uso de IA en la escritura académica.\nNo se puede hacer copy/paste ni plagio de las diapositivas, puesto que será penalizado. El contenido de las diapositivas puede ser utilizado, pero debe ser reapropiado y puesto en diálogo con el problema de investigación.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "4-evaluaciones-conjuntas/rubrica-e2.html#recomendaciones-generales",
+    "href": "4-evaluaciones-conjuntas/rubrica-e2.html#recomendaciones-generales",
+    "title": "Rúbrica de Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "section": "Recomendaciones generales",
+    "text": "Recomendaciones generales\nSobre escritura académica y técnica\n\nPremisa de buena escritura: una idea un párrafo\nCada párrafo inicia con una topic sentence, esta es la oración que presenta la idea principal del párrafo completo.\nIntentar escribir utilizando la estructura gramatical básica del idioma Español: sujeto + verbo + predicado/complemento. Limitar la voz pasiva a citas parafraseadas. Por ejemplo:\n\n\n\n\n\n\n\n\nTipo de voz\nAcción regular\nParafraseo cita\n\n\n\n\nActiva\nEl gobierno local diseñó barrios sin acceso a servicios (enfatiza rol del sujeto)\nJacobs (1969) afirma que la presencia activa de las personas en la calle reduce la inseguridad. (foco en el sujeto)\n\n\nPasiva\nLos barrios fueron diseñados sin acceso a servicios por el gobierno (debilita el rol del sujeto)\nPasiva parafraseada: Se afirma que la inseguridad se reduce cuando hay presencia activa de personas en la calle (Jacobs, 1969) (foco en la idea)\n\n\n\nProcurar diseñar oraciones cortas (no más de 4 líneas), lo cual obliga a acudir al:\n\nPunto seguido\nUso de conectores\n\nProcurar diseñar párrafos cortos (no más de 300 palabras)\nOración final sintetiza y concluye la idea general del párrafo, a la vez que sirve de enlace con el párrafo siguiente.",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Rúbrica Evaluación II"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Ciencia de Datos Aplicada y Ciencias Sociales Computacionales",
+    "section": "",
+    "text": "Bienvenido/a al portal unificado de los cursos electivos de formación profesional (X Semestre):\n\nOPR319 · Ciencia de Datos Aplicada con RStudio (DSRS)\nOPR219 · Ciencias Sociales Computacionales (CSCC)\n\nAquí podrás visualizar y descargar todas las presentaciones de clases (en HTML y PDF), guías de talleres prácticos, bases de datos, plantillas y rúbricas de evaluación.",
+    "crumbs": [
+      "Inicio",
+      "Información General",
+      "Inicio y Programa"
+    ]
+  },
+  {
+    "objectID": "index.html#accesos-rápidos-al-material",
+    "href": "index.html#accesos-rápidos-al-material",
+    "title": "Ciencia de Datos Aplicada y Ciencias Sociales Computacionales",
+    "section": "Accesos Rápidos al Material",
+    "text": "Accesos Rápidos al Material\n\n\n\n📊 Ciencia de Datos Aplicada (DSRS)\nFlujo de trabajo con R, RStudio y tidyverse: importación, transformación, visualización con ggplot2, diseños muestrales complejos (survey), datos longitudinales y espaciales.\nIr a Clases DSRS →\n\n\n\n\n🌐 Ciencias Sociales Computacionales (CSCC)\nInvestigación social en la era digital, rastros digitales, diseño de investigación reproducible (Protocolo IPO), ciencia abierta, control de versiones (Git/GitHub) y ética digital.\nIr a Clases CSCC →\n\n\n\n\n💻 Talleres Prácticos Conjuntos\n8 sesiones prácticas paso a paso con código ejecutable en Quarto / RMarkdown y bases de datos reales (ELSOC-COES, Censo 2017 y MBHT).\nIr a Prácticos →\n\n\n\n\n📋 Evaluaciones y Bases de Datos\nPlantillas reproducibles en formato .qmd, rúbricas de evaluación en PDF y descarga directa de todas las bases de datos del curso.\nEvaluaciones → Datos →",
+    "crumbs": [
+      "Inicio",
+      "Información General",
+      "Inicio y Programa"
+    ]
+  },
+  {
+    "objectID": "index.html#resumen-de-contenidos-y-descargas-directas",
+    "href": "index.html#resumen-de-contenidos-y-descargas-directas",
+    "title": "Ciencia de Datos Aplicada y Ciencias Sociales Computacionales",
+    "section": "Resumen de Contenidos y Descargas Directas",
+    "text": "Resumen de Contenidos y Descargas Directas\n\n1. Clases Teóricas: Ciencia de Datos Aplicada con RStudio (DSRS)\n\n\n\nSesión\nTema de la Sesión\nPresentación Web\nDescargar PDF\nCódigo Fuente\n\n\n\n\nI\nIntroducción a la ciencia de datos y programa del curso\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nII\nIntroducción a R y RStudio\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nIII\nProcesamiento de Datos (readr, haven, dplyr)\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nIV\nModificación y Resumen de Datos (mutate, summarise)\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nV\nIntroducción a la Visualización de Datos con ggplot2\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nVI\nProcesamiento Avanzado (NA, joins y pivot)\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nVII\nIntroducción al diseño muestral complejo (survey)\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nVIII\nVisualización de Datos Longitudinales\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\n\n\n\n\n2. Clases Teóricas: Ciencias Sociales Computacionales (CSCC)\n\n\n\nSesión\nTema de la Sesión\nPresentación Web\nDescargar PDF\nCódigo Fuente\n\n\n\n\nI\nIntroducción a la Ciencia Social Computacional y programa\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nII\nDiseño de investigación en la era digital\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nIII\nReproducibilidad, Ciencia Abierta y Protocolo IPO\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\nIV\nControl de versiones (Git) y trabajo colaborativo (GitHub)\n🖥️ Ver Slides\n📥 PDF\n📄 .qmd\n\n\n\n\n\n\n3. Talleres Prácticos Conjuntos (DSRS & CSCC)\n\n\n\nPráctico\nTema del Taller\nGuía Web\nDescargar PDF\nScript R/Quarto\n\n\n\n\nI\nFlujo de trabajo (RProject) e importación de datos\n📖 Abrir\n📥 PDF\n💻 .qmd\n\n\nII\nProcesamiento y limpieza de datos (select, filter, arrange)\n📖 Abrir\n📥 PDF\n💻 .qmd\n\n\nIII\nManipulación, recodificación y etiquetado (mutate, sjlabelled)\n📖 Abrir\n📥 PDF\n💻 .qmd\n\n\nIV\nVisualización inicial de datos con ggplot2\n📖 Abrir\n📥 PDF\n💻 .qmd\n\n\nV (Parte 1)\nProcesamiento avanzado: datos faltantes (NA), joins y pivot\n📖 Abrir\n📥 PDF\n💻 .qmd\n\n\nV (Parte 2)\nIntroducción a Git y GitHub con RStudio (usethis)\n📖 Abrir\n📥 PDF\n💻 .qmd\n\n\nVI\nAnálisis de encuestas complejas con survey\n📖 Abrir\n📥 PDF\n💻 .Rmd\n\n\nVII\nVisualización de datos longitudinales (panelr, ggplot2)\n📖 Abrir\n📥 PDF\n💻 .Rmd\n\n\nVIII\nVisualización de datos espaciales (sf, chilemapas, leaflet)\n📖 Abrir\n📥 PDF\n💻 .Rmd\n\n\n\n\n\n\n4. Evaluaciones Conjuntas (2026)\n\n\n\nDocumento\nDescripción\nVer en Web\nDescargar PDF\nDescargar Plantilla .qmd\n\n\n\n\nRúbrica Evaluación I\nCriterios de evaluación Entrega 1 (Problematización y Diseño, 20%)\n📖 Ver\n📥 PDF\n📄 .qmd\n\n\nPlantilla Evaluación I\nEstructura base en Quarto para el reporte de la Entrega 1\n📖 Ver\n📥 PDF\n📄 .qmd\n\n\nRúbrica Evaluación II\nCriterios de evaluación Entrega 2 (Informe de Resultados, 40%)\n📖 Ver\n📥 PDF\n📄 .qmd\n\n\nPlantilla Evaluación II\nEstructura base en Quarto para el reporte de la Entrega 2\n📖 Ver\n📥 PDF\n📄 .qmd",
+    "crumbs": [
+      "Inicio",
+      "Información General",
+      "Inicio y Programa"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html",
+    "href": "clases-dsrs.html",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "",
+    "text": "En esta sección encontrarás todas las presentaciones teóricas del curso OPR319: Ciencia de Datos Aplicada con RStudio (DSRS). Puedes navegar las diapositivas directamente desde los visores interactivos de esta página, abrirlas en pantalla completa o descargarlas en formato PDF.",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-i-introducción-a-la-ciencia-de-datos-y-programa-del-curso",
+    "href": "clases-dsrs.html#sesión-i-introducción-a-la-ciencia-de-datos-y-programa-del-curso",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión I: Introducción a la ciencia de datos y programa del curso",
+    "text": "Sesión I: Introducción a la ciencia de datos y programa del curso\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-ii-introducción-a-r-y-rstudio",
+    "href": "clases-dsrs.html#sesión-ii-introducción-a-r-y-rstudio",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión II: Introducción a R y RStudio",
+    "text": "Sesión II: Introducción a R y RStudio\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-iii-procesamiento-de-datos",
+    "href": "clases-dsrs.html#sesión-iii-procesamiento-de-datos",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión III: Procesamiento de Datos",
+    "text": "Sesión III: Procesamiento de Datos\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-iv-modificación-y-resumen-de-datos",
+    "href": "clases-dsrs.html#sesión-iv-modificación-y-resumen-de-datos",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión IV: Modificación y Resumen de Datos",
+    "text": "Sesión IV: Modificación y Resumen de Datos\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-v-introducción-a-la-visualización-de-datos-con-ggplot2",
+    "href": "clases-dsrs.html#sesión-v-introducción-a-la-visualización-de-datos-con-ggplot2",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión V: Introducción a la Visualización de Datos con ggplot2",
+    "text": "Sesión V: Introducción a la Visualización de Datos con ggplot2\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-vi-procesamiento-avanzado-datos-faltantes-uniones-y-datos-longitudinales",
+    "href": "clases-dsrs.html#sesión-vi-procesamiento-avanzado-datos-faltantes-uniones-y-datos-longitudinales",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión VI: Procesamiento Avanzado (Datos Faltantes, Uniones y Datos Longitudinales)",
+    "text": "Sesión VI: Procesamiento Avanzado (Datos Faltantes, Uniones y Datos Longitudinales)\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-vii-introducción-al-diseño-muestral-complejo",
+    "href": "clases-dsrs.html#sesión-vii-introducción-al-diseño-muestral-complejo",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión VII: Introducción al diseño muestral complejo",
+    "text": "Sesión VII: Introducción al diseño muestral complejo\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-dsrs.html#sesión-viii-introducción-a-la-visualización-de-datos-longitudinales",
+    "href": "clases-dsrs.html#sesión-viii-introducción-a-la-visualización-de-datos-longitudinales",
+    "title": "Ciencia de Datos Aplicada con RStudio (DSRS)",
+    "section": "Sesión VIII: Introducción a la Visualización de Datos Longitudinales",
+    "text": "Sesión VIII: Introducción a la Visualización de Datos Longitudinales\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases DSRS (OPR319)",
+      "Ver todas las clases DSRS"
+    ]
+  },
+  {
+    "objectID": "clases-cscc.html",
+    "href": "clases-cscc.html",
+    "title": "Ciencias Sociales Computacionales (CSCC)",
+    "section": "",
+    "text": "En esta sección encontrarás todas las presentaciones teóricas del curso OPR219: Ciencias Sociales Computacionales (CSCC). Puedes navegar las diapositivas directamente desde los visores interactivos de esta página, abrirlas en pantalla completa o descargarlas en formato PDF.",
+    "crumbs": [
+      "Inicio",
+      "Clases CSCC (OPR219)",
+      "Ver todas las clases CSCC"
+    ]
+  },
+  {
+    "objectID": "clases-cscc.html#sesión-i-introducción-a-la-ciencia-social-computacional-y-programa-del-curso",
+    "href": "clases-cscc.html#sesión-i-introducción-a-la-ciencia-social-computacional-y-programa-del-curso",
+    "title": "Ciencias Sociales Computacionales (CSCC)",
+    "section": "Sesión I: Introducción a la ciencia social computacional y programa del curso",
+    "text": "Sesión I: Introducción a la ciencia social computacional y programa del curso\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases CSCC (OPR219)",
+      "Ver todas las clases CSCC"
+    ]
+  },
+  {
+    "objectID": "clases-cscc.html#sesión-ii-diseño-de-investigación-en-la-era-digital",
+    "href": "clases-cscc.html#sesión-ii-diseño-de-investigación-en-la-era-digital",
+    "title": "Ciencias Sociales Computacionales (CSCC)",
+    "section": "Sesión II: Diseño de investigación en la era digital",
+    "text": "Sesión II: Diseño de investigación en la era digital\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases CSCC (OPR219)",
+      "Ver todas las clases CSCC"
+    ]
+  },
+  {
+    "objectID": "clases-cscc.html#sesión-iii-reproducibilidad-y-ciencia-abierta",
+    "href": "clases-cscc.html#sesión-iii-reproducibilidad-y-ciencia-abierta",
+    "title": "Ciencias Sociales Computacionales (CSCC)",
+    "section": "Sesión III: Reproducibilidad y ciencia abierta",
+    "text": "Sesión III: Reproducibilidad y ciencia abierta\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases CSCC (OPR219)",
+      "Ver todas las clases CSCC"
+    ]
+  },
+  {
+    "objectID": "clases-cscc.html#sesión-iv-control-de-versiones-y-trabajo-colaborativo",
+    "href": "clases-cscc.html#sesión-iv-control-de-versiones-y-trabajo-colaborativo",
+    "title": "Ciencias Sociales Computacionales (CSCC)",
+    "section": "Sesión IV: Control de versiones y trabajo colaborativo",
+    "text": "Sesión IV: Control de versiones y trabajo colaborativo\n\n\n\n\n\n🖥️ Pantalla completa 📥 Descargar PDF 📄 Código fuente (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Clases CSCC (OPR219)",
+      "Ver todas las clases CSCC"
+    ]
+  },
+  {
+    "objectID": "practicos.html",
+    "href": "practicos.html",
+    "title": "Talleres Prácticos Conjuntos (DSRS & CSCC)",
+    "section": "",
+    "text": "Los talleres prácticos integran los contenidos de Ciencia de Datos Aplicada con RStudio (DSRS) y Ciencias Sociales Computacionales (CSCC). Cada taller cuenta con una guía interactiva en formato web, una versión descargable en PDF para lectura e impresión, y el archivo de código fuente (.qmd o .Rmd) para ejecutar directamente en RStudio.",
+    "crumbs": [
+      "Inicio",
+      "Talleres Prácticos",
+      "Índice de Prácticos"
+    ]
+  },
+  {
+    "objectID": "practicos.html#tabla-general-de-prácticos",
+    "href": "practicos.html#tabla-general-de-prácticos",
+    "title": "Talleres Prácticos Conjuntos (DSRS & CSCC)",
+    "section": "Tabla General de Prácticos",
+    "text": "Tabla General de Prácticos\n\n\n\nTaller\nTítulo\nLibrerías Clave\nGuía Web\nDescargar PDF\nCódigo Fuente\n\n\n\n\nI\nFlujo de trabajo e importación de datos\ntidyverse, readxl, haven, writexl\n📖 Ver Web\n📥 PDF\n💻 .qmd\n\n\nII\nProcesamiento de datos\ntidyverse, dplyr, sjmisc\n📖 Ver Web\n📥 PDF\n💻 .qmd\n\n\nIII\nManipulación de Datos\ndplyr, car, sjlabelled, sjmisc\n📖 Ver Web\n📥 PDF\n💻 .qmd\n\n\nIV\nVisualización Inicial de Datos\ntidyverse, ggplot2\n📖 Ver Web\n📥 PDF\n💻 .qmd\n\n\nV (1)\nProcesamiento Avanzado de Datos\ndplyr, tidyr, ggplot2\n📖 Ver Web\n📥 PDF\n💻 .qmd\n\n\nV (2)\nIntroducción a Git y GitHub con RStudio\nusethis, gitcreds\n📖 Ver Web\n📥 PDF\n💻 .qmd\n\n\nVI\nAnálisis de Encuestas Complejas con survey\nsurvey, panelr, car, tidyverse\n📖 Ver Web\n📥 PDF\n💻 .Rmd\n\n\nVII\nVisualización de datos longitudinales\npanelr, ggplot2, sjlabelled, sjmisc\n📖 Ver Web\n📥 PDF\n💻 .Rmd\n\n\nVIII\nVisualización de datos espaciales\nsf, chilemapas, leaflet, shadowtext\n📖 Ver Web\n📥 PDF\n💻 .Rmd",
+    "crumbs": [
+      "Inicio",
+      "Talleres Prácticos",
+      "Índice de Prácticos"
+    ]
+  },
+  {
+    "objectID": "practicos.html#detalle-por-sesión-práctica",
+    "href": "practicos.html#detalle-por-sesión-práctica",
+    "title": "Talleres Prácticos Conjuntos (DSRS & CSCC)",
+    "section": "Detalle por Sesión Práctica",
+    "text": "Detalle por Sesión Práctica\n\nPráctico I: Flujo de trabajo e importación de datos\nCreación de proyectos autocontenidos en RStudio (RProject), organización de directorios bajo el protocolo IPO, carga de librerías con pacman e importación de datos desde CSV, Excel, SPSS, Stata y .RData.\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .qmd\n\n\n\nPráctico II: Procesamiento de datos\nCreación de tibbles, selección de variables con select(), filtrado de observaciones con filter() y ordenamiento con arrange() aplicados tanto a datos simulados como a la encuesta longitudinal ELSOC.\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .qmd\n\n\n\nPráctico III: Manipulación de Datos\nTransformación y creación de variables con mutate(), recodificación condicional con if_else(), case_when(), cut() y car::recode(), etiquetado con sjlabelled y resúmenes agrupados con group_by() y summarise().\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .qmd\n\n\n\nPráctico IV: Visualización Inicial de Datos\nIntroducción a la Gramática de los Gráficos con ggplot2: capas mínimas (data, aes, geom), gráficos univariados (geom_bar, geom_histogram) y bivariados (geom_point, geom_boxplot).\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .qmd\n\n\n\nPráctico V (Parte 1): Procesamiento Avanzado de Datos\nIdentificación y tratamiento de valores perdidos (is.na(), drop_na()), unión relacional de tablas (left_join, inner_join, full_join) y transformación entre formatos ancho y largo (pivot_longer).\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .qmd\n\n\n\nPráctico V (Parte 2): Introducción a Git y GitHub con RStudio\nConfiguración de Git, tokens de acceso personal (usethis, gitcreds), creación de repositorios versionados, registro de cambios (stage y commit) y sincronización con GitHub (push y pull).\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .qmd\n\n\n\nPráctico VI: Análisis de Encuestas Complejas con survey\nPreparación de datos longitudinales ELSOC (2016–2019), declaración de diseño muestral complejo estratificado y por conglomerados (svydesign), estimación de tablas ponderadas (svytable) y visualización representativa.\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .Rmd\n\n\n\nPráctico VII: Visualización de datos longitudinales\nTransformación de datos panel con panelr::long_panel(), construcción de gráficos de barras agrupadas, barras apiladas, comparación de baterías de ítems y series temporales de líneas con ggplot2.\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .Rmd\n\n\n\nPráctico VIII: Visualización de datos espaciales\nManejo de geometrías vectoriales (sf) a nivel de manzana censal y comunal en la Región del Maule, unión de atributos territoriales de seguridad (MBHT), mapas coropléticos estáticos (ggplot2::geom_sf) y visores interactivos (leaflet).\n\n📖 Abrir Guía Web 📥 Descargar PDF 💻 Descargar .Rmd",
+    "crumbs": [
+      "Inicio",
+      "Talleres Prácticos",
+      "Índice de Prácticos"
+    ]
+  },
+  {
+    "objectID": "evaluaciones.html",
+    "href": "evaluaciones.html",
+    "title": "Evaluaciones Conjuntas (2026)",
+    "section": "",
+    "text": "Las evaluaciones de los cursos Ciencia de Datos Aplicada con RStudio (DSRS) y Ciencias Sociales Computacionales (CSCC) se articulan mediante reportes automatizados y reproducibles elaborados en Quarto (.qmd) o RMarkdown (.Rmd) dentro de un proyecto RProject estructurado bajo el protocolo IPO (Input - Procesamiento - Output).",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Guía de Evaluaciones"
+    ]
+  },
+  {
+    "objectID": "evaluaciones.html#evaluación-i-problematización-y-diseño-de-flujo-de-trabajo-de-datos",
+    "href": "evaluaciones.html#evaluación-i-problematización-y-diseño-de-flujo-de-trabajo-de-datos",
+    "title": "Evaluaciones Conjuntas (2026)",
+    "section": "Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos",
+    "text": "Evaluación I: Problematización y Diseño de Flujo de Trabajo de Datos\n\nPonderación: 20% de la nota final del curso.\nComponentes del reporte:\n\nIntroducción al problema de investigación (200 a 400 palabras).\nDiseño de investigación y protocolo reproducible (300 a 500 palabras).\nProcesamiento inicial de datos (50 a 150 palabras).\n\n\n\n\n\n📋 Rúbrica Evaluación I\nCriterios generales y específicos de evaluación para ambos cursos (DSRS y CSCC), escala de puntaje y recomendaciones de escritura académica.\n\n📖 Ver en Web 📥 Descargar PDF 📄 Código .qmd\n\n\n\n\n\n📝 Plantilla Evaluación I\nPlantilla base en formato Quarto (.qmd) con todas las secciones y bloques de código (chunks) listos para completar en RStudio.\n\n📖 Ver en Web 📥 Descargar PDF 💻 Descargar Plantilla (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Guía de Evaluaciones"
+    ]
+  },
+  {
+    "objectID": "evaluaciones.html#evaluación-ii-informe-de-resultados-de-ciencia-de-datos",
+    "href": "evaluaciones.html#evaluación-ii-informe-de-resultados-de-ciencia-de-datos",
+    "title": "Evaluaciones Conjuntas (2026)",
+    "section": "Evaluación II: Informe de Resultados de Ciencia de Datos",
+    "text": "Evaluación II: Informe de Resultados de Ciencia de Datos\n\nPonderación: 40% de la nota final del curso.\nComponentes del reporte:\n\nIntroducción al problema de investigación y propuesta (200 a 400 palabras).\nDiseño de investigación reproducible (300 a 500 palabras).\nProcesamiento de datos: importación y manipulación (50 a 150 palabras).\nAnálisis de datos/resultados: univariado, bivariado y adicionales (100 a 200 palabras).\nDiscusión de resultados y líneas futuras (100 a 200 palabras).\n\n\n\n\n\n📋 Rúbrica Evaluación II\nCriterios generales y específicos de evaluación para el informe de resultados (DSRS: 24 pts máx. / CSCC: 18 pts máx.), formato y plazos de entrega.\n\n📖 Ver en Web 📥 Descargar PDF 📄 Código .qmd\n\n\n\n\n\n📝 Plantilla Evaluación II\nPlantilla base en formato Quarto (.qmd) con las 5 secciones del informe de resultados listas para desarrollar tu análisis en RStudio.\n\n📖 Ver en Web 📥 Descargar PDF 💻 Descargar Plantilla (.qmd)",
+    "crumbs": [
+      "Inicio",
+      "Evaluaciones 2026",
+      "Guía de Evaluaciones"
+    ]
+  },
+  {
+    "objectID": "datos.html",
+    "href": "datos.html",
+    "title": "Bases de Datos y Recursos",
+    "section": "",
+    "text": "Aquí puedes descargar directamente todas las bases de datos utilizadas en las clases teóricas, talleres prácticos y evaluaciones del curso.",
+    "crumbs": [
+      "Inicio",
+      "Información General",
+      "Bases de Datos y Recursos"
+    ]
+  },
+  {
+    "objectID": "datos.html#bases-de-datos-del-curso",
+    "href": "datos.html#bases-de-datos-del-curso",
+    "title": "Bases de Datos y Recursos",
+    "section": "1. Bases de Datos del Curso",
+    "text": "1. Bases de Datos del Curso\n\n\n\nArchivo\nFormato\nTamaño aprox.\nUso en el Curso\nDescarga Directa\n\n\n\n\nELSOC_Wide_2016_2023.RData\n.RData\n6.9 MB\nPrácticos I y II (ELSOC formato ancho 2016–2023)\n📥 Descargar\n\n\nelsoc-long.RData\n.RData\n1.9 MB\nPrácticos VI y VII (ELSOC formato largo panel)\n📥 Descargar\n\n\nelsoc_chile.RData\n.RData\n5.5 MB\nClases DSRS y ejercicios generales\n📥 Descargar\n\n\nelsoc_base.RData\n.RData\n152 KB\nClases DSRS (Sesiones I y II)\n📥 Descargar\n\n\ndata_seguridad_maule.xlsx\n.xlsx\n5.5 MB\nPráctico VIII (Índice de seguridad MBHT - Maule)\n📥 Descargar\n\n\ndata_maule_mzn.zip\n.zip (sf)\n5.6 MB\nPráctico VIII (Shapefile manzanas Región del Maule)\n📥 Descargar\n\n\ndf_prueba1.csv\n.csv\n1 KB\nPráctico I (Ejemplo importación CSV)\n📥 Descargar\n\n\ndf_prueba2.xlsx\n.xlsx\n5 KB\nPráctico I (Ejemplo importación Excel)\n📥 Descargar",
+    "crumbs": [
+      "Inicio",
+      "Información General",
+      "Bases de Datos y Recursos"
+    ]
+  },
+  {
+    "objectID": "datos.html#repositorios-externos-oficiales",
+    "href": "datos.html#repositorios-externos-oficiales",
+    "title": "Bases de Datos y Recursos",
+    "section": "2. Repositorios Externos Oficiales",
+    "text": "2. Repositorios Externos Oficiales\nAlgunas bases de datos completas (en formato SPSS .sav, Stata .dta o cartografías nacionales completas) superan los 100 MB y pueden descargarse directamente desde sus fuentes oficiales:\n\nEstudio Longitudinal Social de Chile (ELSOC - COES): Repositorio oficial en Harvard Dataverse\nMatriz de Bienestar Humano Territorial (MBHT - SUBDERE): Plataforma BHT\nMicrodatos Censo 2017 a nivel de Manzana (Geoportal de Chile): Catálogo Geoportal Censo 2017",
+    "crumbs": [
+      "Inicio",
+      "Información General",
+      "Bases de Datos y Recursos"
+    ]
+  },
+  {
+    "objectID": "datos.html#instalación-de-paquetes-en-r",
+    "href": "datos.html#instalación-de-paquetes-en-r",
+    "title": "Bases de Datos y Recursos",
+    "section": "3. Instalación de Paquetes en R",
+    "text": "3. Instalación de Paquetes en R\nPara ejecutar todos los talleres prácticos y plantillas del curso en tu computador, abre RStudio y ejecuta el siguiente bloque en la consola:\nif (!require(\"pacman\")) install.packages(\"pacman\")\n\npacman::p_load(\n  tidyverse,   # Manipulación (dplyr, tidyr) y visualización (ggplot2)\n  readxl,      # Lectura de archivos Excel (.xlsx)\n  writexl,     # Escritura de archivos Excel (.xlsx)\n  haven,       # Lectura de archivos SPSS (.sav) y Stata (.dta)\n  sjlabelled,  # Etiquetado de variables y valores\n  sjmisc,      # Tablas de frecuencias e inspección (frq)\n  car,         # Recodificación de variables\n  panelr,      # Manejo de datos longitudinales / panel\n  survey,      # Diseños muestrales complejos y ponderadores\n  sf,          # Datos espaciales y vectoriales\n  chilemapas,  # Cartografías comunales y regionales de Chile\n  leaflet,     # Mapas interactivos\n  shadowtext,  # Etiquetas de texto con halo en gráficos\n  ggrepel,     # Etiquetas sin superposición en ggplot2\n  broom,       # Tablas ordenadas de modelos\n  texreg,      # Reporte de modelos estadísticos\n  usethis,     # Configuración de proyectos, Git y GitHub\n  gitcreds     # Gestión de credenciales de GitHub\n)",
+    "crumbs": [
+      "Inicio",
+      "Información General",
+      "Bases de Datos y Recursos"
+    ]
+  }
+]

@@ -1,0 +1,129 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - clases-dsrs.qmd
+    - clases-cscc.qmd
+    - practicos.qmd
+    - evaluaciones.qmd
+    - datos.qmd
+    - 1-data-science-rstudio/*.qmd
+    - 2-ccss-computacionales/*.qmd
+    - 3-practicos-conjuntos/2_codigo/*.qmd
+    - 3-practicos-conjuntos/2_codigo/*.Rmd
+    - 4-evaluaciones-conjuntas/*.qmd
+    - "!4-evaluaciones-conjuntas/1-version-2025/**"
+    - "!4-evaluaciones-conjuntas/2-version-2026/**"
+  resources:
+    - 0-datos/*.RData
+    - 3-practicos-conjuntos/1_datos/1_originales/*.RData
+    - 3-practicos-conjuntos/1_datos/1_originales/*.xlsx
+    - 3-practicos-conjuntos/1_datos/1_originales/*.csv
+    - 3-practicos-conjuntos/1_datos/2_procesados/*.RData
+    - 3-practicos-conjuntos/1_datos/2_procesados/*.csv
+    - 3-practicos-conjuntos/1_datos/2_procesados/*.zip
+    - 3-practicos-conjuntos/3_resultados/*
+    - 1-data-science-rstudio/*.qmd
+    - 2-ccss-computacionales/*.qmd
+    - 3-practicos-conjuntos/2_codigo/*.qmd
+    - 3-practicos-conjuntos/2_codigo/*.Rmd
+    - 4-evaluaciones-conjuntas/*.qmd
+
+website:
+  title: "Cursos Ciencia de Datos & CCSS Computacionales"
+  favicon: 1-data-science-rstudio/images/logo-ucm-render.png
+  navbar:
+    background: "#003366"
+    foreground: light
+    logo: 1-data-science-rstudio/images/logo-ucm-render.png
+    pinned: true
+    left:
+      - text: "Inicio"
+        href: index.qmd
+        icon: house-door
+      - text: "Ciencia de Datos (DSRS)"
+        href: clases-dsrs.qmd
+        icon: bar-chart-line
+      - text: "CCSS Computacionales (CSCC)"
+        href: clases-cscc.qmd
+        icon: diagram-3
+      - text: "Prácticos"
+        href: practicos.qmd
+        icon: code-slash
+      - text: "Evaluaciones"
+        href: evaluaciones.qmd
+        icon: clipboard-check
+      - text: "Datos"
+        href: datos.qmd
+        icon: database
+    right:
+      - icon: github
+        href: https://github.com/cristobalortizvilches/ucm-cursos-datos
+        aria-label: Repositorio en GitHub
+
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Información General"
+        contents:
+          - text: "Inicio y Programa"
+            href: index.qmd
+          - text: "Bases de Datos y Recursos"
+            href: datos.qmd
+      - section: "Clases DSRS (OPR319)"
+        contents:
+          - text: "Ver todas las clases DSRS"
+            href: clases-dsrs.qmd
+      - section: "Clases CSCC (OPR219)"
+        contents:
+          - text: "Ver todas las clases CSCC"
+            href: clases-cscc.qmd
+      - section: "Talleres Prácticos"
+        contents:
+          - text: "Índice de Prácticos"
+            href: practicos.qmd
+          - text: "Práctico I: Flujo e Importación"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-1.qmd
+          - text: "Práctico II: Procesamiento"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-2.qmd
+          - text: "Práctico III: Manipulación"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-3.qmd
+          - text: "Práctico IV: Visualización Inicial"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-4.qmd
+          - text: "Práctico V (1): NA, Joins y Pivot"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-5a.qmd
+          - text: "Práctico V (2): Git y GitHub"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-5b.qmd
+          - text: "Práctico VI: Encuestas (survey)"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-6.Rmd
+          - text: "Práctico VII: Longitudinales"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-7.Rmd
+          - text: "Práctico VIII: Datos Espaciales"
+            href: 3-practicos-conjuntos/2_codigo/ejercicio-practico-8.Rmd
+      - section: "Evaluaciones 2026"
+        contents:
+          - text: "Guía de Evaluaciones"
+            href: evaluaciones.qmd
+          - text: "Rúbrica Evaluación I"
+            href: 4-evaluaciones-conjuntas/rubrica-e1.qmd
+          - text: "Plantilla Evaluación I"
+            href: 4-evaluaciones-conjuntas/plantilla-e1.qmd
+          - text: "Rúbrica Evaluación II"
+            href: 4-evaluaciones-conjuntas/rubrica-e2.qmd
+          - text: "Plantilla Evaluación II"
+            href: 4-evaluaciones-conjuntas/plantilla-e2.qmd
+
+  page-footer:
+    background: "#f8f9fa"
+    left: "© 2026 Profesor Cristóbal Ortiz Vilches · Carrera de Sociología, Universidad Católica del Maule (UCM)"
+    right: "Material bajo licencia CC BY-NC 4.0 · Desarrollado con [Quarto](https://quarto.org/) y R"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    lang: es
+
